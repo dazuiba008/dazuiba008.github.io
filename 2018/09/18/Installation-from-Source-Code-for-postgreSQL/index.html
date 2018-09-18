@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="postgresql," />
 
 
 
@@ -79,16 +79,18 @@
 
 
 
-<meta name="description" content="人在江湖飘,哪能不挨刀！">
-<meta property="og:type" content="website">
-<meta property="og:title" content="魂醉的一亩二分地">
-<meta property="og:url" content="http://yoursite.com/tags/mytest/index.html">
+<meta name="description" content="其实学习pg有一段时间了，不过一直没有写相关的blog，以后这一块也会一起加进来，记录自己的学习过程。这里就先介绍下安装吧，pg安装还是很简单的，而且速度也快。1.和其他数据库安装一样，可以根据自己的需求，修改系统参数   /etc/sysctl.conf ,/etc/security/limits.conf,2.新建用户和组：    #groupadd postgres    #useradd">
+<meta name="keywords" content="postgresql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Installation from Source Code for postgreSQL">
+<meta property="og:url" content="http://yoursite.com/2018/09/18/Installation-from-Source-Code-for-postgreSQL/index.html">
 <meta property="og:site_name" content="魂醉的一亩二分地">
-<meta property="og:description" content="人在江湖飘,哪能不挨刀！">
+<meta property="og:description" content="其实学习pg有一段时间了，不过一直没有写相关的blog，以后这一块也会一起加进来，记录自己的学习过程。这里就先介绍下安装吧，pg安装还是很简单的，而且速度也快。1.和其他数据库安装一样，可以根据自己的需求，修改系统参数   /etc/sysctl.conf ,/etc/security/limits.conf,2.新建用户和组：    #groupadd postgres    #useradd">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-18T06:15:44.977Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="魂醉的一亩二分地">
-<meta name="twitter:description" content="人在江湖飘,哪能不挨刀！">
+<meta name="twitter:title" content="Installation from Source Code for postgreSQL">
+<meta name="twitter:description" content="其实学习pg有一段时间了，不过一直没有写相关的blog，以后这一块也会一起加进来，记录自己的学习过程。这里就先介绍下安装吧，pg安装还是很简单的，而且速度也快。1.和其他数据库安装一样，可以根据自己的需求，修改系统参数   /etc/sysctl.conf ,/etc/security/limits.conf,2.新建用户和组：    #groupadd postgres    #useradd">
 
 
 
@@ -118,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/mytest/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/09/18/Installation-from-Source-Code-for-postgreSQL/"/>
 
 
 
 
 
-  <title>标签: mytest | 魂醉的一亩二分地</title>
+  <title>Installation from Source Code for postgreSQL | 魂醉的一亩二分地</title>
   
 
 
@@ -143,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -281,54 +283,178 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>mytest<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/18/Installation-from-Source-Code-for-postgreSQL/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="魂醉">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="魂醉的一亩二分地">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/09/18/我的第一篇文章/" itemprop="url">
-              
-                <span itemprop="name">我的第一篇文章</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Installation from Source Code for postgreSQL</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-18T14:00:59+08:00"
-              content="2018-09-18" >
-          09-18
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-18T14:14:19+08:00">
+                2018-09-18
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PostgreSQL/" itemprop="url" rel="index">
+                    <span itemprop="name">PostgreSQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>其实学习pg有一段时间了，不过一直没有写相关的blog，以后这一块也会一起加进来，记录自己的学习过程。<br>这里就先介绍下安装吧，pg安装还是很简单的，而且速度也快。<br>1.和其他数据库安装一样，可以根据自己的需求，修改系统参数<br>   /etc/sysctl.conf ,/etc/security/limits.conf,<br>2.新建用户和组：</p>
+<p>   #groupadd postgres</p>
+<p>   #useradd -g postgres postgres<br>3.创建相关目录：<br>   mkdir   -p  /database/pgdata/pg_root<br>   mkdir  -p   /opt/pgsql<br>   chown  -R postgres:postgres /database/pgdata/pg_root</p>
+<p>4.配置环境变量<br>export PS1=”$USER@<code>/bin/hostname -s</code>-&gt; “<br>export PGPORT=1921<br>export PGDATA= /database/pgdata/pg_root<br>export LANG=en_US.utf8<br>export PGHOME=/opt/pgsql<br>export LD_LIBRARY_PATH=$PGHOME/lib:/lib64:/usr/lib64:/usr/local/lib64:/lib:/usr/lib:/usr/local/lib<br>export DATE=<code>date +&quot;%Y%m%d%H%M&quot;</code><br>export PATH=$PGHOME/bin:$PATH:.<br>export MANPATH=$PGHOME/share/man:$MANPATH<br>alias rm=’rm -i’<br>alias ll=’ls -lh’<br>根据自己需求自己修改<br>5.解压安装包，可以安装了<br> ./configure  –help这个可以查看一下对应的帮助，根据自己的环境，适当选用一些参数<br>./configure –prefix=/opt/pgsql –with-pgport=1921 –with-segsize=8 –with-wal-segsize=64 –with-wal-blocksize=64 –with-perl –with-python –with-openssl –with-pam –with-ldap –with-libxml –with-libxslt –enable-thread-safety</p>
+<p>gmake world<br>gmake install-world<br>安装完成以后<br>su - postgres<br>initdb -D /database/pgdata/pg_root<br>初始化以后，可以启动数据库了<br>通过postgres -D 或者pg_ctl -D后面跟对应的安装路径就可以了。</p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/postgresql/" rel="tag"># postgresql</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/18/Greenplum-install/" rel="next" title="Greenplum install">
+                <i class="fa fa-chevron-left"></i> Greenplum install
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -336,6 +462,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -623,6 +753,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
