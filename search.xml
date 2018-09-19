@@ -22,4 +22,15 @@
         <tag>Greenplum</tag>
       </tags>
   </entry>
+  <entry>
+    <title><![CDATA[mongodb replica sets reconfig and conver a Secondary to an Arbiter]]></title>
+    <url>%2F2013%2F04%2F22%2Fmongodb-replica-sets-reconfig-and-conver-a-Secondary-to-an-Arbiter%2F</url>
+    <content type="text"><![CDATA[replica set由于需求可能会调整节点的优先级，或者仲裁节点那么先看一下语法：rs.reconfig(configuration[, force])Parameters:configuration – A document that specifies the configuration of a replica set.force – Optional. Specify { force: true } as the force parameter to force the replica set to accept the new configuration even if a majority of the members are not accessible. Use with caution, as this can lead to rollback situations.Initializes a new replica set configuration. This function will disconnect the shell briefly and forces a reconnection as the replica set renegotiates which node will be primary. As a result, the shell will display an error even if this command succeeds. rs.reconfig() provides a wrapper around the “replSetReconfig” database command. rs.reconfig() overwrites the existing replica set configuration. Retrieve the current configuration object with rs.conf(), modify the configuration as needed and then use rs.reconfig() to submit the modified configuration object. To reconfigure a replica set, use the following sequence of operations: conf = rs.conf() // modify conf to change configuration rs.reconfig(conf)If you want to force the reconfiguration if a majority of the set isn’t connected to the current member, or you’re issuing the command against a secondary, use the following form: conf = rs.conf() // modify conf to change configuration rs.reconfig(conf, { force: true } )Warning Forcing a rs.reconfig() can lead to rollback situations and other difficult to recover from situations. Exercise caution when using this option.这里遇到rollback情况，可能会导致fatal状态，那么replica set就等于失效了，可以拷贝local数据文件，或者所有数据文件进行重建举例：var c = rs.conf();c.members[2].priority = 0; 0~100数字越大优先级越高，0不会被切换为primary节点，这里也可以写成包含小数的值rs.reconfig(c);配置完以后，可以通过一下命令查看一下配置是否修改好：rs.conf()rs.status()为了防止脑裂，可以加入仲裁节点，使用以下命令：rs.addArb(“:&lt;:port&gt;”); ==rs.add(hostspec, arbiterOnly)示例：rs.add(‘mongodb3.example.net:27017’, true)当然将一个从节点转换为仲裁节点：(1)首先关闭从节点(2)rs.remove(“&lt;:port&gt;”)删除该从节点，rs.conf()验证一下(3)创建新的数据目录，因为仲裁节点是不存放生产数据的(4)通过rs.addArb(“:&lt;:port&gt;”)加入，rs.conf()验证一下那么就可以看到：仲裁节点的属性为”arbiterOnly” : true{ “_id” : “xxx”, “version” : 14, “members” : [ { “_id” : 1, “host” : “xxx.xxx.xxx.xxx:5281” }, { “_id” : 2, “host” : “ xxx.xxx.xxx.xxx :5281”, “arbiterOnly” : true }, { “_id” : 3, “host” : “ xxx.xxx.xxx.xxx :5281” } ]}]]></content>
+      <categories>
+        <category>mongodb</category>
+      </categories>
+      <tags>
+        <tag>mongodb</tag>
+      </tags>
+  </entry>
 </search>
