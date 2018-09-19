@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="魂醉的一亩二分地">
 <meta property="og:description" content="replica set由于需求可能会调整节点的优先级，或者仲裁节点那么先看一下语法：rs.reconfig(configuration[, force])Parameters:configuration – A document that specifies the configuration of a replica set.force – Optional. Specify { force:">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-19T01:34:47.275Z">
+<meta property="og:updated_time" content="2018-09-19T01:45:18.353Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mongodb replica sets reconfig and conver a Secondary to an Arbiter">
 <meta name="twitter:description" content="replica set由于需求可能会调整节点的优先级，或者仲裁节点那么先看一下语法：rs.reconfig(configuration[, force])Parameters:configuration – A document that specifies the configuration of a replica set.force – Optional. Specify { force:">
@@ -391,7 +391,8 @@
       
 
       
-        <p>replica set由于需求可能会调整节点的优先级，或者仲裁节点<br>那么先看一下语法：<br>rs.reconfig(configuration[, force])<br>Parameters:<br>configuration – A document that specifies the configuration of a replica set.<br>force – Optional. Specify { force: true } as the force parameter to force the replica set to accept the new configuration even if a majority of the members are not accessible. Use with caution, as this can lead to rollback situations.<br>Initializes a new replica set configuration. This function will disconnect the shell briefly and forces a reconnection as the replica set renegotiates which node will be primary. As a result, the shell will display an error even if this command succeeds.</p>
+        <a id="more"></a>
+<p>replica set由于需求可能会调整节点的优先级，或者仲裁节点<br>那么先看一下语法：<br>rs.reconfig(configuration[, force])<br>Parameters:<br>configuration – A document that specifies the configuration of a replica set.<br>force – Optional. Specify { force: true } as the force parameter to force the replica set to accept the new configuration even if a majority of the members are not accessible. Use with caution, as this can lead to rollback situations.<br>Initializes a new replica set configuration. This function will disconnect the shell briefly and forces a reconnection as the replica set renegotiates which node will be primary. As a result, the shell will display an error even if this command succeeds.</p>
 <p>rs.reconfig() provides a wrapper around the “replSetReconfig” database command.</p>
 <p>rs.reconfig() overwrites the existing replica set configuration. Retrieve the current configuration object with rs.conf(), modify the configuration as needed and then use rs.reconfig() to submit the modified configuration object.</p>
 <p>To reconfigure a replica set, use the following sequence of operations:</p>
