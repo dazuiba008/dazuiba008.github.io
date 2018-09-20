@@ -33,4 +33,15 @@
         <tag>mongodb</tag>
       </tags>
   </entry>
+  <entry>
+    <title><![CDATA[oracle ORA-1555错误]]></title>
+    <url>%2F2011%2F07%2F29%2Foracle-ORA-1555%E9%94%99%E8%AF%AF%2F</url>
+    <content type="text"><![CDATA[1555错误大家应该都碰到过，这里做下简单的阐述和一些解决方法。 大家可以这么理解，oracle提交的UNDO超过了保留期，或者在保留期的数据被覆盖，无法做一致性读，就会抛出此类错误，这里有几个参数有必要说明一下： UNDO_MANAGEMENT：值为AUTO表示使用了自动撤销管理表空间，MANUAL则表示手动管理（已淘汰），如果想Flashback Query自动管理必须条件 。 UNDO_TABLESPACE：Oracle数据库中可以创建多个UNDO表空间，不过同时只能使用一个，当UNDO_MANAGEMENT初始化参数值为AUTO时，UNDO_TABLESPACE参数用来指定当前使用的UNDO表空间名称 UNDO_RETENTION：该参数用来指定UNDO段中数据保存的最短时间，以秒为单位，是一个动态参数，完全可以在实例运行时随时修改，通常默认是900秒，其实这个保留时间并不是说超过这个时间就会过期，数据就不在了，只是标记了一下可以被覆盖了，超过这个时间的数据可以被覆盖了，同理，就算是没有超过这个时间，你的UNDO空间已经满了，那么新事务的数据还是会覆盖掉UNDO。那么此时如果你在找丢失部分的数据，就会出现ORA 1555了，简单点来说就是找不到UNDO里面的前镜像了。 另外块清除会引起1555，不过这种情况是很少遇到的。 可以show parameter undo看一下这几个参数的值。 还有如果你的UNDO表空间过于小，那可能一般的普通操作都会报出这个错，大家一定要设置合理，避免此类错误。 哈哈，既然关系到UNDO，那么再简单说下UNDO吧，首先有几个数据字典和动态性能视图：v$undostat,DBA_ROLLBACK_SEGS,DBA_UNDO_EXTENTS,还有一个v$TRANSACTION，记录了事务的一些信息，还有回滚的数量。 UNDO其实就是记录删除或者更新操作的数据，顾名思义就是为了回滚，这里和REDO是紧密相连的，这里涉及到UNDO的REDO,因为事务其实都是先写UNDO，再写REDO的，也就是UNDO的REDO（记录UNDO块的修改）和REDO的redo（记录普通数据文件的修改）是所有的REDO。那么UNDO这里只是做一个简单的了解。 大家一定要记得在insert的时候，如果列上有索引，即使nologging，那么还是会导致大量的UNDO，因为在插入数据的时候会调整索引，那么肯定会产生大量的UNDO。delete和update是必走内存的，所以始终还是会记录REDO。]]></content>
+      <categories>
+        <category>oracle</category>
+      </categories>
+      <tags>
+        <tag>oracle</tag>
+      </tags>
+  </entry>
 </search>
