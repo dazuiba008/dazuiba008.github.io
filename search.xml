@@ -1,30 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[library cache]]></title>
-    <url>%2F2018%2F09%2F21%2Flibrary-cache%2F</url>
-    <content type="text"><![CDATA[这里简单发表下对库告诉缓存的认识，大家知道共享池是有library cache和data dictionary cache和控制部分组成，首先sql执行的过程显示语法分析阶段，然后是语意分析阶段，也就是验证下对象权限等一些列的东西，再下面就是SQL进行hash运算，运算后匹配library cache里的hash桶，再匹配hash桶上面的handle，也就是句柄，如果匹配成功，那么去找子游标，如果不成功，那么就生成一个handle，这里也就是硬解析，挂载hash桶上。 这里如果是不同用户或者，期间对象权限更改，就算是SQL文本一样，也是无法共享子游标的，生成handle，其实就是要想共享池申请空闲的内存，期间获得shared pool latch ，那么很容易产生冲突。handle其实就是存放的父游标，真正的执行计划是存放在子游标上的，也就是heap6上，一个父游标可能对应多个子游标，比如，不同用户下的相同SQL，就会造成1个父对多个子游标，这种父游标存在，而要重新生成子游标，就是relaod，需要耗硬件资源，数据库性能也就十分低下，所以我们要避免硬解析和reload，解析过程中很消耗资源，而且容易造成 latch的冲突，父游标里主要包含SQL文本，父游标打开时，是被锁住的，也就是不能交换出library cache ，子游标主要包含执行计划和绑定变量，这个就很重要。这里再介绍下软解析，其实只要在hash桶里可以匹配对应的SQL文本，那么就是软解析，说明之前运行过该sql，其实sql执行期间只要步骤可以跳过，那么我们就可以定位为软解析。这里还有软软解析，这个是最好性能，session_cached_cursors，当会话相同的CURSOR第三次访问是，那么会话会在PGA里做个标记，就算会话结束，cursor也不会从library cache交换出去，这里不需要访问library cache，只和PGA有关联，共享的东西这里我们没去访问，也就是不争用资源，性能得到提升。]]></content>
-      <categories>
-        <category>oracle</category>
-      </categories>
-      <tags>
-        <tag>oracle</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Installation from Source Code for postgreSQL]]></title>
-    <url>%2F2018%2F09%2F18%2FInstallation-from-Source-Code-for-postgreSQL%2F</url>
-    <content type="text"><![CDATA[其实学习pg有一段时间了，不过一直没有写相关的blog，以后这一块也会一起加进来，记录自己的学习过程。这里就先介绍下安装吧，pg安装还是很简单的，而且速度也快。1.和其他数据库安装一样，可以根据自己的需求，修改系统参数 /etc/sysctl.conf ,/etc/security/limits.conf,2.新建用户和组： #groupadd postgres #useradd -g postgres postgres3.创建相关目录： mkdir -p /database/pgdata/pg_root mkdir -p /opt/pgsql chown -R postgres:postgres /database/pgdata/pg_root 4.配置环境变量export PS1=”$USER@/bin/hostname -s-&gt; “export PGPORT=1921export PGDATA= /database/pgdata/pg_rootexport LANG=en_US.utf8export PGHOME=/opt/pgsqlexport LD_LIBRARY_PATH=$PGHOME/lib:/lib64:/usr/lib64:/usr/local/lib64:/lib:/usr/lib:/usr/local/libexport DATE=date +&quot;%Y%m%d%H%M&quot;export PATH=$PGHOME/bin:$PATH:.export MANPATH=$PGHOME/share/man:$MANPATHalias rm=’rm -i’alias ll=’ls -lh’根据自己需求自己修改5.解压安装包，可以安装了 ./configure –help这个可以查看一下对应的帮助，根据自己的环境，适当选用一些参数./configure –prefix=/opt/pgsql –with-pgport=1921 –with-segsize=8 –with-wal-segsize=64 –with-wal-blocksize=64 –with-perl –with-python –with-openssl –with-pam –with-ldap –with-libxml –with-libxslt –enable-thread-safety gmake worldgmake install-world安装完成以后su - postgresinitdb -D /database/pgdata/pg_root初始化以后，可以启动数据库了通过postgres -D 或者pg_ctl -D后面跟对应的安装路径就可以了。]]></content>
-      <categories>
-        <category>PostgreSQL</category>
-      </categories>
-      <tags>
-        <tag>postgresql</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Greenplum install]]></title>
-    <url>%2F2018%2F09%2F18%2FGreenplum-install%2F</url>
+    <url>%2F2013%2F09%2F18%2FGreenplum-install%2F</url>
     <content type="text"><![CDATA[架构：master主要建立与客户端的连接，收集segment的执行结果，不存放业务数据，可以一主一备segment业务数据存放处，执行master分发的SQL,一台机器可以配置多个segment，segment分primary和mirror 四台服务器搭建测试环境 192.168.101.115 master192.168.101.116 segment+standby192.168.100.217 segment192.168.100.225 segment 分辨配置一个primary，一个mirror对应后面参数路径，如果设置多个,空格分隔即可declare -a DATA_DIRECTORY=(/data01/gpadmin/gpdata/primary)declare -a MIRROR_DATA_DIRECTORY=(/data01/gpadmin/gpdata/mirror) 1.每台服务器/etc/hosts192.168.101.115 db-192-168-101-115.sky-mobi.com db-192-168-101-115192.168.101.116 db-192-168-101-116.sky-mobi.com db-192-168-101-116192.168.100.217 db-192-168-100-217.sky-mobi.com db-192-168-100-217192.168.100.225 db-192-168-100-225.sky-mobi.com db-192-168-100-225 2.配置/etc/sysctl.confkernel.shmmax = 500000000kernel.shmmni = 4096kernel.shmall = 4000000000kernel.sem = 250 512000 100 2048kernel.sysrq = 1kernel.core_uses_pid = 1kernel.msgmnb = 65536kernel.msgmax = 65536kernel.msgmni = 2048net.ipv4.tcp_syncookies = 1net.ipv4.conf.default.accept_source_route = 0net.ipv4.tcp_tw_recycle = 1net.ipv4.tcp_max_syn_backlog = 4096net.ipv4.conf.all.arp_filter = 1net.ipv4.ip_local_port_range = 10000 65535net.core.netdev_max_backlog = 10000net.core.rmem_max = 2097152net.core.wmem_max = 2097152vm.overcommit_memory = 2 3.配置/etc/security/limits.conf soft nofile 65536 hard nofile 65536 soft nproc 131072 hard nproc 131072 修改磁盘调度策略echo deadline &gt; /sys/block/sba/queue/scheduler 5.执行安装程序useradd gpadminpasswd gpadminunzip greenplum-db-4.3.12.0-rhel5-x86_64.zip./greenplum-db-4.3.12.0-rhel5-x86_64.bin默认安装在/usr/local下 7.chown -R gpadmin.gpadmin /usr/local/greenplum-db8.配置gpadmin环境变量，添加以下source /usr/local/greenplum-db/greenplum_path.shexport MASTER_DATA_DIRECTORY=/data01/gpadmin/gpdata/master/gpseg-1export PGPORT=1922export PS1=”$USER@/bin/hostname -s-&gt; “ 9.新建两个文件hostlist, seg_hostshostlistdb-192-168-101-115db-192-168-101-116db-192-168-100-217db-192-168-100-225 seg_hostsdb-192-168-101-116db-192-168-100-217db-192-168-100-225 10.使用gpssh-exkeys打通所有服务器的透明登陆gpssh-exkeys -f hostlistgpssh -f hostlist ls //批量执行命令 11.打包安装好的目录，并复制到其他节点，解压tar -cf gp.tar /use/local/greenplum-db-4.3.12.0/gpscp -f hostlist gp.tar =:/home/gpmadin //批量服务到每个节点tar -xf gp.tar //解压 12.建立相关数据目录赋予权限mkdir -p /data01/gpadmin/gpdata/mastermkdir -p /data01/gpadmin/gpdata/primarymkdir -p /data01/gpadmin/gpdata/mirrorchown -R gpadmin.gpadmin /data01/gpadmin/gpdata/master /data01/gpadmin/gpdata/primary /data01/gpadmin/gpdata/mirror 13.初始化Greenplum复制配置文件到自己的目录cp /usr/local/greenplum-db/docs/cli_help/gpconfigs/gpinitsystem_config /home/gpadmin/ 修改后的相关参数ARRAY_NAME=”SKY Greenplum DW”SEG_PREFIX=gpsegPORT_BASE=40000declare -a DATA_DIRECTORY=(/data01/gpadmin/gpdata/primary)MASTER_HOSTNAME=db-192-168-101-115MASTER_DIRECTORY=/data01/gpadmin/gpdata/masterMASTER_PORT=1922TRUSTED_SHELL=sshCHECK_POINT_SEGMENTS=8ENCODING=UTF-8MIRROR_PORT_BASE=50000REPLICATION_PORT_BASE=41000MIRROR_REPLICATION_PORT_BASE=51000declare -a MIRROR_DATA_DIRECTORY=(/data01/gpadmin/gpdata/mirror)MACHINE_LIST_FILE=/home/gpadmin/seg_hosts 初始化GPgpinitsystem -c /home/gpadmin/gpinitsystem_config -s db-192-168-101-116 数据库可以正常连接：psql -d postgrespsql (8.2.15)Type “help” for help. postgres=# \l List of databases Name | Owner | Encoding | Access privileges———–+———+———-+———————— hank | gpadmin | UTF8 | =Tc/gpadmin : gpadmin=CTc/gpadmin : hank=CTc/gpadmin postgres | gpadmin | UTF8 | template0 | gpadmin | UTF8 | =c/gpadmin : gpadmin=CTc/gpadmin template1 | gpadmin | UTF8 | =c/gpadmin : gpadmin=CTc/gpadmin 关闭与启动： gpstart -a 启动 gpstop -a 关闭 gpstop -r 重启 gpstop -u 重载配置参数 gpstart -m 单用户维护模式启动 PGOPTIONS=’-c gp_session_role=utility’ psql gpstate 查看GP状态 参考：http://gpdb.docs.pivotal.io/43120/install_guide/prep_os_install_gpdb.html]]></content>
       <categories>
         <category>Greenplum</category>
@@ -78,6 +56,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[library cache]]></title>
+    <url>%2F2011%2F09%2F21%2Flibrary-cache%2F</url>
+    <content type="text"><![CDATA[这里简单发表下对库告诉缓存的认识，大家知道共享池是有library cache和data dictionary cache和控制部分组成，首先sql执行的过程显示语法分析阶段，然后是语意分析阶段，也就是验证下对象权限等一些列的东西，再下面就是SQL进行hash运算，运算后匹配library cache里的hash桶，再匹配hash桶上面的handle，也就是句柄，如果匹配成功，那么去找子游标，如果不成功，那么就生成一个handle，这里也就是硬解析，挂载hash桶上。 这里如果是不同用户或者，期间对象权限更改，就算是SQL文本一样，也是无法共享子游标的，生成handle，其实就是要想共享池申请空闲的内存，期间获得shared pool latch ，那么很容易产生冲突。handle其实就是存放的父游标，真正的执行计划是存放在子游标上的，也就是heap6上，一个父游标可能对应多个子游标，比如，不同用户下的相同SQL，就会造成1个父对多个子游标，这种父游标存在，而要重新生成子游标，就是relaod，需要耗硬件资源，数据库性能也就十分低下，所以我们要避免硬解析和reload，解析过程中很消耗资源，而且容易造成 latch的冲突，父游标里主要包含SQL文本，父游标打开时，是被锁住的，也就是不能交换出library cache ，子游标主要包含执行计划和绑定变量，这个就很重要。这里再介绍下软解析，其实只要在hash桶里可以匹配对应的SQL文本，那么就是软解析，说明之前运行过该sql，其实sql执行期间只要步骤可以跳过，那么我们就可以定位为软解析。这里还有软软解析，这个是最好性能，session_cached_cursors，当会话相同的CURSOR第三次访问是，那么会话会在PGA里做个标记，就算会话结束，cursor也不会从library cache交换出去，这里不需要访问library cache，只和PGA有关联，共享的东西这里我们没去访问，也就是不争用资源，性能得到提升。]]></content>
+      <categories>
+        <category>oracle</category>
+      </categories>
+      <tags>
+        <tag>oracle</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[oracle内存碎片]]></title>
     <url>%2F2011%2F09%2F21%2Foracle%E5%86%85%E5%AD%98%E7%A2%8E%E7%89%87%2F</url>
     <content type="text"><![CDATA[oracle内存碎片是由于频繁的申请，释放，拆分chunk，从而导致拆分成很多小的chunk，这就是内存碎片。碎片有什么危害呢，可能造成shared pool latch的冲突。 我们需要为大的内存需求保留空间，避免申请大chunk的时候，结果没有，申请不到。对于非常大的对象，oracle可以单独保留一个区域为此分配空间，shared_pool_reserved_size，这个值缺省应该是shared_pool_size 的5%，这块区域完全和正常的chunk不相往来，单独存在，v$shared_pool_reserved可以通过这个视图查看这块区域的使用情况。这个区域的管理是先进先出原则，怎么避免内存碎片呢，首先大的对象keep到内存，可以用dbms_shared_pool.keep,具体使用自己研究一下，这里无论是存储对象还是临时的，都可以keep。减少大的匿名块，比如PL/SQL，还有就是避免共享池太大，共享池够用就好，如果共享池很大，小的chunk申请又多，那么就造成很多碎片，freelist就会很长，持有的shared_pool_latch就会时间长，CPU遍历的时候就会很耗资源，所以加大共享池不是解决此种冲突的方法，这个时候最关键的还是看一下为什么不能共享SQL语句。从9I开始，oracle开始引入了多个共享池的概念，所以大的共享池不会再那么差劲，可以最多有7个子latch保护共享池，要配置多个共享池，首先硬件要足够的硬，呵呵。CPU够多，内存够大。比如一个hash桶油18000个chunk，如果只有一个共享池，那么只能遍历这18000个，如果配置了6个子共享池，那么平均一个hash桶就是18000/6，一个shared_pool_latch也就是原来的1/6时间就可以完成。子共享池的个数可以通过隐含参数_kghdsidx_count手动调节，同事也指定了几个child latch，可以通过select a.ksppinm,b.ksppstvl from x$ksppi a,x$ksppsv b where a.indx=b.indx and a.ksppinm=’_kghdsidx_count’;查看你的数据库有几个共享池。看了一下，10G默认的子共享池个数是2个，相对的，增加了共享池，你就可以适当的增加共享池的大小，每个子共享池有自己的LRU列表，和shared_pool_latch.v$db_object_cache存放了钉住的对象信息，或者可以设置cursor_sharing=force.这个设置比较复杂，这里是强制绑定变量，具体以后分解。]]></content>
@@ -108,6 +97,17 @@
       </categories>
       <tags>
         <tag>oracle</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Installation from Source Code for postgreSQL]]></title>
+    <url>%2F2010%2F09%2F18%2FInstallation-from-Source-Code-for-postgreSQL%2F</url>
+    <content type="text"><![CDATA[其实学习pg有一段时间了，不过一直没有写相关的blog，以后这一块也会一起加进来，记录自己的学习过程。这里就先介绍下安装吧，pg安装还是很简单的，而且速度也快。1.和其他数据库安装一样，可以根据自己的需求，修改系统参数 /etc/sysctl.conf ,/etc/security/limits.conf,2.新建用户和组： #groupadd postgres #useradd -g postgres postgres3.创建相关目录： mkdir -p /database/pgdata/pg_root mkdir -p /opt/pgsql chown -R postgres:postgres /database/pgdata/pg_root 4.配置环境变量export PS1=”$USER@/bin/hostname -s-&gt; “export PGPORT=1921export PGDATA= /database/pgdata/pg_rootexport LANG=en_US.utf8export PGHOME=/opt/pgsqlexport LD_LIBRARY_PATH=$PGHOME/lib:/lib64:/usr/lib64:/usr/local/lib64:/lib:/usr/lib:/usr/local/libexport DATE=date +&quot;%Y%m%d%H%M&quot;export PATH=$PGHOME/bin:$PATH:.export MANPATH=$PGHOME/share/man:$MANPATHalias rm=’rm -i’alias ll=’ls -lh’根据自己需求自己修改5.解压安装包，可以安装了 ./configure –help这个可以查看一下对应的帮助，根据自己的环境，适当选用一些参数./configure –prefix=/opt/pgsql –with-pgport=1921 –with-segsize=8 –with-wal-segsize=64 –with-wal-blocksize=64 –with-perl –with-python –with-openssl –with-pam –with-ldap –with-libxml –with-libxslt –enable-thread-safety gmake worldgmake install-world安装完成以后su - postgresinitdb -D /database/pgdata/pg_root初始化以后，可以启动数据库了通过postgres -D 或者pg_ctl -D后面跟对应的安装路径就可以了。]]></content>
+      <categories>
+        <category>PostgreSQL</category>
+      </categories>
+      <tags>
+        <tag>postgresql</tag>
       </tags>
   </entry>
 </search>

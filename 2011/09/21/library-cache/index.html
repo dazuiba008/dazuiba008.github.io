@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="postgresql," />
+  <meta name="keywords" content="oracle," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="其实学习pg有一段时间了，不过一直没有写相关的blog，以后这一块也会一起加进来，记录自己的学习过程。这里就先介绍下安装吧，pg安装还是很简单的，而且速度也快。1.和其他数据库安装一样，可以根据自己的需求，修改系统参数   /etc/sysctl.conf ,/etc/security/limits.conf,2.新建用户和组：    #groupadd postgres    #useradd">
-<meta name="keywords" content="postgresql">
+<meta name="description" content="这里简单发表下对库告诉缓存的认识，大家知道共享池是有library cache和data dictionary cache和控制部分组成，首先sql执行的过程显示语法分析阶段，然后是语意分析阶段，也就是验证下对象权限等一些列的东西，再下面就是SQL进行hash运算，运算后匹配library cache里的hash桶，再匹配hash桶上面的handle，也就是句柄，如果匹配成功，那么去找子游标，如果">
+<meta name="keywords" content="oracle">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Installation from Source Code for postgreSQL">
-<meta property="og:url" content="http://yoursite.com/2018/09/18/Installation-from-Source-Code-for-postgreSQL/index.html">
+<meta property="og:title" content="library cache">
+<meta property="og:url" content="http://yoursite.com/2011/09/21/library-cache/index.html">
 <meta property="og:site_name" content="魂醉的一亩二分地">
-<meta property="og:description" content="其实学习pg有一段时间了，不过一直没有写相关的blog，以后这一块也会一起加进来，记录自己的学习过程。这里就先介绍下安装吧，pg安装还是很简单的，而且速度也快。1.和其他数据库安装一样，可以根据自己的需求，修改系统参数   /etc/sysctl.conf ,/etc/security/limits.conf,2.新建用户和组：    #groupadd postgres    #useradd">
+<meta property="og:description" content="这里简单发表下对库告诉缓存的认识，大家知道共享池是有library cache和data dictionary cache和控制部分组成，首先sql执行的过程显示语法分析阶段，然后是语意分析阶段，也就是验证下对象权限等一些列的东西，再下面就是SQL进行hash运算，运算后匹配library cache里的hash桶，再匹配hash桶上面的handle，也就是句柄，如果匹配成功，那么去找子游标，如果">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-18T06:15:44.977Z">
+<meta property="og:updated_time" content="2018-09-21T07:11:18.360Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Installation from Source Code for postgreSQL">
-<meta name="twitter:description" content="其实学习pg有一段时间了，不过一直没有写相关的blog，以后这一块也会一起加进来，记录自己的学习过程。这里就先介绍下安装吧，pg安装还是很简单的，而且速度也快。1.和其他数据库安装一样，可以根据自己的需求，修改系统参数   /etc/sysctl.conf ,/etc/security/limits.conf,2.新建用户和组：    #groupadd postgres    #useradd">
+<meta name="twitter:title" content="library cache">
+<meta name="twitter:description" content="这里简单发表下对库告诉缓存的认识，大家知道共享池是有library cache和data dictionary cache和控制部分组成，首先sql执行的过程显示语法分析阶段，然后是语意分析阶段，也就是验证下对象权限等一些列的东西，再下面就是SQL进行hash运算，运算后匹配library cache里的hash桶，再匹配hash桶上面的handle，也就是句柄，如果匹配成功，那么去找子游标，如果">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/09/18/Installation-from-Source-Code-for-postgreSQL/"/>
+  <link rel="canonical" href="http://yoursite.com/2011/09/21/library-cache/"/>
 
 
 
 
 
-  <title>Installation from Source Code for postgreSQL | 魂醉的一亩二分地</title>
+  <title>library cache | 魂醉的一亩二分地</title>
   
 
 
@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/18/Installation-from-Source-Code-for-postgreSQL/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2011/09/21/library-cache/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="魂醉">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Installation from Source Code for postgreSQL</h1>
+          <h1 class="post-title" itemprop="name headline">library cache</h1>
         
 
         <div class="post-meta">
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-18T14:14:19+08:00">
-                2018-09-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2011-09-21T14:56:11+08:00">
+                2011-09-21
               </time>
             
 
@@ -349,8 +349,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/PostgreSQL/" itemprop="url" rel="index">
-                    <span itemprop="name">PostgreSQL</span>
+                  <a href="/categories/oracle/" itemprop="url" rel="index">
+                    <span itemprop="name">oracle</span>
                   </a>
                 </span>
 
@@ -366,7 +366,7 @@
 
           
           
-             <span id="/2018/09/18/Installation-from-Source-Code-for-postgreSQL/" class="leancloud_visitors" data-flag-title="Installation from Source Code for postgreSQL">
+             <span id="/2011/09/21/library-cache/" class="leancloud_visitors" data-flag-title="library cache">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -402,12 +402,9 @@
       
 
       
-        <p>其实学习pg有一段时间了，不过一直没有写相关的blog，以后这一块也会一起加进来，记录自己的学习过程。<br>这里就先介绍下安装吧，pg安装还是很简单的，而且速度也快。<br>1.和其他数据库安装一样，可以根据自己的需求，修改系统参数<br>   /etc/sysctl.conf ,/etc/security/limits.conf,<br>2.新建用户和组：</p>
-<p>   #groupadd postgres</p>
-<p>   #useradd -g postgres postgres<br>3.创建相关目录：<br>   mkdir   -p  /database/pgdata/pg_root<br>   mkdir  -p   /opt/pgsql<br>   chown  -R postgres:postgres /database/pgdata/pg_root</p>
-<p>4.配置环境变量<br>export PS1=”$USER@<code>/bin/hostname -s</code>-&gt; “<br>export PGPORT=1921<br>export PGDATA= /database/pgdata/pg_root<br>export LANG=en_US.utf8<br>export PGHOME=/opt/pgsql<br>export LD_LIBRARY_PATH=$PGHOME/lib:/lib64:/usr/lib64:/usr/local/lib64:/lib:/usr/lib:/usr/local/lib<br>export DATE=<code>date +&quot;%Y%m%d%H%M&quot;</code><br>export PATH=$PGHOME/bin:$PATH:.<br>export MANPATH=$PGHOME/share/man:$MANPATH<br>alias rm=’rm -i’<br>alias ll=’ls -lh’<br>根据自己需求自己修改<br>5.解压安装包，可以安装了<br> ./configure  –help这个可以查看一下对应的帮助，根据自己的环境，适当选用一些参数<br>./configure –prefix=/opt/pgsql –with-pgport=1921 –with-segsize=8 –with-wal-segsize=64 –with-wal-blocksize=64 –with-perl –with-python –with-openssl –with-pam –with-ldap –with-libxml –with-libxslt –enable-thread-safety</p>
-<p>gmake world<br>gmake install-world<br>安装完成以后<br>su - postgres<br>initdb -D /database/pgdata/pg_root<br>初始化以后，可以启动数据库了<br>通过postgres -D 或者pg_ctl -D后面跟对应的安装路径就可以了。</p>
-
+        <pre><code>这里简单发表下对库告诉缓存的认识，大家知道共享池是有library cache和data dictionary cache和控制部分组成，首先sql执行的过程显示语法分析阶段，然后是语意分析阶段，也就是验证下对象权限等一些列的东西，再下面就是SQL进行hash运算，运算后匹配library cache里的hash桶，再匹配hash桶上面的handle，也就是句柄，如果匹配成功，那么去找子游标，如果不成功，那么就生成一个handle，这里也就是硬解析，挂载hash桶上。
+这里如果是不同用户或者，期间对象权限更改，就算是SQL文本一样，也是无法共享子游标的，生成handle，其实就是要想共享池申请空闲的内存，期间获得shared pool latch ，那么很容易产生冲突。handle其实就是存放的父游标，真正的执行计划是存放在子游标上的，也就是heap6上，一个父游标可能对应多个子游标，比如，不同用户下的相同SQL，就会造成1个父对多个子游标，这种父游标存在，而要重新生成子游标，就是relaod，需要耗硬件资源，数据库性能也就十分低下，所以我们要避免硬解析和reload，解析过程中很消耗资源，而且容易造成 latch的冲突，父游标里主要包含SQL文本，父游标打开时，是被锁住的，也就是不能交换出library cache ，子游标主要包含执行计划和绑定变量，这个就很重要。这里再介绍下软解析，其实只要在hash桶里可以匹配对应的SQL文本，那么就是软解析，说明之前运行过该sql，其实sql执行期间只要步骤可以跳过，那么我们就可以定位为软解析。这里还有软软解析，这个是最好性能，session_cached_cursors，当会话相同的CURSOR第三次访问是，那么会话会在PGA里做个标记，就算会话结束，cursor也不会从library cache交换出去，这里不需要访问library cache，只和PGA有关联，共享的东西这里我们没去访问，也就是不争用资源，性能得到提升。
+</code></pre>
       
     </div>
     
@@ -453,7 +450,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/postgresql/" rel="tag"># postgresql</a>
+            <a href="/tags/oracle/" rel="tag"># oracle</a>
           
         </div>
       
@@ -466,8 +463,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/18/Greenplum-install/" rel="next" title="Greenplum install">
-                <i class="fa fa-chevron-left"></i> Greenplum install
+              <a href="/2011/09/21/oracle内存碎片/" rel="next" title="oracle内存碎片">
+                <i class="fa fa-chevron-left"></i> oracle内存碎片
               </a>
             
           </div>
@@ -476,8 +473,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/09/21/library-cache/" rel="prev" title="library cache">
-                library cache <i class="fa fa-chevron-right"></i>
+              <a href="/2011/09/21/浅谈oracle索引/" rel="prev" title="浅谈oracle索引">
+                浅谈oracle索引 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
