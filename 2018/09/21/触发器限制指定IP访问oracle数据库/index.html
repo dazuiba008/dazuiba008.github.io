@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="mongodb," />
+  <meta name="keywords" content="oracle," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="replica set由于需求可能会调整节点的优先级，或者仲裁节点那么先看一下语法：rs.reconfig(configuration[, force])Parameters:configuration – A document that specifies the configuration of a replica set.force – Optional. Specify { force:">
-<meta name="keywords" content="mongodb">
+<meta name="description" content="最近有个项目需要限制某些数据库用户的访问来源IP，在PG中比较好实现，但是ORACLE没有比较简便的操作。如果不管用户的话，仅仅限制来源IP对监听的访问是比较容易实现的，通过配置数据库服务器的sqlnet.ora文件或者修改数据库服务器的IPTABLES等手段实现。sqlnet.ora范例:tcp.validnode_checking=yestcp.invited_nodes=(172.16.33">
+<meta name="keywords" content="oracle">
 <meta property="og:type" content="article">
-<meta property="og:title" content="mongodb replica sets reconfig and conver a Secondary to an Arbiter">
-<meta property="og:url" content="http://yoursite.com/2013/04/22/mongodb-replica-sets-reconfig-and-conver-a-Secondary-to-an-Arbiter/index.html">
+<meta property="og:title" content="触发器限制指定IP访问oracle数据库">
+<meta property="og:url" content="http://yoursite.com/2018/09/21/触发器限制指定IP访问oracle数据库/index.html">
 <meta property="og:site_name" content="魂醉的一亩二分地">
-<meta property="og:description" content="replica set由于需求可能会调整节点的优先级，或者仲裁节点那么先看一下语法：rs.reconfig(configuration[, force])Parameters:configuration – A document that specifies the configuration of a replica set.force – Optional. Specify { force:">
+<meta property="og:description" content="最近有个项目需要限制某些数据库用户的访问来源IP，在PG中比较好实现，但是ORACLE没有比较简便的操作。如果不管用户的话，仅仅限制来源IP对监听的访问是比较容易实现的，通过配置数据库服务器的sqlnet.ora文件或者修改数据库服务器的IPTABLES等手段实现。sqlnet.ora范例:tcp.validnode_checking=yestcp.invited_nodes=(172.16.33">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-19T01:45:18.353Z">
+<meta property="og:updated_time" content="2018-09-21T07:05:11.057Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="mongodb replica sets reconfig and conver a Secondary to an Arbiter">
-<meta name="twitter:description" content="replica set由于需求可能会调整节点的优先级，或者仲裁节点那么先看一下语法：rs.reconfig(configuration[, force])Parameters:configuration – A document that specifies the configuration of a replica set.force – Optional. Specify { force:">
+<meta name="twitter:title" content="触发器限制指定IP访问oracle数据库">
+<meta name="twitter:description" content="最近有个项目需要限制某些数据库用户的访问来源IP，在PG中比较好实现，但是ORACLE没有比较简便的操作。如果不管用户的话，仅仅限制来源IP对监听的访问是比较容易实现的，通过配置数据库服务器的sqlnet.ora文件或者修改数据库服务器的IPTABLES等手段实现。sqlnet.ora范例:tcp.validnode_checking=yestcp.invited_nodes=(172.16.33">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2013/04/22/mongodb-replica-sets-reconfig-and-conver-a-Secondary-to-an-Arbiter/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/09/21/触发器限制指定IP访问oracle数据库/"/>
 
 
 
 
 
-  <title>mongodb replica sets reconfig and conver a Secondary to an Arbiter | 魂醉的一亩二分地</title>
+  <title>触发器限制指定IP访问oracle数据库 | 魂醉的一亩二分地</title>
   
 
 
@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2013/04/22/mongodb-replica-sets-reconfig-and-conver-a-Secondary-to-an-Arbiter/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/21/触发器限制指定IP访问oracle数据库/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="魂醉">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">mongodb replica sets reconfig and conver a Secondary to an Arbiter</h1>
+          <h1 class="post-title" itemprop="name headline">触发器限制指定IP访问oracle数据库</h1>
         
 
         <div class="post-meta">
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-04-22T09:33:06+08:00">
-                2013-04-22
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-21T15:03:11+08:00">
+                2018-09-21
               </time>
             
 
@@ -349,8 +349,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mongodb/" itemprop="url" rel="index">
-                    <span itemprop="name">mongodb</span>
+                  <a href="/categories/oracle/" itemprop="url" rel="index">
+                    <span itemprop="name">oracle</span>
                   </a>
                 </span>
 
@@ -366,7 +366,7 @@
 
           
           
-             <span id="/2013/04/22/mongodb-replica-sets-reconfig-and-conver-a-Secondary-to-an-Arbiter/" class="leancloud_visitors" data-flag-title="mongodb replica sets reconfig and conver a Secondary to an Arbiter">
+             <span id="/2018/09/21/触发器限制指定IP访问oracle数据库/" class="leancloud_visitors" data-flag-title="触发器限制指定IP访问oracle数据库">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -402,17 +402,26 @@
       
 
       
-        <a id="more"></a>
-<p>replica set由于需求可能会调整节点的优先级，或者仲裁节点<br>那么先看一下语法：<br>rs.reconfig(configuration[, force])<br>Parameters:<br>configuration – A document that specifies the configuration of a replica set.<br>force – Optional. Specify { force: true } as the force parameter to force the replica set to accept the new configuration even if a majority of the members are not accessible. Use with caution, as this can lead to rollback situations.<br>Initializes a new replica set configuration. This function will disconnect the shell briefly and forces a reconnection as the replica set renegotiates which node will be primary. As a result, the shell will display an error even if this command succeeds.</p>
-<p>rs.reconfig() provides a wrapper around the “replSetReconfig” database command.</p>
-<p>rs.reconfig() overwrites the existing replica set configuration. Retrieve the current configuration object with rs.conf(), modify the configuration as needed and then use rs.reconfig() to submit the modified configuration object.</p>
-<p>To reconfigure a replica set, use the following sequence of operations:</p>
-<p>conf = rs.conf()</p>
-<p>// modify conf to change configuration</p>
-<p>rs.reconfig(conf)<br>If you want to force the reconfiguration if a majority of the set isn’t connected to the current member, or you’re issuing the command against a secondary, use the following form:</p>
-<p>conf = rs.conf()</p>
-<p>// modify conf to change configuration</p>
-<p>rs.reconfig(conf, { force: true } )<br>Warning   Forcing a rs.reconfig() can lead to rollback situations and other difficult to recover from situations. Exercise caution when using this option.这里遇到rollback情况，可能会导致fatal状态，那么replica set就等于失效了，可以拷贝local数据文件，或者所有数据文件进行重建<br>举例：<br>var c = rs.conf();<br>c.members[2].priority = 0;  0~100数字越大优先级越高，0不会被切换为primary节点，这里也可以写成包含小数的值<br>rs.reconfig(c);<br>配置完以后，可以通过一下命令查看一下配置是否修改好：<br>rs.conf()<br>rs.status()<br>为了防止脑裂，可以加入仲裁节点，使用以下命令：<br>rs.addArb(“<hostname>:&lt;:port&gt;”); ==rs.add(hostspec, arbiterOnly)<br>示例：<br>rs.add(‘mongodb3.example.net:27017’, true)<br>当然将一个从节点转换为仲裁节点：<br>(1)首先关闭从节点<br>(2)rs.remove(“<hostname>&lt;:port&gt;”)删除该从节点，rs.conf()验证一下<br>(3)创建新的数据目录，因为仲裁节点是不存放生产数据的<br>(4)通过rs.addArb(“<hostname>:&lt;:port&gt;”)加入，rs.conf()验证一下<br>那么就可以看到：仲裁节点的属性为”arbiterOnly” : true<br>{<br>        “_id” : “xxx”,<br>        “version” : 14,<br>        “members” : [<br>                {<br>                        “_id” : 1,<br>                        “host” : “xxx.xxx.xxx.xxx:5281”<br>                },<br>                {<br>                        “_id” : 2,<br>                        “host” : “ xxx.xxx.xxx.xxx :5281”,<br>                        “arbiterOnly” : true<br>                },<br>                {<br>                        “_id” : 3,<br>                        “host” : “ xxx.xxx.xxx.xxx :5281”<br>                }<br>        ]<br>}</hostname></hostname></hostname></p>
+        <p>最近有个项目需要限制某些数据库用户的访问来源IP，在PG中比较好实现，但是ORACLE没有比较简便的操作。<br>如果不管用户的话，仅仅限制来源IP对监听的访问是比较容易实现的，通过配置数据库服务器的sqlnet.ora文件或者修改数据库服务器的IPTABLES等手段实现。<br>sqlnet.ora范例:<br>tcp.validnode_checking=yes<br>tcp.invited_nodes=(172.16.33.11,172.16.34.89)</p>
+<p>iptables范例:<br>[root@kefu ~]# cat /etc/sysconfig/iptables</p>
+<h1 id="Firewall-configuration-written-by-system-config-securitylevel"><a href="#Firewall-configuration-written-by-system-config-securitylevel" class="headerlink" title="Firewall configuration written by system-config-securitylevel"></a>Firewall configuration written by system-config-securitylevel</h1><h1 id="Manual-customization-of-this-file-is-not-recommended"><a href="#Manual-customization-of-this-file-is-not-recommended" class="headerlink" title="Manual customization of this file is not recommended."></a>Manual customization of this file is not recommended.</h1><p>*filter<br>:INPUT ACCEPT [0:0]<br>:FORWARD ACCEPT [0:0]<br>:OUTPUT ACCEPT [0:0]<br>:RH-Firewall-1-INPUT - [0:0]<br>-A INPUT -j RH-Firewall-1-INPUT<br>-A FORWARD -j RH-Firewall-1-INPUT</p>
+<h1 id="允许访问1521的服务器"><a href="#允许访问1521的服务器" class="headerlink" title="允许访问1521的服务器"></a>允许访问1521的服务器</h1><p>-A RH-Firewall-1-INPUT -s 172.16.3.68/32 -m state –state NEW -m tcp -p tcp –dport 1521 -j ACCEPT<br>-A RH-Firewall-1-INPUT -i lo -j ACCEPT<br>-A RH-Firewall-1-INPUT -p icmp –icmp-type any -j ACCEPT<br>-A RH-Firewall-1-INPUT -p 50 -j ACCEPT<br>-A RH-Firewall-1-INPUT -p 51 -j ACCEPT<br>-A RH-Firewall-1-INPUT -p udp –dport 5353 -d 224.0.0.251 -j ACCEPT<br>-A RH-Firewall-1-INPUT -p udp -m udp –dport 631 -j ACCEPT<br>-A RH-Firewall-1-INPUT -p tcp -m tcp –dport 631 -j ACCEPT<br>-A RH-Firewall-1-INPUT -m state –state ESTABLISHED,RELATED -j ACCEPT<br>-A RH-Firewall-1-INPUT -m state –state NEW -m tcp -p tcp –dport 22 -j ACCEPT<br>-A RH-Firewall-1-INPUT -j REJECT –reject-with icmp-host-prohibited<br>COMMIT</p>
+<p>下面来看看如何限制特定用户和特定IP：</p>
+<ol>
+<li>创建ACL表 (本例将ACL表建立在dsm用户下,随便建哪里都可以)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">create table dsm.tbl_iplimit (logonuser varchar2(32),ip_address varchar2(15),remark varchar2(64),create_time date default sysdate);</span><br><span class="line">insert into dsm.tbl_iplimit values (&apos;DSM&apos;,&apos;172.16.18.81&apos;,&apos;digoal&apos;&apos;s host.&apos;,sysdate);</span><br><span class="line">insert into dsm.tbl_iplimit values (&apos;DSM&apos;,&apos;local&apos;,&apos;本地&apos;,sysdate);</span><br><span class="line">commit;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这里限制了DSM用户只能从172.16.18.81和ORACLE所在服务器登录.其他用户不受限制.</p>
+<ol start="2">
+<li><p>创建触发器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">conn / as sysdba</span><br><span class="line">create or replace trigger &quot;logon_audit&quot; after</span><br><span class="line">logon on database</span><br><span class="line">declare</span><br><span class="line">record_num number;</span><br><span class="line">userip varchar2(15);</span><br><span class="line">isforbidden boolean:=true;</span><br><span class="line">begin</span><br><span class="line">  userip:=nvl(sys_context (&apos;userenv&apos;,&apos;ip_address&apos;),&apos;local&apos;);</span><br><span class="line">  select count(*) into record_num from dsm.tbl_iplimit where logonuser=user;</span><br><span class="line">  if (record_num&gt;0) then</span><br><span class="line">      select count(*) into record_num from dsm.tbl_iplimit where logonuser=user and ip_address=userip;</span><br><span class="line">      if (record_num=0) then</span><br><span class="line">      raise_application_error(-20003,&apos;ip :&apos;||userip||&apos; is forbided&apos;);</span><br><span class="line">      end if;</span><br><span class="line">  end if;</span><br><span class="line">exception</span><br><span class="line"> when value_error then</span><br><span class="line">  sys.dbms_output.put_line(&apos;exception handed&apos;);</span><br><span class="line"> when others then</span><br><span class="line">  raise;</span><br><span class="line">end logon_audit;</span><br><span class="line">/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>测试<br>在本地登录<br>SQL&gt; conn dsm/pwd<br>正常<br>delete from tbl_iplimit where ip_address=’local’;<br>commit;<br>exit;<br>再在本地登录,已经受阻了.<br>SQL&gt; conn dsm/pwd<br>ERROR:<br>ORA-00604: error occurred at recursive SQL level 1<br>ORA-20003: ip :local is forbided<br>ORA-06512: at line 18</p>
+</li>
+</ol>
+<p>换台机器(172.16.3.67)登录:<br>SQL&gt; conn dsm/pwd@//172.16.3.13:1521/sid<br>ERROR:<br>ORA-00604: error occurred at recursive SQL level 1<br>ORA-20003: ip :local is forbided<br>ORA-06512: at line 18<br>受阻</p>
+<p>换台机器(172.16.3.81)登录:<br>SQL&gt; conn dsm/pwd@//172.16.3.13:1521/sid<br>正常</p>
+<p>如果IP范围比较宽，可以写一个IP比较的函数加入到上面的判断中,避免写很多条记录。</p>
 
       
     </div>
@@ -459,7 +468,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/mongodb/" rel="tag"># mongodb</a>
+            <a href="/tags/oracle/" rel="tag"># oracle</a>
           
         </div>
       
@@ -472,8 +481,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2011/09/21/oracle内存碎片/" rel="next" title="oracle内存碎片">
-                <i class="fa fa-chevron-left"></i> oracle内存碎片
+              <a href="/2018/09/21/oracle执行计划和执行顺序/" rel="next" title="oracle执行计划和执行顺序">
+                <i class="fa fa-chevron-left"></i> oracle执行计划和执行顺序
               </a>
             
           </div>
@@ -481,10 +490,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/09/18/Greenplum-install/" rel="prev" title="Greenplum install">
-                Greenplum install <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -547,8 +552,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -666,6 +680,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Firewall-configuration-written-by-system-config-securitylevel"><span class="nav-number">1.</span> <span class="nav-text">Firewall configuration written by system-config-securitylevel</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Manual-customization-of-this-file-is-not-recommended"><span class="nav-number">2.</span> <span class="nav-text">Manual customization of this file is not recommended.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#允许访问1521的服务器"><span class="nav-number">3.</span> <span class="nav-text">允许访问1521的服务器</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

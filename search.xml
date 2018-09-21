@@ -1,6 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[触发器限制指定IP访问oracle数据库]]></title>
+    <url>%2F2018%2F09%2F21%2F%E8%A7%A6%E5%8F%91%E5%99%A8%E9%99%90%E5%88%B6%E6%8C%87%E5%AE%9AIP%E8%AE%BF%E9%97%AEoracle%E6%95%B0%E6%8D%AE%E5%BA%93%2F</url>
+    <content type="text"><![CDATA[最近有个项目需要限制某些数据库用户的访问来源IP，在PG中比较好实现，但是ORACLE没有比较简便的操作。如果不管用户的话，仅仅限制来源IP对监听的访问是比较容易实现的，通过配置数据库服务器的sqlnet.ora文件或者修改数据库服务器的IPTABLES等手段实现。sqlnet.ora范例:tcp.validnode_checking=yestcp.invited_nodes=(172.16.33.11,172.16.34.89) iptables范例:[root@kefu ~]# cat /etc/sysconfig/iptables Firewall configuration written by system-config-securitylevelManual customization of this file is not recommended.*filter:INPUT ACCEPT [0:0]:FORWARD ACCEPT [0:0]:OUTPUT ACCEPT [0:0]:RH-Firewall-1-INPUT - [0:0]-A INPUT -j RH-Firewall-1-INPUT-A FORWARD -j RH-Firewall-1-INPUT 允许访问1521的服务器-A RH-Firewall-1-INPUT -s 172.16.3.68/32 -m state –state NEW -m tcp -p tcp –dport 1521 -j ACCEPT-A RH-Firewall-1-INPUT -i lo -j ACCEPT-A RH-Firewall-1-INPUT -p icmp –icmp-type any -j ACCEPT-A RH-Firewall-1-INPUT -p 50 -j ACCEPT-A RH-Firewall-1-INPUT -p 51 -j ACCEPT-A RH-Firewall-1-INPUT -p udp –dport 5353 -d 224.0.0.251 -j ACCEPT-A RH-Firewall-1-INPUT -p udp -m udp –dport 631 -j ACCEPT-A RH-Firewall-1-INPUT -p tcp -m tcp –dport 631 -j ACCEPT-A RH-Firewall-1-INPUT -m state –state ESTABLISHED,RELATED -j ACCEPT-A RH-Firewall-1-INPUT -m state –state NEW -m tcp -p tcp –dport 22 -j ACCEPT-A RH-Firewall-1-INPUT -j REJECT –reject-with icmp-host-prohibitedCOMMIT 下面来看看如何限制特定用户和特定IP： 创建ACL表 (本例将ACL表建立在dsm用户下,随便建哪里都可以)1234create table dsm.tbl_iplimit (logonuser varchar2(32),ip_address varchar2(15),remark varchar2(64),create_time date default sysdate);insert into dsm.tbl_iplimit values (&apos;DSM&apos;,&apos;172.16.18.81&apos;,&apos;digoal&apos;&apos;s host.&apos;,sysdate);insert into dsm.tbl_iplimit values (&apos;DSM&apos;,&apos;local&apos;,&apos;本地&apos;,sysdate);commit; 这里限制了DSM用户只能从172.16.18.81和ORACLE所在服务器登录.其他用户不受限制. 创建触发器 1234567891011121314151617181920212223conn / as sysdbacreate or replace trigger &quot;logon_audit&quot; afterlogon on databasedeclarerecord_num number;userip varchar2(15);isforbidden boolean:=true;begin userip:=nvl(sys_context (&apos;userenv&apos;,&apos;ip_address&apos;),&apos;local&apos;); select count(*) into record_num from dsm.tbl_iplimit where logonuser=user; if (record_num&gt;0) then select count(*) into record_num from dsm.tbl_iplimit where logonuser=user and ip_address=userip; if (record_num=0) then raise_application_error(-20003,&apos;ip :&apos;||userip||&apos; is forbided&apos;); end if; end if;exception when value_error then sys.dbms_output.put_line(&apos;exception handed&apos;); when others then raise;end logon_audit;/ 测试在本地登录SQL&gt; conn dsm/pwd正常delete from tbl_iplimit where ip_address=’local’;commit;exit;再在本地登录,已经受阻了.SQL&gt; conn dsm/pwdERROR:ORA-00604: error occurred at recursive SQL level 1ORA-20003: ip :local is forbidedORA-06512: at line 18 换台机器(172.16.3.67)登录:SQL&gt; conn dsm/pwd@//172.16.3.13:1521/sidERROR:ORA-00604: error occurred at recursive SQL level 1ORA-20003: ip :local is forbidedORA-06512: at line 18受阻 换台机器(172.16.3.81)登录:SQL&gt; conn dsm/pwd@//172.16.3.13:1521/sid正常 如果IP范围比较宽，可以写一个IP比较的函数加入到上面的判断中,避免写很多条记录。]]></content>
+      <categories>
+        <category>oracle</category>
+      </categories>
+      <tags>
+        <tag>oracle</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[oracle执行计划和执行顺序]]></title>
+    <url>%2F2018%2F09%2F21%2Foracle%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92%E5%92%8C%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F%2F</url>
+    <content type="text"><![CDATA[如果要了解执行计划和执行顺序，必须理解执行计划的父子关系。执行计划是一个树状结构，顶层的STATEMENT是这棵树的根。父子关系按照如下的树状结构组织：PARENT FIRST CHILD SECOND CHILD 在这个例子里，FIRST CHILD最先执行，然后是SECOND CHILD，这两个步骤执行完毕后，执行PARENT。下面是一个更多层次的结构： PARENT1 FIRST CHILD FIRST GRANDCHILD SECOND CHILD FIRST GRANDCHILD是第一个执行的步骤，然后是FIRST CHILD。下面通过一个真实的执行计划来验证这个原则： set autotrace traceonly explain select ename,dname from emp, dept where emp.deptno=dept.deptno and dept.dname in (‘ACCOUNTING’,’RESEARCH’,’SALES’,’OPERATIONS’); 15 rows selected. 这个语句的执行计划如下： Execution Plan 0 SELECT STATEMENT Optimizer=CHOOSE (Cost=3 Card=8 Bytes=248) 1 0 HASH JOIN (Cost=3 Card=8 Bytes=248) 2 1 TABLE ACCESS (FULL) OF ‘DEPT’ (Cost=1 Card=3 Bytes=36) 3 1 TABLE ACCESS (FULL) OF ‘EMP’ (Cost=1 Card=16 Bytes=304) 注意这个执行计划的最左边的两个列，第一个列是步骤的ID，第二个列是父步骤的ID。执行从ID=0的行开始： 0 SELECT STATEMENT Optimizer=CHOOSE (Cost=3 Card=8 Bytes=248) 这个步骤没有父步骤，有一个子步骤（ID=1），所以这个ID＝1的步骤必须在执行步骤0之前执行。继续观察ID=1的步骤： 1 0 HASH JOIN (Cost=3 Card=8 Bytes=248) 这个步骤是ID=0的步骤的子步骤，该步骤有2个子步骤：ID=2和ID=3，因此ID=2和ID=3的步骤必须在ID=1的步骤之前执行。再来检查ID=2的步骤： 2 1 TABLE ACCESS (FULL) OF ‘DEPT’ (Cost=1 Card=3 Bytes=36) 这个步骤是ID=1的步骤的子步骤，并且该步骤没有任何子步骤。因此该步骤是这个SQL语句第一个执行的步骤，这个步骤产生的结果集会提供给ID=1的步骤。这个步骤是对表DEPT进行全表扫描，这个步骤的COST＝1。 ID=1的步骤也依赖ID=3的步骤： 3 1 TABLE ACCESS (FULL) OF ‘EMP’ (Cost=1 Card=16 Bytes=304) 这个步骤是ID=1的步骤的第二个子步骤，没有任何子步骤，在这个语句中，是第二个被执行的步骤。 ID=1的步骤将ID=3和ID=3的步骤的结果集进行HASH 连接，然后把结果交给ID=0的步骤，就完成了本语句的执行。 这里是转载白鳝大大的一篇文章，对于执行计划读取入门，还是很清楚简单明了的。]]></content>
+      <categories>
+        <category>oracle</category>
+      </categories>
+      <tags>
+        <tag>oracle</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[浅谈oracle索引]]></title>
+    <url>%2F2018%2F09%2F21%2F%E6%B5%85%E8%B0%88oracle%E7%B4%A2%E5%BC%95%2F</url>
+    <content type="text"><![CDATA[oracle索引一般分为B树索引和位图索引，用的比较多的都是B树索引。 B树索引，比如普通索引，反转索引，降序索引，函数索引，这些索引都是B树索引，结构都是一样的，位图索引的存储结构和B树是不一样的，对于B树索引，可以进行一般的索引唯一扫描，索引范围扫描，快速索引扫描和索引全扫描，位图就简单很多，他只有全扫描，才能找到对应的行。顾名思义，B树索引其实就是一棵树，普通的都是升序，右边节点比左边的节点大，那么降序就是正好反之。B树的所有节点都在一条双向链上，就是用来实现范围扫秒用的。 接下来，介绍一下反转索引，反转索引在存储键值的时候，先把键值反转，再进行存储，比如abcd就反转为dcba，一般反转索引用来解决热块，原理就是利用键值反转，把索引块打乱，把热点分散到不同的索引块。 记得创建的时候是用reverse函数：create index_name on tablename (reverse(ind_name));如过是 create index_name on tablename(ind_name) reverse;是用不到范围扫描的。 HW大家应该都清楚，如果是全表扫描，那么所有的数据块都会被扫一遍，HW以下的是肯定被扫的，以上的就不用了，以上的就相当于是没人住过的房子，不用去找。这里B树索引高度一般都是3，就是说扫描三个索引块就可以找到值，如果数据量大，那么可能就会高于3这个高度，B索引重要的几个概念，根节点，分支节点，叶子节点，很好理解，根肯定是最高的，分支就在中间，叶子在最底层，这里注意叶子节点，他除了有键值，还有块地址。 还有一点索引的使用绝对不能滥用，因为索引是有序的，所以在IO上会有很大消耗，如果一个表上很多索引，而且表的内容经常使用DML语句，那么索引肯定也是经常更新，会消耗额外的IO和CPU性能。还有一点一定要记得，创建好函数索引以后，一定要记得分析后再使用。至于反转索引，这里不详解了，可以dump出来看看，在reverse一下看看区别。很明显。 还有索引快速扫和索引扫是不一样的，快速只扫叶子节点，一次性读取db_file_multiblock_read_count个，索引扫是从根开始扫，只读书一个数据块。]]></content>
+      <categories>
+        <category>oracle</category>
+      </categories>
+      <tags>
+        <tag>oracle</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[library cache]]></title>
+    <url>%2F2018%2F09%2F21%2Flibrary-cache%2F</url>
+    <content type="text"><![CDATA[这里简单发表下对库告诉缓存的认识，大家知道共享池是有library cache和data dictionary cache和控制部分组成，首先sql执行的过程显示语法分析阶段，然后是语意分析阶段，也就是验证下对象权限等一些列的东西，再下面就是SQL进行hash运算，运算后匹配library cache里的hash桶，再匹配hash桶上面的handle，也就是句柄，如果匹配成功，那么去找子游标，如果不成功，那么就生成一个handle，这里也就是硬解析，挂载hash桶上。 这里如果是不同用户或者，期间对象权限更改，就算是SQL文本一样，也是无法共享子游标的，生成handle，其实就是要想共享池申请空闲的内存，期间获得shared pool latch ，那么很容易产生冲突。handle其实就是存放的父游标，真正的执行计划是存放在子游标上的，也就是heap6上，一个父游标可能对应多个子游标，比如，不同用户下的相同SQL，就会造成1个父对多个子游标，这种父游标存在，而要重新生成子游标，就是relaod，需要耗硬件资源，数据库性能也就十分低下，所以我们要避免硬解析和reload，解析过程中很消耗资源，而且容易造成 latch的冲突，父游标里主要包含SQL文本，父游标打开时，是被锁住的，也就是不能交换出library cache ，子游标主要包含执行计划和绑定变量，这个就很重要。这里再介绍下软解析，其实只要在hash桶里可以匹配对应的SQL文本，那么就是软解析，说明之前运行过该sql，其实sql执行期间只要步骤可以跳过，那么我们就可以定位为软解析。这里还有软软解析，这个是最好性能，session_cached_cursors，当会话相同的CURSOR第三次访问是，那么会话会在PGA里做个标记，就算会话结束，cursor也不会从library cache交换出去，这里不需要访问library cache，只和PGA有关联，共享的东西这里我们没去访问，也就是不争用资源，性能得到提升。]]></content>
+      <categories>
+        <category>oracle</category>
+      </categories>
+      <tags>
+        <tag>oracle</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Installation from Source Code for postgreSQL]]></title>
     <url>%2F2018%2F09%2F18%2FInstallation-from-Source-Code-for-postgreSQL%2F</url>
     <content type="text"><![CDATA[其实学习pg有一段时间了，不过一直没有写相关的blog，以后这一块也会一起加进来，记录自己的学习过程。这里就先介绍下安装吧，pg安装还是很简单的，而且速度也快。1.和其他数据库安装一样，可以根据自己的需求，修改系统参数 /etc/sysctl.conf ,/etc/security/limits.conf,2.新建用户和组： #groupadd postgres #useradd -g postgres postgres3.创建相关目录： mkdir -p /database/pgdata/pg_root mkdir -p /opt/pgsql chown -R postgres:postgres /database/pgdata/pg_root 4.配置环境变量export PS1=”$USER@/bin/hostname -s-&gt; “export PGPORT=1921export PGDATA= /database/pgdata/pg_rootexport LANG=en_US.utf8export PGHOME=/opt/pgsqlexport LD_LIBRARY_PATH=$PGHOME/lib:/lib64:/usr/lib64:/usr/local/lib64:/lib:/usr/lib:/usr/local/libexport DATE=date +&quot;%Y%m%d%H%M&quot;export PATH=$PGHOME/bin:$PATH:.export MANPATH=$PGHOME/share/man:$MANPATHalias rm=’rm -i’alias ll=’ls -lh’根据自己需求自己修改5.解压安装包，可以安装了 ./configure –help这个可以查看一下对应的帮助，根据自己的环境，适当选用一些参数./configure –prefix=/opt/pgsql –with-pgport=1921 –with-segsize=8 –with-wal-segsize=64 –with-wal-blocksize=64 –with-perl –with-python –with-openssl –with-pam –with-ldap –with-libxml –with-libxslt –enable-thread-safety gmake worldgmake install-world安装完成以后su - postgresinitdb -D /database/pgdata/pg_root初始化以后，可以启动数据库了通过postgres -D 或者pg_ctl -D后面跟对应的安装路径就可以了。]]></content>
