@@ -90,7 +90,7 @@
 <meta property="og:image" content="http://pfebs4xvj.bkt.clouddn.com/1.jpg">
 <meta property="og:image" content="http://pfebs4xvj.bkt.clouddn.com/2.jpg">
 <meta property="og:image" content="http://pfebs4xvj.bkt.clouddn.com/3.jpg">
-<meta property="og:updated_time" content="2018-09-21T08:10:48.077Z">
+<meta property="og:updated_time" content="2018-09-21T08:13:31.903Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="oracle listener">
 <meta name="twitter:description" content="这一块知识，我相信搞oracle的兄弟都是比较精通的，我也是前段时间公司让做个培训的时候，又把这块又温习了一遍，还是有不少新的收获，今天就搬到这里记录一下大家可以看到这里的WEB应用充当中间件，既懂HTTP，又懂oracle net，厉害吧，其实就是个翻译官。如果WEB应用服务器采用 JDBC OCI DRIVER，那么WEB服务必须的安装oracle net组件，才能和oracle数据库进行通讯">
@@ -428,7 +428,7 @@
 <p>配置服务端的tnsnames.ora文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">hankzhang =</span><br><span class="line"></span><br><span class="line">(DESCRIPTION =</span><br><span class="line"></span><br><span class="line">  (ADDRESS_LIST =</span><br><span class="line"></span><br><span class="line">    (ADDRESS = (PROTOCOL = TCP)(HOST =)(PORT = 1234))</span><br><span class="line"></span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
 <p>然后再设置参数：  Alter system set local_listener=hankzhang;</p>
 <p>以上两种方法效果是一样滴。</p>
-<p>lisnrctl status看一下：<br><img src="http://pfebs4xvj.bkt.clouddn.com/3.jpg" alt="Alt text"><br>oracle listener - dazuiba_008 - 魂醉的数据库之路<br> 至于RAC的listener配置，呵呵，大同小异，不过还是有区别的，这里先提以下，有时间再继续。</p>
+<p>lisnrctl status看一下：<br><img src="http://pfebs4xvj.bkt.clouddn.com/3.jpg" alt="Alt text"><br>至于RAC的listener配置，呵呵，大同小异，不过还是有区别的，这里先提以下，有时间再继续。</p>
 <p>RAC在监听端也可以负载均衡的哦，呵呵，当然这是在RAC双主模式的情况下，而且需要配置REMOTE_LISTENER，配置tnsnames.ora文件，监听暂时先到这里。</p>
 
       
