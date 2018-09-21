@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="oracle," />
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="人在江湖飘,哪能不挨刀！">
-<meta property="og:type" content="website">
-<meta property="og:title" content="categories">
-<meta property="og:url" content="http://yoursite.com/categories/index.html">
+<meta name="description" content="oracle内存碎片是由于频繁的申请，释放，拆分chunk，从而导致拆分成很多小的chunk，这就是内存碎片。碎片有什么危害呢，可能造成shared pool latch的冲突。             我们需要为大的内存需求保留空间，避免申请大chunk的时候，结果没有，申请不到。对于非常大的对象，oracle可以单独保留一个区域为此分配空间，shared_pool_reserved_size，">
+<meta name="keywords" content="oracle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="oracle内存碎片">
+<meta property="og:url" content="http://yoursite.com/2011/09/21/oracle内存碎片/index.html">
 <meta property="og:site_name" content="魂醉的一亩二分地">
-<meta property="og:description" content="人在江湖飘,哪能不挨刀！">
+<meta property="og:description" content="oracle内存碎片是由于频繁的申请，释放，拆分chunk，从而导致拆分成很多小的chunk，这就是内存碎片。碎片有什么危害呢，可能造成shared pool latch的冲突。             我们需要为大的内存需求保留空间，避免申请大chunk的时候，结果没有，申请不到。对于非常大的对象，oracle可以单独保留一个区域为此分配空间，shared_pool_reserved_size，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-17T06:55:50.942Z">
+<meta property="og:updated_time" content="2018-09-21T06:53:54.727Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="categories">
-<meta name="twitter:description" content="人在江湖飘,哪能不挨刀！">
+<meta name="twitter:title" content="oracle内存碎片">
+<meta name="twitter:description" content="oracle内存碎片是由于频繁的申请，释放，拆分chunk，从而导致拆分成很多小的chunk，这就是内存碎片。碎片有什么危害呢，可能造成shared pool latch的冲突。             我们需要为大的内存需求保留空间，避免申请大chunk的时候，结果没有，申请不到。对于非常大的对象，oracle可以单独保留一个区域为此分配空间，shared_pool_reserved_size，">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/categories/"/>
+  <link rel="canonical" href="http://yoursite.com/2011/09/21/oracle内存碎片/"/>
 
 
 
 
 
-  <title>categories | 魂醉的一亩二分地</title>
+  <title>oracle内存碎片 | 魂醉的一亩二分地</title>
   
 
 
@@ -284,40 +285,221 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2011/09/21/oracle内存碎片/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="魂醉">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="魂醉的一亩二分地">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">categories</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <div class="category-all-page">
-            <div class="category-all-title">
-                目前共计 4 个分类
-            </div>
-            <div class="category-all">
-              <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Greenplum/">Greenplum</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PostgreSQL/">PostgreSQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mongodb/">mongodb</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/oracle/">oracle</a><span class="category-list-count">3</span></li></ul>
-            </div>
-          </div>
+          <h1 class="post-title" itemprop="name headline">oracle内存碎片</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2011-09-21T14:52:49+08:00">
+                2011-09-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/oracle/" itemprop="url" rel="index">
+                    <span itemprop="name">oracle</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2011/09/21/oracle内存碎片/" class="leancloud_visitors" data-flag-title="oracle内存碎片">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p>oracle内存碎片是由于频繁的申请，释放，拆分chunk，从而导致拆分成很多小的chunk，这就是内存碎片。碎片有什么危害呢，可能造成shared pool latch的冲突。<br>             我们需要为大的内存需求保留空间，避免申请大chunk的时候，结果没有，申请不到。对于非常大的对象，oracle可以单独保留一个区域为此分配空间，shared_pool_reserved_size，这个值缺省应该是shared_pool_size 的5%，这块区域完全和正常的chunk不相往来，单独存在，v$shared_pool_reserved可以通过这个视图查看这块区域的使用情况。这个区域的管理是先进先出原则，怎么避免内存碎片呢，首先大的对象keep到内存，可以用dbms_shared_pool.keep,具体使用自己研究一下，这里无论是存储对象还是临时的，都可以keep。减少大的匿名块，比如PL/SQL，还有就是避免共享池太大，共享池够用就好，如果共享池很大，小的chunk申请又多，那么就造成很多碎片，freelist就会很长，持有的shared_pool_latch就会时间长，CPU遍历的时候就会很耗资源，所以加大共享池不是解决此种冲突的方法，这个时候最关键的还是看一下为什么不能共享SQL语句。从9I开始，oracle开始引入了多个共享池的概念，所以大的共享池不会再那么差劲，可以最多有7个子latch保护共享池，要配置多个共享池，首先硬件要足够的硬，呵呵。CPU够多，内存够大。比如一个hash桶油18000个chunk，如果只有一个共享池，那么只能遍历这18000个，如果配置了6个子共享池，那么平均一个hash桶就是18000/6，一个shared_pool_latch也就是原来的1/6时间就可以完成。子共享池的个数可以通过隐含参数_kghdsidx_count手动调节，同事也指定了几个child latch，可以通过select a.ksppinm,b.ksppstvl from x$ksppi a,x$ksppsv b where a.indx=b.indx and a.ksppinm=’_kghdsidx_count’;查看你的数据库有几个共享池。看了一下，10G默认的子共享池个数是2个，相对的，增加了共享池，你就可以适当的增加共享池的大小，每个子共享池有自己的LRU列表，和shared_pool_latch.v$db_object_cache存放了钉住的对象信息，或者可以设置cursor_sharing=force.这个设置比较复杂，这里是强制绑定变量，具体以后分解。</p>
+
       
     </div>
     
     
     
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>你活着,证明了什么？</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="魂醉 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="魂醉 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/oracle/" rel="tag"># oracle</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2011/08/01/ONE-PASS-AND-MULTI-PASS/" rel="next" title="ONE PASS AND MULTI PASS">
+                <i class="fa fa-chevron-left"></i> ONE PASS AND MULTI PASS
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/04/22/mongodb-replica-sets-reconfig-and-conver-a-Secondary-to-an-Arbiter/" rel="prev" title="mongodb replica sets reconfig and conver a Secondary to an Arbiter">
+                mongodb replica sets reconfig and conver a Secondary to an Arbiter <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
   </div>
 
 
@@ -326,6 +508,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTg0MC8xNjM2Nw=="></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -664,6 +855,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 

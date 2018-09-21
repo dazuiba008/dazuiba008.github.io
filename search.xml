@@ -34,6 +34,28 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[oracle内存碎片]]></title>
+    <url>%2F2011%2F09%2F21%2Foracle%E5%86%85%E5%AD%98%E7%A2%8E%E7%89%87%2F</url>
+    <content type="text"><![CDATA[oracle内存碎片是由于频繁的申请，释放，拆分chunk，从而导致拆分成很多小的chunk，这就是内存碎片。碎片有什么危害呢，可能造成shared pool latch的冲突。 我们需要为大的内存需求保留空间，避免申请大chunk的时候，结果没有，申请不到。对于非常大的对象，oracle可以单独保留一个区域为此分配空间，shared_pool_reserved_size，这个值缺省应该是shared_pool_size 的5%，这块区域完全和正常的chunk不相往来，单独存在，v$shared_pool_reserved可以通过这个视图查看这块区域的使用情况。这个区域的管理是先进先出原则，怎么避免内存碎片呢，首先大的对象keep到内存，可以用dbms_shared_pool.keep,具体使用自己研究一下，这里无论是存储对象还是临时的，都可以keep。减少大的匿名块，比如PL/SQL，还有就是避免共享池太大，共享池够用就好，如果共享池很大，小的chunk申请又多，那么就造成很多碎片，freelist就会很长，持有的shared_pool_latch就会时间长，CPU遍历的时候就会很耗资源，所以加大共享池不是解决此种冲突的方法，这个时候最关键的还是看一下为什么不能共享SQL语句。从9I开始，oracle开始引入了多个共享池的概念，所以大的共享池不会再那么差劲，可以最多有7个子latch保护共享池，要配置多个共享池，首先硬件要足够的硬，呵呵。CPU够多，内存够大。比如一个hash桶油18000个chunk，如果只有一个共享池，那么只能遍历这18000个，如果配置了6个子共享池，那么平均一个hash桶就是18000/6，一个shared_pool_latch也就是原来的1/6时间就可以完成。子共享池的个数可以通过隐含参数_kghdsidx_count手动调节，同事也指定了几个child latch，可以通过select a.ksppinm,b.ksppstvl from x$ksppi a,x$ksppsv b where a.indx=b.indx and a.ksppinm=’_kghdsidx_count’;查看你的数据库有几个共享池。看了一下，10G默认的子共享池个数是2个，相对的，增加了共享池，你就可以适当的增加共享池的大小，每个子共享池有自己的LRU列表，和shared_pool_latch.v$db_object_cache存放了钉住的对象信息，或者可以设置cursor_sharing=force.这个设置比较复杂，这里是强制绑定变量，具体以后分解。]]></content>
+      <categories>
+        <category>oracle</category>
+      </categories>
+      <tags>
+        <tag>oracle</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[ONE PASS AND MULTI PASS]]></title>
+    <url>%2F2011%2F08%2F01%2FONE-PASS-AND-MULTI-PASS%2F</url>
+    <content type="text"><![CDATA[谈到ONE PASS AND MULTI PASS，那么不得不谈谈oracle sort，不知道大家是不是这么认为，给的内存多了，那么SORT是不是就性能就好了呢？答案肯定是否定的，那么我们先介绍下oracle 的SORT。 其实在数据库环境中，很多时候都是伴随着排序的，比如创建索引，group by ,order by,union，分组函数等等。一般情况下，应该是排序在cache中性能是最好的，完了是ONE pass，最差的就是multi pass，但是这不是绝对的，如果你PGA_AGGREGATE_TARGET一味的加大，排序的性能可能直线下降，比MULTI pass的性能还差，在我们OLAP环境中，不要期望所有的排序都在CACHE中，ONE PASS是我们要调优的重点，因为MULTI PASS性能最差。 这里了解一下排序的机制，排序是私有的，他的排序区是有大小限制的，一次排序超过这个限制了，不得不用到临时表空间。监控排序相关的视图：V$SQL_WORKAREA、V$SQL_WORKAREA_ACTIVE、V$SORT_USAGE，这个大家下去自己查阅联机文档从9i开始，workarea_size_policy 是AMM（自动内存管理）AMM会有一个后台进程每3秒钟为检查负载情况，为每个进程合理的更新最小内存ONE-PASS点，所以要找这个点从9i开始就交给oracle自己完成了，我们不需要再去配置sort_area_size等相关的参数。如果workarea_size_policy 是MANUAL的，那么可以研究一下sort_area_size 相关的参数。总的进程PGA大小是由PGA_AGGREGATE_TARGET决定的，其实排序的时候要维护一个二叉树，如果这个二叉树很大的话，那么很消耗CPU资源。 cache模式：当一个排序进程读取数据源，写到workarea_size_policy 的时候，incoming data和tree没有被填充满就结束了排序的情况，就是cache模式，这种是性能最好的情况。 one-pass模式：当一个排序吧incoming data和tree填充满以后，如果再继续填充，那么会把工作区里面的数据进行分片，叫sort runs，这个排序运行片归档至临时表空间。那么如果排序很大，就会有很多的sort runs，归档到临时表空间的sort runs还的重新进行一次merge，这里有一个基于排序区的宽度（max intermediate merge width），也就是一次merge的宽度，可以通过10032和10033查看这些内容，比如这里有50个sort runs，这个宽度是100，那么我们merge一次就可以完成，这里就叫做one-pass。 multi-pass模式：如果merge一次，不够，需要多次merge。多次merge，肯定增加IO压力。所以这种是效率最差的。 当做工作区是AMM的时候，如果不能cache，那么就要切换到minimum one-pass memeory.这里只介绍几种模式，具体优化以后有时间再续。]]></content>
+      <categories>
+        <category>oracle</category>
+      </categories>
+      <tags>
+        <tag>oracle</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[oracle ORA-1555错误]]></title>
     <url>%2F2011%2F07%2F29%2Foracle-ORA-1555%E9%94%99%E8%AF%AF%2F</url>
     <content type="text"><![CDATA[1555错误大家应该都碰到过，这里做下简单的阐述和一些解决方法。 大家可以这么理解，oracle提交的UNDO超过了保留期，或者在保留期的数据被覆盖，无法做一致性读，就会抛出此类错误，这里有几个参数有必要说明一下： UNDO_MANAGEMENT：值为AUTO表示使用了自动撤销管理表空间，MANUAL则表示手动管理（已淘汰），如果想Flashback Query自动管理必须条件 。 UNDO_TABLESPACE：Oracle数据库中可以创建多个UNDO表空间，不过同时只能使用一个，当UNDO_MANAGEMENT初始化参数值为AUTO时，UNDO_TABLESPACE参数用来指定当前使用的UNDO表空间名称 UNDO_RETENTION：该参数用来指定UNDO段中数据保存的最短时间，以秒为单位，是一个动态参数，完全可以在实例运行时随时修改，通常默认是900秒，其实这个保留时间并不是说超过这个时间就会过期，数据就不在了，只是标记了一下可以被覆盖了，超过这个时间的数据可以被覆盖了，同理，就算是没有超过这个时间，你的UNDO空间已经满了，那么新事务的数据还是会覆盖掉UNDO。那么此时如果你在找丢失部分的数据，就会出现ORA 1555了，简单点来说就是找不到UNDO里面的前镜像了。 另外块清除会引起1555，不过这种情况是很少遇到的。 可以show parameter undo看一下这几个参数的值。 还有如果你的UNDO表空间过于小，那可能一般的普通操作都会报出这个错，大家一定要设置合理，避免此类错误。 哈哈，既然关系到UNDO，那么再简单说下UNDO吧，首先有几个数据字典和动态性能视图：v$undostat,DBA_ROLLBACK_SEGS,DBA_UNDO_EXTENTS,还有一个v$TRANSACTION，记录了事务的一些信息，还有回滚的数量。 UNDO其实就是记录删除或者更新操作的数据，顾名思义就是为了回滚，这里和REDO是紧密相连的，这里涉及到UNDO的REDO,因为事务其实都是先写UNDO，再写REDO的，也就是UNDO的REDO（记录UNDO块的修改）和REDO的redo（记录普通数据文件的修改）是所有的REDO。那么UNDO这里只是做一个简单的了解。 大家一定要记得在insert的时候，如果列上有索引，即使nologging，那么还是会导致大量的UNDO，因为在插入数据的时候会调整索引，那么肯定会产生大量的UNDO。delete和update是必走内存的，所以始终还是会记录REDO。]]></content>

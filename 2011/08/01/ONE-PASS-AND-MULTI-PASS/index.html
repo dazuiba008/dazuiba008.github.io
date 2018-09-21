@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="oracle," />
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="人在江湖飘,哪能不挨刀！">
-<meta property="og:type" content="website">
-<meta property="og:title" content="categories">
-<meta property="og:url" content="http://yoursite.com/categories/index.html">
+<meta name="description" content="谈到ONE PASS  AND MULTI PASS，那么不得不谈谈oracle sort，不知道大家是不是这么认为，给的内存多了，那么SORT是不是就性能就好了呢？答案肯定是否定的，那么我们先介绍下oracle 的SORT。 其实在数据库环境中，很多时候都是伴随着排序的，比如创建索引，group by ,order by,union，分组函数等等。一般情况下，应该是排序在cache中性能是最好的">
+<meta name="keywords" content="oracle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ONE PASS AND MULTI PASS">
+<meta property="og:url" content="http://yoursite.com/2011/08/01/ONE-PASS-AND-MULTI-PASS/index.html">
 <meta property="og:site_name" content="魂醉的一亩二分地">
-<meta property="og:description" content="人在江湖飘,哪能不挨刀！">
+<meta property="og:description" content="谈到ONE PASS  AND MULTI PASS，那么不得不谈谈oracle sort，不知道大家是不是这么认为，给的内存多了，那么SORT是不是就性能就好了呢？答案肯定是否定的，那么我们先介绍下oracle 的SORT。 其实在数据库环境中，很多时候都是伴随着排序的，比如创建索引，group by ,order by,union，分组函数等等。一般情况下，应该是排序在cache中性能是最好的">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-17T06:55:50.942Z">
+<meta property="og:updated_time" content="2018-09-21T06:51:44.285Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="categories">
-<meta name="twitter:description" content="人在江湖飘,哪能不挨刀！">
+<meta name="twitter:title" content="ONE PASS AND MULTI PASS">
+<meta name="twitter:description" content="谈到ONE PASS  AND MULTI PASS，那么不得不谈谈oracle sort，不知道大家是不是这么认为，给的内存多了，那么SORT是不是就性能就好了呢？答案肯定是否定的，那么我们先介绍下oracle 的SORT。 其实在数据库环境中，很多时候都是伴随着排序的，比如创建索引，group by ,order by,union，分组函数等等。一般情况下，应该是排序在cache中性能是最好的">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/categories/"/>
+  <link rel="canonical" href="http://yoursite.com/2011/08/01/ONE-PASS-AND-MULTI-PASS/"/>
 
 
 
 
 
-  <title>categories | 魂醉的一亩二分地</title>
+  <title>ONE PASS AND MULTI PASS | 魂醉的一亩二分地</title>
   
 
 
@@ -284,40 +285,229 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2011/08/01/ONE-PASS-AND-MULTI-PASS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="魂醉">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="魂醉的一亩二分地">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">categories</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <div class="category-all-page">
-            <div class="category-all-title">
-                目前共计 4 个分类
-            </div>
-            <div class="category-all">
-              <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Greenplum/">Greenplum</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/PostgreSQL/">PostgreSQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mongodb/">mongodb</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/oracle/">oracle</a><span class="category-list-count">3</span></li></ul>
-            </div>
-          </div>
+          <h1 class="post-title" itemprop="name headline">ONE PASS AND MULTI PASS</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2011-08-01T14:47:37+08:00">
+                2011-08-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/oracle/" itemprop="url" rel="index">
+                    <span itemprop="name">oracle</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2011/08/01/ONE-PASS-AND-MULTI-PASS/" class="leancloud_visitors" data-flag-title="ONE PASS AND MULTI PASS">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p>谈到ONE PASS  AND MULTI PASS，那么不得不谈谈oracle sort，不知道大家是不是这么认为，给的内存多了，那么SORT是不是就性能就好了呢？答案肯定是否定的，那么我们先介绍下oracle 的SORT。</p>
+<pre><code>其实在数据库环境中，很多时候都是伴随着排序的，比如创建索引，group by ,order by,union，分组函数等等。一般情况下，应该是排序在cache中性能是最好的，完了是ONE pass，最差的就是multi pass，但是这不是绝对的，如果你PGA_AGGREGATE_TARGET一味的加大，排序的性能可能直线下降，比MULTI pass的性能还差，在我们OLAP环境中，不要期望所有的排序都在CACHE中，ONE PASS是我们要调优的重点，因为MULTI PASS性能最差。
+</code></pre><p>这里了解一下排序的机制，排序是私有的，他的排序区是有大小限制的，一次排序超过这个限制了，不得不用到临时表空间。<br>监控排序相关的视图：V$SQL_WORKAREA、V$SQL_WORKAREA_ACTIVE、V$SORT_USAGE，这个大家下去自己查阅联机文档<br>从9i开始，workarea_size_policy 是AMM（自动内存管理）AMM会有一个后台进程每3秒钟为检查负载情况，为每个进程合理的更新最小内存ONE-PASS点，所以要找这个点从9i开始就交给oracle自己完成了，我们不需要再去配置sort_area_size等相关的参数。如果workarea_size_policy 是MANUAL的，那么可以研究一下sort_area_size 相关的参数。总的进程PGA大小是由PGA_AGGREGATE_TARGET决定的，其实排序的时候要维护一个二叉树，如果这个二叉树很大的话，那么很消耗CPU资源。</p>
+<pre><code> cache模式：当一个排序进程读取数据源，写到workarea_size_policy 的时候，incoming data和tree没有被填充满就结束了排序的情况，就是cache模式，这种是性能最好的情况。
+
+ one-pass模式：当一个排序吧incoming data和tree填充满以后，如果再继续填充，那么会把工作区里面的数据进行分片，叫sort runs，这个排序运行片归档至临时表空间。那么如果排序很大，就会有很多的sort runs，归档到临时表空间的sort runs还的重新进行一次merge，这里有一个基于排序区的宽度（max intermediate merge width），也就是一次merge的宽度，可以通过10032和10033查看这些内容，比如这里有50个sort runs，这个宽度是100，那么我们merge一次就可以完成，这里就叫做one-pass。
+
+multi-pass模式：如果merge一次，不够，需要多次merge。多次merge，肯定增加IO压力。所以这种是效率最差的。
+</code></pre><p>当做工作区是AMM的时候，如果不能cache，那么就要切换到minimum one-pass memeory.<br>这里只介绍几种模式，具体优化以后有时间再续。</p>
+
       
     </div>
     
     
     
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>你活着,证明了什么？</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="魂醉 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="魂醉 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/oracle/" rel="tag"># oracle</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2011/07/29/oracle-ORA-1555错误/" rel="next" title="oracle ORA-1555错误">
+                <i class="fa fa-chevron-left"></i> oracle ORA-1555错误
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2011/09/21/oracle内存碎片/" rel="prev" title="oracle内存碎片">
+                oracle内存碎片 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
   </div>
 
 
@@ -326,6 +516,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTg0MC8xNjM2Nw=="></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -664,6 +863,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
