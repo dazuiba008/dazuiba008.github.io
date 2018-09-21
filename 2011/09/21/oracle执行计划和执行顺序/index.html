@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="oracle索引一般分为B树索引和位图索引，用的比较多的都是B树索引。  B树索引，比如普通索引，反转索引，降序索引，函数索引，这些索引都是B树索引，结构都是一样的，位图索引的存储结构和B树是不一样的，对于B树索引，可以进行一般的索引唯一扫描，索引范围扫描，快速索引扫描和索引全扫描，位图就简单很多，他只有全扫描，才能找到对应的行。顾名思义，B树索引其实就是一棵树，普通的都是升序，右边节点比左边的节">
+<meta name="description" content="如果要了解执行计划和执行顺序，必须理解执行计划的父子关系。执行计划是一个树状结构，顶层的STATEMENT是这棵树的根。父子关系按照如下的树状结构组织：PARENT FIRST  CHILD SECOND CHILD 在这个例子里，FIRST CHILD最先执行，然后是SECOND CHILD，这两个步骤执行完毕后，执行PARENT。下面是一个更多层次的结构： PARENT1 FIRST  CHI">
 <meta name="keywords" content="oracle">
 <meta property="og:type" content="article">
-<meta property="og:title" content="浅谈oracle索引">
-<meta property="og:url" content="http://yoursite.com/2018/09/21/浅谈oracle索引/index.html">
+<meta property="og:title" content="oracle执行计划和执行顺序">
+<meta property="og:url" content="http://yoursite.com/2011/09/21/oracle执行计划和执行顺序/index.html">
 <meta property="og:site_name" content="魂醉的一亩二分地">
-<meta property="og:description" content="oracle索引一般分为B树索引和位图索引，用的比较多的都是B树索引。  B树索引，比如普通索引，反转索引，降序索引，函数索引，这些索引都是B树索引，结构都是一样的，位图索引的存储结构和B树是不一样的，对于B树索引，可以进行一般的索引唯一扫描，索引范围扫描，快速索引扫描和索引全扫描，位图就简单很多，他只有全扫描，才能找到对应的行。顾名思义，B树索引其实就是一棵树，普通的都是升序，右边节点比左边的节">
+<meta property="og:description" content="如果要了解执行计划和执行顺序，必须理解执行计划的父子关系。执行计划是一个树状结构，顶层的STATEMENT是这棵树的根。父子关系按照如下的树状结构组织：PARENT FIRST  CHILD SECOND CHILD 在这个例子里，FIRST CHILD最先执行，然后是SECOND CHILD，这两个步骤执行完毕后，执行PARENT。下面是一个更多层次的结构： PARENT1 FIRST  CHI">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-21T07:00:37.516Z">
+<meta property="og:updated_time" content="2018-09-21T07:08:36.501Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="浅谈oracle索引">
-<meta name="twitter:description" content="oracle索引一般分为B树索引和位图索引，用的比较多的都是B树索引。  B树索引，比如普通索引，反转索引，降序索引，函数索引，这些索引都是B树索引，结构都是一样的，位图索引的存储结构和B树是不一样的，对于B树索引，可以进行一般的索引唯一扫描，索引范围扫描，快速索引扫描和索引全扫描，位图就简单很多，他只有全扫描，才能找到对应的行。顾名思义，B树索引其实就是一棵树，普通的都是升序，右边节点比左边的节">
+<meta name="twitter:title" content="oracle执行计划和执行顺序">
+<meta name="twitter:description" content="如果要了解执行计划和执行顺序，必须理解执行计划的父子关系。执行计划是一个树状结构，顶层的STATEMENT是这棵树的根。父子关系按照如下的树状结构组织：PARENT FIRST  CHILD SECOND CHILD 在这个例子里，FIRST CHILD最先执行，然后是SECOND CHILD，这两个步骤执行完毕后，执行PARENT。下面是一个更多层次的结构： PARENT1 FIRST  CHI">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/09/21/浅谈oracle索引/"/>
+  <link rel="canonical" href="http://yoursite.com/2011/09/21/oracle执行计划和执行顺序/"/>
 
 
 
 
 
-  <title>浅谈oracle索引 | 魂醉的一亩二分地</title>
+  <title>oracle执行计划和执行顺序 | 魂醉的一亩二分地</title>
   
 
 
@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/21/浅谈oracle索引/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2011/09/21/oracle执行计划和执行顺序/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="魂醉">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">浅谈oracle索引</h1>
+          <h1 class="post-title" itemprop="name headline">oracle执行计划和执行顺序</h1>
         
 
         <div class="post-meta">
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-21T14:58:52+08:00">
-                2018-09-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2011-09-21T15:01:26+08:00">
+                2011-09-21
               </time>
             
 
@@ -366,7 +366,7 @@
 
           
           
-             <span id="/2018/09/21/浅谈oracle索引/" class="leancloud_visitors" data-flag-title="浅谈oracle索引">
+             <span id="/2011/09/21/oracle执行计划和执行顺序/" class="leancloud_visitors" data-flag-title="oracle执行计划和执行顺序">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -402,19 +402,41 @@
       
 
       
-        <p>oracle索引一般分为B树索引和位图索引，用的比较多的都是B树索引。</p>
-<pre><code> B树索引，比如普通索引，反转索引，降序索引，函数索引，这些索引都是B树索引，结构都是一样的，位图索引的存储结构和B树是不一样的，对于B树索引，可以进行一般的索引唯一扫描，索引范围扫描，快速索引扫描和索引全扫描，位图就简单很多，他只有全扫描，才能找到对应的行。顾名思义，B树索引其实就是一棵树，普通的都是升序，右边节点比左边的节点大，那么降序就是正好反之。B树的所有节点都在一条双向链上，就是用来实现范围扫秒用的。
+        <p>如果要了解执行计划和执行顺序，必须理解执行计划的父子关系。执行计划是一个树状结构，顶层的STATEMENT是这棵树的根。父子关系按照如下的树状结构组织：<br>PARENT</p>
+<p>FIRST  CHILD</p>
+<p>SECOND CHILD</p>
+<p>在这个例子里，FIRST CHILD最先执行，然后是SECOND CHILD，这两个步骤执行完毕后，执行PARENT。下面是一个更多层次的结构：</p>
+<p>PARENT1</p>
+<p>FIRST  CHILD</p>
+<p>FIRST  GRANDCHILD</p>
+<p>SECOND CHILD</p>
+<p>FIRST  GRANDCHILD是第一个执行的步骤，然后是FIRST CHILD。下面通过一个真实的执行计划来验证这个原则：</p>
+<p>set autotrace traceonly explain</p>
+<p>select ename,dname  from emp, dept </p>
+<p>where emp.deptno=dept.deptno </p>
+<p>and dept.dname in</p>
+<p> (‘ACCOUNTING’,’RESEARCH’,’SALES’,’OPERATIONS’);</p>
+<p>15 rows selected.</p>
+<p>这个语句的执行计划如下：</p>
+<p>Execution Plan</p>
+<hr>
+<p>   0      SELECT STATEMENT Optimizer=CHOOSE (Cost=3 Card=8 Bytes=248)</p>
+<p>   1    0   HASH JOIN (Cost=3 Card=8 Bytes=248)</p>
+<p>   2    1     TABLE ACCESS (FULL) OF ‘DEPT’ (Cost=1 Card=3 Bytes=36)</p>
+<p>   3    1     TABLE ACCESS (FULL) OF ‘EMP’ (Cost=1 Card=16 Bytes=304)</p>
+<p>注意这个执行计划的最左边的两个列，第一个列是步骤的ID，第二个列是父步骤的ID。执行从ID=0的行开始：</p>
+<p>0      SELECT STATEMENT Optimizer=CHOOSE (Cost=3 Card=8 Bytes=248)</p>
+<p>这个步骤没有父步骤，有一个子步骤（ID=1），所以这个ID＝1的步骤必须在执行步骤0之前执行。继续观察ID=1的步骤：</p>
+<p>1    0   HASH JOIN (Cost=3 Card=8 Bytes=248)</p>
+<p>这个步骤是ID=0的步骤的子步骤，该步骤有2个子步骤：ID=2和ID=3，因此ID=2和ID=3的步骤必须在ID=1的步骤之前执行。再来检查ID=2的步骤：</p>
+<p>2    1     TABLE ACCESS (FULL) OF ‘DEPT’ (Cost=1 Card=3 Bytes=36)</p>
+<p>这个步骤是ID=1的步骤的子步骤，并且该步骤没有任何子步骤。因此该步骤是这个SQL语句第一个执行的步骤，这个步骤产生的结果集会提供给ID=1的步骤。这个步骤是对表DEPT进行全表扫描，这个步骤的COST＝1。</p>
+<p>ID=1的步骤也依赖ID=3的步骤：</p>
+<p>3    1     TABLE ACCESS (FULL) OF ‘EMP’ (Cost=1 Card=16 Bytes=304)</p>
+<p>这个步骤是ID=1的步骤的第二个子步骤，没有任何子步骤，在这个语句中，是第二个被执行的步骤。</p>
+<pre><code>ID=1的步骤将ID=3和ID=3的步骤的结果集进行HASH 连接，然后把结果交给ID=0的步骤，就完成了本语句的执行。
+</code></pre><p>这里是转载白鳝大大的一篇文章，对于执行计划读取入门，还是很清楚简单明了的。</p>
 
- 接下来，介绍一下反转索引，反转索引在存储键值的时候，先把键值反转，再进行存储，比如abcd就反转为dcba，一般反转索引用来解决热块，原理就是利用键值反转，把索引块打乱，把热点分散到不同的索引块。
-
-记得创建的时候是用reverse函数：create index_name on tablename (reverse(ind_name));如过是 create index_name on tablename(ind_name) reverse;是用不到范围扫描的。
-
-HW大家应该都清楚，如果是全表扫描，那么所有的数据块都会被扫一遍，HW以下的是肯定被扫的，以上的就不用了，以上的就相当于是没人住过的房子，不用去找。这里B树索引高度一般都是3，就是说扫描三个索引块就可以找到值，如果数据量大，那么可能就会高于3这个高度，B索引重要的几个概念，根节点，分支节点，叶子节点，很好理解，根肯定是最高的，分支就在中间，叶子在最底层，这里注意叶子节点，他除了有键值，还有块地址。
-
-还有一点索引的使用绝对不能滥用，因为索引是有序的，所以在IO上会有很大消耗，如果一个表上很多索引，而且表的内容经常使用DML语句，那么索引肯定也是经常更新，会消耗额外的IO和CPU性能。还有一点一定要记得，创建好函数索引以后，一定要记得分析后再使用。至于反转索引，这里不详解了，可以dump出来看看，在reverse一下看看区别。很明显。
-
-还有索引快速扫和索引扫是不一样的，快速只扫叶子节点，一次性读取db_file_multiblock_read_count个，索引扫是从根开始扫，只读书一个数据块。
-</code></pre>
       
     </div>
     
@@ -473,8 +495,8 @@ HW大家应该都清楚，如果是全表扫描，那么所有的数据块都会
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/21/library-cache/" rel="next" title="library cache">
-                <i class="fa fa-chevron-left"></i> library cache
+              <a href="/2011/09/21/浅谈oracle索引/" rel="next" title="浅谈oracle索引">
+                <i class="fa fa-chevron-left"></i> 浅谈oracle索引
               </a>
             
           </div>
@@ -483,8 +505,8 @@ HW大家应该都清楚，如果是全表扫描，那么所有的数据块都会
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/09/21/oracle执行计划和执行顺序/" rel="prev" title="oracle执行计划和执行顺序">
-                oracle执行计划和执行顺序 <i class="fa fa-chevron-right"></i>
+              <a href="/2011/09/21/触发器限制指定IP访问oracle数据库/" rel="prev" title="触发器限制指定IP访问oracle数据库">
+                触发器限制指定IP访问oracle数据库 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
