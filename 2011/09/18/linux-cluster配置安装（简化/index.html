@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="魂醉的一亩二分地">
 <meta property="og:description" content="一:首先先介绍一下服务器配置：两台hp ProLiant DL360 G6 ，配置均一样 两颗四核Intel(R) Xeon(R) CPU E5504  @ 2.00GHz 内存：24G 硬盘：三块146G本地硬盘 二：安装clucster，这一步在安装系统的时候已经选中了cluster组件，如果没有安装，那么安装必要的RPM包 三：利用chkconfig –list查看服务，chkconfig">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-21T09:16:35.902Z">
+<meta property="og:updated_time" content="2018-09-21T09:21:16.919Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="linux cluster配置安装（简化)">
 <meta name="twitter:description" content="一:首先先介绍一下服务器配置：两台hp ProLiant DL360 G6 ，配置均一样 两颗四核Intel(R) Xeon(R) CPU E5504  @ 2.00GHz 内存：24G 硬盘：三块146G本地硬盘 二：安装clucster，这一步在安装系统的时候已经选中了cluster组件，如果没有安装，那么安装必要的RPM包 三：利用chkconfig –list查看服务，chkconfig">
@@ -411,17 +411,17 @@
 <p>四：配置集群</p>
 <p>两台服务器都已经安装redhat5.5</p>
 <p>下面是进行一些配置文件的修改</p>
-<ol>
+<ul>
 <li>1：首先修改/etc/hosts文件</li>
-</ol>
+</ul>
 <p>这个文件要求两台机器上均一样</p>
 <p>192.168.29.54   pgbouncer-192-168-29-54.sky-mobi.com.hz pgbouncer-192-168-29-54</p>
 <p>192.168.29.55   pgbouncer-192-168-29-55.sky-mobi.com.hz pgbouncer-192-168-29-55</p>
 <p>192.168.27.8    pgbouncer-192-168-29-55_fence.sky-mobi.com.hz pgbouncer-192-168-29-55_fence</p>
 <p>192.168.27.9    pgbouncer-192-168-29-54_fence.sky-mobi.com.hz pgbouncer-192-168-29-54_fence</p>
-<ol start="2">
+<ul>
 <li>2:修改内核参数，不同的硬件配置可以根据具体情况进行配置，以下是我加的/etc/sysctl.conf</li>
-</ol>
+</ul>
 <p>net.ipv4.ip_local_port_range = 1024 65000</p>
 <p>net.core.rmem_default = 1048576</p>
 <p>net.core.rmem_max = 1048576</p>
@@ -432,46 +432,29 @@
 <p>net.core.netdev_max_backlog=10000</p>
 <p>vm.overcommit_memory=0</p>
 <p>net.ipv4.ip_conntrack_max=655360</p>
-<ol start="3">
-<li>3：配置/etc/security/limits.conf,加入</li>
-</ol>
 <ul>
-<li><p>soft    nofile  131072</p>
+<li><p>3：配置/etc/security/limits.conf,加入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">*  soft    nofile  131072</span><br><span class="line"></span><br><span class="line">*  hard    nofile  131072</span><br><span class="line"></span><br><span class="line">*  soft    nproc   131072</span><br><span class="line"></span><br><span class="line">*  hard    nproc   131072</span><br><span class="line"></span><br><span class="line">*  soft    core    unlimited</span><br><span class="line"></span><br><span class="line">*  hard    core    unlimited</span><br><span class="line"></span><br><span class="line">*  soft    memlock 50000000</span><br><span class="line"></span><br><span class="line">*  hard    memlock 50000000</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>hard    nofile  131072</p>
-</li>
-<li><p>soft    nproc   131072</p>
-</li>
-<li><p>hard    nproc   131072</p>
-</li>
-<li><p>soft    core    unlimited</p>
-</li>
-<li><p>hard    core    unlimited</p>
-</li>
-<li><p>soft    memlock 50000000</p>
-</li>
-<li><p>hard    memlock 50000000</p>
+<li><p>4：配置/etc/pam.d/login,加入</p>
 </li>
 </ul>
-<ol start="4">
-<li>4：配置/etc/pam.d/login,加入</li>
-</ol>
 <p>session required pam_limits.so</p>
-<ol start="5">
+<ul>
 <li>5：配置/etc/ssh/sshd_config，加入</li>
-</ol>
+</ul>
 <p>修改UseDNS no</p>
-<ol start="6">
+<ul>
 <li>6：配置/etc/sysconfig/ntpd，同步改为</li>
-</ol>
+</ul>
 <p>SYNC_HWCLOCK=yes</p>
-<ol start="7">
+<ul>
 <li>7：配置/etc/rc.local，加入</li>
-</ol>
+</ul>
 <p>/sbin/sysctl -w net.ipv4.ip_conntrack_max=655360</p>
-<ol start="8">
+<ul>
 <li>8：配置/etc/cluster/cluster.conf,截图有点大，大家凑合着看吧，这里其实就是利用system-config-cluster图形配置完成后生成的集群配置文件，这里直接创建并修改这个文件即可，下面简单说明下这个配置：</li>
-</ol>
+</ul>
 <p>Alias这里是集群的名称，大家可以自定义，不过切记在局域网内保证名字唯一性</p>
 <p>后面config_version是版本，这个大家修改一次，可以加1，两台服务器要一致，name可以和alias一样。</p>
 <p>接下来就是配置node</p>
@@ -489,15 +472,15 @@
 <p> <script file="/etc/init.d/nfs" name="nfs">这里配置资源，这里我是NFS服务</p>
 <p><script ref="nfs"/>这里的名称要与上面name的名称一致</p>
 <p><img src="http://pfebs4xvj.bkt.clouddn.com/linux-1.jpg" alt="Alt text"> </p>
-<ol start="9">
+<ul>
 <li>9:加入crontab</li>
-</ol>
+</ul>
 <p>Crontab –e</p>
 <p>8 <em>/2 </em> <em> </em> /usr/sbin/ntpdate asia.pool.ntp.org &amp;&amp; /sbin/hwclock –systohc</p>
 <p>定时同步时间</p>
-<ol start="10">
+<ul>
 <li>10：启动集群服务</li>
-</ol>
+</ul>
 <p>Service cman start</p>
 <p>Service rgmanager start</p>
 <p>通过clustat查看状态。</p>
