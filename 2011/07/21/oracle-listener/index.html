@@ -83,14 +83,14 @@
 <meta name="keywords" content="oracle">
 <meta property="og:type" content="article">
 <meta property="og:title" content="oracle listener">
-<meta property="og:url" content="http://yoursite.com/2018/09/21/oracle-listener/index.html">
+<meta property="og:url" content="http://yoursite.com/2011/07/21/oracle-listener/index.html">
 <meta property="og:site_name" content="魂醉的一亩二分地">
 <meta property="og:description" content="这一块知识，我相信搞oracle的兄弟都是比较精通的，我也是前段时间公司让做个培训的时候，又把这块又温习了一遍，还是有不少新的收获，今天就搬到这里记录一下大家可以看到这里的WEB应用充当中间件，既懂HTTP，又懂oracle net，厉害吧，其实就是个翻译官。如果WEB应用服务器采用 JDBC OCI DRIVER，那么WEB服务必须的安装oracle net组件，才能和oracle数据库进行通讯">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://pfebs4xvj.bkt.clouddn.com/1.jpg">
 <meta property="og:image" content="http://pfebs4xvj.bkt.clouddn.com/2.jpg">
-<meta property="og:image" content="http://pfebs4xvj.bkt.clouddn.com/2.jpg">
-<meta property="og:updated_time" content="2018-09-21T08:07:13.622Z">
+<meta property="og:image" content="http://pfebs4xvj.bkt.clouddn.com/3.jpg">
+<meta property="og:updated_time" content="2018-09-21T08:10:48.077Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="oracle listener">
 <meta name="twitter:description" content="这一块知识，我相信搞oracle的兄弟都是比较精通的，我也是前段时间公司让做个培训的时候，又把这块又温习了一遍，还是有不少新的收获，今天就搬到这里记录一下大家可以看到这里的WEB应用充当中间件，既懂HTTP，又懂oracle net，厉害吧，其实就是个翻译官。如果WEB应用服务器采用 JDBC OCI DRIVER，那么WEB服务必须的安装oracle net组件，才能和oracle数据库进行通讯">
@@ -124,7 +124,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/09/21/oracle-listener/"/>
+  <link rel="canonical" href="http://yoursite.com/2011/07/21/oracle-listener/"/>
 
 
 
@@ -301,7 +301,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/21/oracle-listener/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2011/07/21/oracle-listener/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="魂醉">
@@ -330,8 +330,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-21T15:30:04+08:00">
-                2018-09-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2011-07-21T15:30:04+08:00">
+                2011-07-21
               </time>
             
 
@@ -370,7 +370,7 @@
 
           
           
-             <span id="/2018/09/21/oracle-listener/" class="leancloud_visitors" data-flag-title="oracle listener">
+             <span id="/2011/07/21/oracle-listener/" class="leancloud_visitors" data-flag-title="oracle listener">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -412,74 +412,23 @@
 <p>1.动态注册：就是PMON主动把信息告诉监听，无需使用listener.ora将文件，lsnrclt status里面read的都是动态。</p>
 <p>2.静态注册：监听主动去找服务和实例，需要配置listener.ora文件，指定SID列表，lsnrctl status里面是unknown</p>
 <p>先看静态注册，很简单的，保证一看就懂</p>
-<p>直接配置listener.ora文件即可</p>
-<p>SID_LIST_LISTENER =</p>
-<p>  (SID_LIST =</p>
-<pre><code>(SID_DESC =
-
-  (SID_NAME = oradb)
-
-  (ORACLE_HOME = /app/oracle/product/10.2.0/db_1)
-
-)
-</code></pre><p>  )</p>
-<p>LISTENER =</p>
-<p>  (DESCRIPTION_LIST =</p>
-<pre><code>(DESCRIPTION =
-
-  (ADDRESS = (PROTOCOL = TCP)(HOST =)(PORT = 1521))
-
-)
-</code></pre><p>  )</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">直接配置listener.ora文件即可</span><br><span class="line"></span><br><span class="line">SID_LIST_LISTENER =</span><br><span class="line"></span><br><span class="line">  (SID_LIST =</span><br><span class="line"></span><br><span class="line">    (SID_DESC =</span><br><span class="line"></span><br><span class="line">      (SID_NAME = oradb)</span><br><span class="line"></span><br><span class="line">      (ORACLE_HOME = /app/oracle/product/10.2.0/db_1)</span><br><span class="line"></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">LISTENER =</span><br><span class="line"></span><br><span class="line">  (DESCRIPTION_LIST =</span><br><span class="line"></span><br><span class="line">    (DESCRIPTION =</span><br><span class="line"></span><br><span class="line">      (ADDRESS = (PROTOCOL = TCP)(HOST =)(PORT = 1521))</span><br><span class="line"></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">  )</span><br></pre></td></tr></table></figure>
 <p>  需要配置SID_NAME LISTENER需要指定相关参数块，这里如果host参数不指定，那么/etc/hosts需要指定，监听启动的时候回去读hosts文件匹配，如果设置为0.0.0.0，那么默认监听所有地址</p>
 <p>动态注册以及配置：</p>
 <p>1.动态注册不需要配置listener.ora文件，需要配置初始化参数文件，参数service_names,可是设置多个服务名，区分不同业务。</p>
 <p>2.如果想配置非默认端口，非默认监听名称，非TCPIP协议，那么需要配置listener.ora 而且需要配置local_listener参数，tnsnames.ora也需要配置。</p>
-<p>这里可以看到动态注册分为默认的和非默认的，默认的就是TCP/IP协议，端口是1521，监听名称LISTENER。非默认的大家自己能理解的哦。</p>
-<p>默认动态注册实验：</p>
-<p>1.Show parameter service_names;</p>
-<p>2.Alter system set service_names=zhang,hai,hong;</p>
-<ol start="3">
-<li>Mv listener.ora listener.ora.bak   Lsnrctl stop</li>
-</ol>
-<p>4.Lsnrctl  start</p>
-<p>5.Alter system  register;</p>
-<p>6.Lsnrctl service;</p>
-<p>看结果：</p>
-<p>Connecting to (DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=172.16.3.174)(PORT=1521)))<br>Services Summary…<br>Service “HAI” has 1 instance(s).<br>  Instance “oradb”, status READY, has 1 handler(s) for this service…<br>    Handler(s):<br>      “DEDICATED” established:0 refused:0 state:ready<br>         LOCAL SERVER<br>Service “HONG” has 1 instance(s).<br>  Instance “oradb”, status READY, has 1 handler(s) for this service…<br>    Handler(s):<br>      “DEDICATED” established:0 refused:0 state:ready<br>         LOCAL SERVER<br>Service “ZHANG” has 1 instance(s).<br>  Instance “oradb”, status READY, has 1 handler(s) for this service…<br>    Handler(s):<br>      “DEDICATED” established:0 refused:0 state:ready<br>         LOCAL SERVER<br>Service “oradb” has 2 instance(s).<br>  Instance “oradb”, status UNKNOWN, has 1 handler(s) for this service…<br>    Handler(s):<br>      “DEDICATED” established:0 refused:0<br>         LOCAL SERVER<br>  Instance “oradb”, status READY, has 1 handler(s) for this service…<br>    Handler(s):<br>      “DEDICATED” established:0 refused:0 state:ready<br>         LOCAL SERVER<br>Service “oradb_XPT” has 1 instance(s).<br>  Instance “oradb”, status READY, has 1 handler(s) for this service…<br>    Handler(s):<br>      “DEDICATED” established:0 refused:0 state:ready<br>         LOCAL SERVER<br>The command completed successfully</p>
-<p>相应的client端你如果是用oracle net组件的，那么肯定要配置tnsnames.ora文件</p>
-<p>  testdb =</p>
-<p>  (DESCRIPTION =</p>
-<pre><code>(ADDRESS = (PROTOCOL = TCP)(HOST = 172.168.3.174)(PORT = 1521))
-
-(CONNECT_DATA =
-
-  (SERVER = DEDICATED)
-
-  (SERVICE_NAME = zhang)
-
-)
-</code></pre><p>  )</p>
+<p>这里可以看到动态注册分为默认的和非默认的，默认的就是TCP/IP协议，端口是1521，监听名称LISTENER。非默认的大家自己能理解的哦。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">默认动态注册实验：</span><br><span class="line"></span><br><span class="line">1.Show parameter service_names;</span><br><span class="line"></span><br><span class="line">2.Alter system set service_names=zhang,hai,hong;</span><br><span class="line"></span><br><span class="line">3. Mv listener.ora listener.ora.bak   Lsnrctl stop</span><br><span class="line"></span><br><span class="line">4.Lsnrctl  start</span><br><span class="line"></span><br><span class="line">5.Alter system  register;</span><br><span class="line"></span><br><span class="line">6.Lsnrctl service;</span><br><span class="line"></span><br><span class="line">看结果：</span><br><span class="line"></span><br><span class="line">Connecting to (DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=172.16.3.174)(PORT=1521)))</span><br><span class="line">Services Summary...</span><br><span class="line">Service &quot;HAI&quot; has 1 instance(s).</span><br><span class="line">  Instance &quot;oradb&quot;, status READY, has 1 handler(s) for this service...</span><br><span class="line">    Handler(s):</span><br><span class="line">      &quot;DEDICATED&quot; established:0 refused:0 state:ready</span><br><span class="line">         LOCAL SERVER</span><br><span class="line">Service &quot;HONG&quot; has 1 instance(s).</span><br><span class="line">  Instance &quot;oradb&quot;, status READY, has 1 handler(s) for this service...</span><br><span class="line">    Handler(s):</span><br><span class="line">      &quot;DEDICATED&quot; established:0 refused:0 state:ready</span><br><span class="line">         LOCAL SERVER</span><br><span class="line">Service &quot;ZHANG&quot; has 1 instance(s).</span><br><span class="line">  Instance &quot;oradb&quot;, status READY, has 1 handler(s) for this service...</span><br><span class="line">    Handler(s):</span><br><span class="line">      &quot;DEDICATED&quot; established:0 refused:0 state:ready</span><br><span class="line">         LOCAL SERVER</span><br><span class="line">Service &quot;oradb&quot; has 2 instance(s).</span><br><span class="line">  Instance &quot;oradb&quot;, status UNKNOWN, has 1 handler(s) for this service...</span><br><span class="line">    Handler(s):</span><br><span class="line">      &quot;DEDICATED&quot; established:0 refused:0</span><br><span class="line">         LOCAL SERVER</span><br><span class="line">  Instance &quot;oradb&quot;, status READY, has 1 handler(s) for this service...</span><br><span class="line">    Handler(s):</span><br><span class="line">      &quot;DEDICATED&quot; established:0 refused:0 state:ready</span><br><span class="line">         LOCAL SERVER</span><br><span class="line">Service &quot;oradb_XPT&quot; has 1 instance(s).</span><br><span class="line">  Instance &quot;oradb&quot;, status READY, has 1 handler(s) for this service...</span><br><span class="line">    Handler(s):</span><br><span class="line">      &quot;DEDICATED&quot; established:0 refused:0 state:ready</span><br><span class="line">         LOCAL SERVER</span><br><span class="line">The command completed successfully</span><br></pre></td></tr></table></figure></p>
+<p>相应的client端你如果是用oracle net组件的，那么肯定要配置tnsnames.ora文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">testdb =</span><br><span class="line"></span><br><span class="line">(DESCRIPTION =</span><br><span class="line"></span><br><span class="line">  (ADDRESS = (PROTOCOL = TCP)(HOST = 172.168.3.174)(PORT = 1521))</span><br><span class="line"></span><br><span class="line">  (CONNECT_DATA =</span><br><span class="line"></span><br><span class="line">    (SERVER = DEDICATED)</span><br><span class="line"></span><br><span class="line">    (SERVICE_NAME = zhang)</span><br><span class="line"></span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
 <p>注意：标红的可以写zhang,hai,hong 或者oradb，就算木有listener.ora 文件，照样可以监听。</p>
 <p>下面介绍下非默认动态注册：</p>
 <p>这里我们端口用1234,非默认必须需要listener.ora 文件，还有就是local_listener参数.</p>
-<p>修改监听文件：</p>
-<h1 id="listener-ora-Network-Configuration-File-app-oracle-product-10-2-0-db-1-network-admin-listener-ora"><a href="#listener-ora-Network-Configuration-File-app-oracle-product-10-2-0-db-1-network-admin-listener-ora" class="headerlink" title="listener.ora Network Configuration File: /app/oracle/product/10.2.0/db_1/network/admin/listener.ora"></a>listener.ora Network Configuration File: /app/oracle/product/10.2.0/db_1/network/admin/listener.ora</h1><h1 id="Generated-by-Oracle-configuration-tools"><a href="#Generated-by-Oracle-configuration-tools" class="headerlink" title="Generated by Oracle configuration tools."></a>Generated by Oracle configuration tools.</h1><p>SID_LIST_LISTENER =<br>  (SID_LIST =<br>    (SID_DESC =<br>      (SID_NAME = oradb)<br>      (ORACLE_HOME = /app/oracle/product/10.2.0/db_1)<br>    )<br>  )</p>
-<p>LISTENER =<br>  (DESCRIPTION_LIST =<br>    (DESCRIPTION =<br>      (ADDRESS = (PROTOCOL = TCP)(HOST =172.16.3.174)(PORT = 1234))<br>    )<br>  )</p>
+<p>修改监听文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># listener.ora Network Configuration File: /app/oracle/product/10.2.0/db_1/network/admin/listener.ora</span><br><span class="line"># Generated by Oracle configuration tools.</span><br><span class="line"></span><br><span class="line">SID_LIST_LISTENER =</span><br><span class="line">  (SID_LIST =</span><br><span class="line">    (SID_DESC =</span><br><span class="line">      (SID_NAME = oradb)</span><br><span class="line">      (ORACLE_HOME = /app/oracle/product/10.2.0/db_1)</span><br><span class="line">    )</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">LISTENER =</span><br><span class="line">  (DESCRIPTION_LIST =</span><br><span class="line">    (DESCRIPTION =</span><br><span class="line">      (ADDRESS = (PROTOCOL = TCP)(HOST =172.16.3.174)(PORT = 1234))</span><br><span class="line">    )</span><br><span class="line">  )</span><br></pre></td></tr></table></figure></p>
 <p>修改local_listener参数：Alter system set local_listener=‘(ADDRESS = (PROTOCOL = TCP)(HOST =)(PORT = 1234))’;</p>
 <p>注意这里，以上修改参数等同于以下配置：</p>
-<p>配置服务端的tnsnames.ora文件</p>
-<p>  hankzhang =</p>
-<p>  (DESCRIPTION =</p>
-<pre><code>(ADDRESS_LIST =
-
-  (ADDRESS = (PROTOCOL = TCP)(HOST =)(PORT = 1234))
-
-)
-</code></pre><p>  )</p>
+<p>配置服务端的tnsnames.ora文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">hankzhang =</span><br><span class="line"></span><br><span class="line">(DESCRIPTION =</span><br><span class="line"></span><br><span class="line">  (ADDRESS_LIST =</span><br><span class="line"></span><br><span class="line">    (ADDRESS = (PROTOCOL = TCP)(HOST =)(PORT = 1234))</span><br><span class="line"></span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
 <p>然后再设置参数：  Alter system set local_listener=hankzhang;</p>
 <p>以上两种方法效果是一样滴。</p>
-<p>lisnrctl status看一下：<br><img src="http://pfebs4xvj.bkt.clouddn.com/2.jpg" alt="Alt text"><br>oracle listener - dazuiba_008 - 魂醉的数据库之路<br> 至于RAC的listener配置，呵呵，大同小异，不过还是有区别的，这里先提以下，有时间再继续。</p>
+<p>lisnrctl status看一下：<br><img src="http://pfebs4xvj.bkt.clouddn.com/3.jpg" alt="Alt text"><br>oracle listener - dazuiba_008 - 魂醉的数据库之路<br> 至于RAC的listener配置，呵呵，大同小异，不过还是有区别的，这里先提以下，有时间再继续。</p>
 <p>RAC在监听端也可以负载均衡的哦，呵呵，当然这是在RAC双主模式的情况下，而且需要配置REMOTE_LISTENER，配置tnsnames.ora文件，监听暂时先到这里。</p>
 
       
@@ -540,8 +489,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2013/09/18/Greenplum-install/" rel="next" title="Greenplum install">
-                <i class="fa fa-chevron-left"></i> Greenplum install
+              <a href="/2010/09/18/Installation-from-Source-Code-for-postgreSQL/" rel="next" title="Installation from Source Code for postgreSQL">
+                <i class="fa fa-chevron-left"></i> Installation from Source Code for postgreSQL
               </a>
             
           </div>
@@ -549,6 +498,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2011/07/29/oracle-ORA-1555错误/" rel="prev" title="oracle ORA-1555错误">
+                oracle ORA-1555错误 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -611,17 +564,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -739,22 +683,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#listener-ora-Network-Configuration-File-app-oracle-product-10-2-0-db-1-network-admin-listener-ora"><span class="nav-number">1.</span> <span class="nav-text">listener.ora Network Configuration File: /app/oracle/product/10.2.0/db_1/network/admin/listener.ora</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Generated-by-Oracle-configuration-tools"><span class="nav-number">2.</span> <span class="nav-text">Generated by Oracle configuration tools.</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
