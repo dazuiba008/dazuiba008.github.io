@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="话说导数据expdp比exp效率多了，原因很简单，exp是通过BUFFER CACHE的SQL导出到exp文件的，但是expdp则不是，他不通过BUFFER CACHE，而是直接导出到文件的，而且只能在服务端，所以不受网络的影响。 建好相关目录后，就开始动工导数据了，但是出现错误了 expdp mrpmusic/mrpmusic dumpfile=mrpmusic.dmp directory=mr">
+<meta name="description" content="常用定位library cache lock的方法 经常看到PUB上有兄弟说什么LIBRARY CACHE LOCK和PIN的错误不知道该如何处理，而且定位不到问题出在哪里,我来说几句吧,以我工作上的经验，希望能对大家有用    一般来说,这类错误是因为在包或过程被频繁调用的过程中，DDL语句引起的，那我们该怎么处理呢?其实我们可以这样来操作来查原因，老板要的一般都是为什么产生这个故障和谁操作导致">
 <meta name="keywords" content="oracle">
 <meta property="og:type" content="article">
-<meta property="og:title" content="记一次expdp错误">
-<meta property="og:url" content="http://yoursite.com/2011/08/24/记一次expdp错误/index.html">
+<meta property="og:title" content="定位library cache lock的方法(转帖)">
+<meta property="og:url" content="http://yoursite.com/2018/09/25/定位library-cache-lock的方法-转帖/index.html">
 <meta property="og:site_name" content="魂醉的一亩二分地">
-<meta property="og:description" content="话说导数据expdp比exp效率多了，原因很简单，exp是通过BUFFER CACHE的SQL导出到exp文件的，但是expdp则不是，他不通过BUFFER CACHE，而是直接导出到文件的，而且只能在服务端，所以不受网络的影响。 建好相关目录后，就开始动工导数据了，但是出现错误了 expdp mrpmusic/mrpmusic dumpfile=mrpmusic.dmp directory=mr">
+<meta property="og:description" content="常用定位library cache lock的方法 经常看到PUB上有兄弟说什么LIBRARY CACHE LOCK和PIN的错误不知道该如何处理，而且定位不到问题出在哪里,我来说几句吧,以我工作上的经验，希望能对大家有用    一般来说,这类错误是因为在包或过程被频繁调用的过程中，DDL语句引起的，那我们该怎么处理呢?其实我们可以这样来操作来查原因，老板要的一般都是为什么产生这个故障和谁操作导致">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-25T01:58:56.419Z">
+<meta property="og:updated_time" content="2018-09-25T06:45:48.114Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="记一次expdp错误">
-<meta name="twitter:description" content="话说导数据expdp比exp效率多了，原因很简单，exp是通过BUFFER CACHE的SQL导出到exp文件的，但是expdp则不是，他不通过BUFFER CACHE，而是直接导出到文件的，而且只能在服务端，所以不受网络的影响。 建好相关目录后，就开始动工导数据了，但是出现错误了 expdp mrpmusic/mrpmusic dumpfile=mrpmusic.dmp directory=mr">
+<meta name="twitter:title" content="定位library cache lock的方法(转帖)">
+<meta name="twitter:description" content="常用定位library cache lock的方法 经常看到PUB上有兄弟说什么LIBRARY CACHE LOCK和PIN的错误不知道该如何处理，而且定位不到问题出在哪里,我来说几句吧,以我工作上的经验，希望能对大家有用    一般来说,这类错误是因为在包或过程被频繁调用的过程中，DDL语句引起的，那我们该怎么处理呢?其实我们可以这样来操作来查原因，老板要的一般都是为什么产生这个故障和谁操作导致">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2011/08/24/记一次expdp错误/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/09/25/定位library-cache-lock的方法-转帖/"/>
 
 
 
 
 
-  <title>记一次expdp错误 | 魂醉的一亩二分地</title>
+  <title>定位library cache lock的方法(转帖) | 魂醉的一亩二分地</title>
   
 
 
@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2011/08/24/记一次expdp错误/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/25/定位library-cache-lock的方法-转帖/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="魂醉">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">记一次expdp错误</h1>
+          <h1 class="post-title" itemprop="name headline">定位library cache lock的方法(转帖)</h1>
         
 
         <div class="post-meta">
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2011-08-24T09:42:06+08:00">
-                2011-08-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-25T14:42:42+08:00">
+                2018-09-25
               </time>
             
 
@@ -366,7 +366,7 @@
 
           
           
-             <span id="/2011/08/24/记一次expdp错误/" class="leancloud_visitors" data-flag-title="记一次expdp错误">
+             <span id="/2018/09/25/定位library-cache-lock的方法-转帖/" class="leancloud_visitors" data-flag-title="定位library cache lock的方法(转帖)">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -402,20 +402,33 @@
       
 
       
-        <p>话说导数据expdp比exp效率多了，原因很简单，exp是通过BUFFER CACHE的SQL导出到exp文件的，但是expdp则不是，他不通过BUFFER CACHE，而是直接导出到文件的，而且只能在服务端，所以不受网络的影响。</p>
-<p>建好相关目录后，就开始动工导数据了，但是出现错误了</p>
-<p>expdp mrpmusic/mrpmusic dumpfile=mrpmusic.dmp directory=mrpmusic_exp<br>ORA-39006: internal error<br>ORA-39065: unexpected master process exception in DISPATCH<br>ORA-01403: no data found</p>
-<p>ORA-39097: Data Pump job encountered unexpected error 100</p>
-<p>完了查了下metalink</p>
-<p>Data Pump Export Started Failing After Applying CPU Patch [ID 453796.1]这篇文章</p>
-<p>上面说是运行两个脚本</p>
-<p>sqlplus / as sysdba<br>$ORACLE_HOME/rdbms/admin/catmet2.sql<br>$ORACLE_HOME/rdbms/admin/utlrp.sql</p>
-<p>执行后，又有新错误</p>
-<p>ORA-39125: Worker unexpected fatal error in KUPW$WORKER.UNLOAD_METADATA while calling DBMS_METADATA.FETCH_XML_CLOB [PROCACT_SCHEMA:”MRPMUSIC”]<br>ORA-04063: view “SYS.KU$_CLUSTER_VIEW” has errors</p>
-<p>ORA-06512: at “SYS.DBMS_SYS_ERROR”, line 105<br>ORA-06512: at “SYS.KUPW$WORKER”, line 6313</p>
-<p>继续查看了一下 ID 742018.1</p>
-<p>解决方案：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">cd $ORACLE_HOME/rdbms/admin</span><br><span class="line">SQL&gt; startup restrict</span><br><span class="line">SQL&gt; select count(*) from dba_objects where status=&apos;INVALID&apos;;</span><br><span class="line">SQL&gt; @catalog</span><br><span class="line">SQL&gt; @catproc</span><br><span class="line">SQL&gt; @utlrp &lt;== To compile the invalid objects</span><br><span class="line">SQL&gt; select count(*) from dba_objects where status=&apos;INVALID&apos;;</span><br><span class="line">col comp_id for a12</span><br><span class="line">col comp_name for a30</span><br><span class="line">col version for a12</span><br><span class="line">select comp_id, comp_name, version, status from dba_registry;</span><br><span class="line">SQL&gt; shutdown immediate</span><br><span class="line">SQL&gt; startup</span><br></pre></td></tr></table></figure></p>
-<p>需要重启数据库，我就不往下继续了。由于版本不同，无法向下兼容，还是老实用低版本的EXP出来</p>
+        <pre><code>常用定位library cache lock的方法
+</code></pre><p>经常看到PUB上有兄弟说什么LIBRARY CACHE LOCK和PIN的错误不知道该如何处理，而且定位不到问题出在哪里,我来说几句吧,以我工作上的经验，希望能对大家有用</p>
+<p>   一般来说,这类错误是因为在包或过程被频繁调用的过程中，DDL语句引起的，那我们该怎么处理呢?其实我们可以这样来操作来查原因，老板要的一般都是为什么产生这个故障和谁操作导致的这个故障，特别是故障处理好后，这个问题就要回答老板了。</p>
+<p>1、预先在数据库中建立DDL级的触发器,我认为这个是必要的,因为这个对生产影响不大，但是却可以让我们监控到不少有用的信息.，比如记录在abc表中，可以记录登陆用户，操作语句，操作时间等等信息。</p>
+<p>  2、在数据库中出现大量的libriary cache lock 的等待事件的时候，系统出现严重的问题了，我们可以立即从这个时间点左右着手，比如12日21日中午12点到12点半之间出问题，如下语句</p>
+<p>select * from dba_objects where</p>
+<p>last_ddl_time&gt;to_date(‘20071221 12:00:00’,’yyyymmdd hh24:mi:ss’)</p>
+<p>AND last_ddl_time&lt;=to_date(‘200712 12:30:00’,’yyyymmdd hh24:mi:ss’)</p>
+<p>and (object_type like ‘%PACK%’ or object_type like ‘FUNCTION’ OR object_type=’PROCEDURE’)</p>
+<p>AND STATUS=’INVALID’</p>
+<p>order by last_ddl_time desc</p>
+<p>其实通过这个基本上就发现是什么问题了，基本上就只会有一两个对象比如包BBB失效</p>
+<p>3、然后找包关联的对象，是否在我们的触发器记录的表中有记录，接着执行如下语句（切记，这个记录DDL动作的语句发挥作用了）</p>
+<p>select * from abc where ddl_time&gt;to_date(‘20071221 12:00:00’,’yyyymmdd hh24:mi:ss’)</p>
+<p>AND ddl_time&lt;=to_date(‘200712 12:30:00’,’yyyymmdd hh24:mi:ss’)</p>
+<p>and schema_object in (SELECT referenced_name FROM DBA_DEPENDENCIES WHERE NAME=’BBB’ )</p>
+<p>ORDER BY DDL_time desc</p>
+<p>（请注意，这个BBB就是上面我查出来的，举例说比如失效的包）</p>
+<p>这样查出来的，绝对就是引起这次事故的罪魁祸首的动作了。（ddl_time和 schema_object 是abc表的字段，记录了登陆者操作DDL的时间和对象）</p>
+<p> 以上方式是我在工作中经常采用的，很好用，一般不会有问题。</p>
+<p> 当然我上面并没有说明解决问题的方法，解决问题的方法是如下。但是有的时候发现问题原因，追究问题原因是非常非常重要的，可以避免下次再发生，当然通过DUMP systemstate等方式，比较复杂，我的这个思路操作起来应该比较简便，很明了。另外，建立DDL级的触发器，个人认为是必须的！所以上面的方法我想说出来，希望对大家有用！</p>
+<p> 解决问题的方法步骤</p>
+<p>1、查看具体产生library cache lock 的对象，比如不哪些包和存储过程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT KGLNAOWN,KGLNAOBJ</span><br><span class="line"></span><br><span class="line">   FROM x$kglob</span><br><span class="line"></span><br><span class="line">  WHERE kglhdadr in( select P1RAW from v$session_wait where event like &apos;library cache%&apos;);</span><br></pre></td></tr></table></figure></p>
+<p>2、  查看具体是那些用户做了这个操作导致 library cache lock<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">select sid, program ,machine from v$session where paddr in (</span><br><span class="line"></span><br><span class="line">       SELECT s.paddr</span><br><span class="line"></span><br><span class="line">        FROM x$kglpn p, v$session s</span><br><span class="line"></span><br><span class="line">       WHERE p.kglpnuse=s.saddr(+) AND p.kglpnmod &lt;&gt; 0</span><br><span class="line"></span><br><span class="line">   and kglpnhdl in ( select p1raw  from v$session_wait where event  in (&apos;library cache pin&apos;,&apos;library cache lock&apos; ,&apos;library cache load lock&apos;)  )        );</span><br></pre></td></tr></table></figure></p>
+<p>3、、以下语句用来杀掉会话（前面查看，然后到这步是决定是否要杀掉进程解决这个问题）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">select &apos;kill -9 &apos;||spid from v$process where addr in (</span><br><span class="line"></span><br><span class="line">       SELECT s.paddr</span><br><span class="line"></span><br><span class="line">        FROM x$kglpn p, v$session s</span><br><span class="line"></span><br><span class="line">       WHERE p.kglpnuse=s.saddr --AND p.kglpnmod &lt;&gt; 0</span><br><span class="line"></span><br><span class="line">   and kglpnhdl in ( select p1raw  from v$session_wait where event  in (&apos; library cache pin&apos;,&apos;library cache lock&apos; )  )        );</span><br><span class="line"></span><br><span class="line"> 附：DDL触发器的语句</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">CREATE OR REPLACE TRIGGER tr_trace_ddl</span><br><span class="line"></span><br><span class="line">AFTER ddl</span><br><span class="line"></span><br><span class="line">ON database</span><br><span class="line"></span><br><span class="line">DECLARE</span><br><span class="line"></span><br><span class="line">  SQL_TEXT   ORA_NAME_LIST_T;</span><br><span class="line"></span><br><span class="line">  STATE_SQL  VARCHAR2(4000); --DDL$TRACE.DDL_SQL%TYPE;</span><br><span class="line"></span><br><span class="line">  V_ERR_INFO VARCHAR2(200);</span><br><span class="line"></span><br><span class="line">BEGIN</span><br><span class="line"></span><br><span class="line">  FOR I IN 1 .. ORA_SQL_TXT(SQL_TEXT) LOOP</span><br><span class="line"></span><br><span class="line">    STATE_SQL := STATE_SQL || SQL_TEXT(I);</span><br><span class="line"></span><br><span class="line">  END LOOP;</span><br><span class="line"></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">  INSERT INTO SYSTEM.ABC</span><br><span class="line"></span><br><span class="line">    (LOGIN_USER,</span><br><span class="line"></span><br><span class="line">     AUDSID,</span><br><span class="line"></span><br><span class="line">     IPADDRESS,</span><br><span class="line"></span><br><span class="line">     SCHEMA_USER,</span><br><span class="line"></span><br><span class="line">     SCHEMA_OBJECT,</span><br><span class="line"></span><br><span class="line">     DDL_TIME,</span><br><span class="line"></span><br><span class="line">     DDL_SQL)</span><br><span class="line"></span><br><span class="line">  VALUES</span><br><span class="line"></span><br><span class="line">    (ORA_LOGIN_USER,</span><br><span class="line"></span><br><span class="line">     USERENV(&apos;SESSIONID&apos;),</span><br><span class="line"></span><br><span class="line">     SYS_CONTEXT(&apos;userenv&apos;, &apos;ip_address&apos;),</span><br><span class="line"></span><br><span class="line">     ORA_DICT_OBJ_OWNER,</span><br><span class="line"></span><br><span class="line">     ORA_DICT_OBJ_NAME,</span><br><span class="line"></span><br><span class="line">     SYSDATE,</span><br><span class="line"></span><br><span class="line">     STATE_SQL);</span><br><span class="line"></span><br><span class="line">EXCEPTION</span><br><span class="line"></span><br><span class="line">  WHEN OTHERS THEN</span><br><span class="line"></span><br><span class="line">    V_ERR_INFO := SUBSTRB(SQLERRM, 1, 198);</span><br><span class="line"></span><br><span class="line">END TR_TRACE_DDL;</span><br></pre></td></tr></table></figure></p>
+<p>目的找出spid ,也可以用下面的sql:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">SELECT spid</span><br><span class="line"></span><br><span class="line">   FROM v$process p, v$session s</span><br><span class="line"></span><br><span class="line">  WHERE p.addr = s.paddr</span><br><span class="line"></span><br><span class="line">    AND s.SID IN (SELECT sid</span><br><span class="line"></span><br><span class="line">                    FROM v$session_wait b</span><br><span class="line"></span><br><span class="line">                   WHERE b.EVENT in (&apos; library cache pin&apos;,&apos;library cache lock&apos; )  )</span><br></pre></td></tr></table></figure></p>
+<p>前提是sesion 没有被 killed 掉, 如果被killed , v$session.paddr &lt;&gt; v$process.addr.</p>
 
       
     </div>
@@ -475,8 +488,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2011/08/22/INDEX-FAST-FULL-SCAN-AND-SKIP-SCAN/" rel="next" title="INDEX FAST FULL SCAN AND SKIP SCAN">
-                <i class="fa fa-chevron-left"></i> INDEX FAST FULL SCAN AND SKIP SCAN
+              <a href="/2013/09/18/Greenplum-install/" rel="next" title="Greenplum install">
+                <i class="fa fa-chevron-left"></i> Greenplum install
               </a>
             
           </div>
@@ -484,10 +497,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2011/08/25/DBA-ERRORS错误一例/" rel="prev" title="DBA_ERRORS错误一例">
-                DBA_ERRORS错误一例 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
