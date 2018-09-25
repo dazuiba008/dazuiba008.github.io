@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="oracle," />
 
 
 
@@ -79,16 +79,18 @@
 
 
 
-<meta name="description" content="人在江湖飘,哪能不挨刀！">
-<meta property="og:type" content="website">
-<meta property="og:title" content="魂醉的一亩二分地">
-<meta property="og:url" content="http://yoursite.com/archives/2018/09/index.html">
+<meta name="description" content="话说导数据expdp比exp效率多了，原因很简单，exp是通过BUFFER CACHE的SQL导出到exp文件的，但是expdp则不是，他不通过BUFFER CACHE，而是直接导出到文件的，而且只能在服务端，所以不受网络的影响。 建好相关目录后，就开始动工导数据了，但是出现错误了 expdp mrpmusic/mrpmusic dumpfile=mrpmusic.dmp directory=mr">
+<meta name="keywords" content="oracle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记一次expdp错误">
+<meta property="og:url" content="http://yoursite.com/2011/08/24/记一次expdp错误/index.html">
 <meta property="og:site_name" content="魂醉的一亩二分地">
-<meta property="og:description" content="人在江湖飘,哪能不挨刀！">
+<meta property="og:description" content="话说导数据expdp比exp效率多了，原因很简单，exp是通过BUFFER CACHE的SQL导出到exp文件的，但是expdp则不是，他不通过BUFFER CACHE，而是直接导出到文件的，而且只能在服务端，所以不受网络的影响。 建好相关目录后，就开始动工导数据了，但是出现错误了 expdp mrpmusic/mrpmusic dumpfile=mrpmusic.dmp directory=mr">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-25T01:43:18.371Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="魂醉的一亩二分地">
-<meta name="twitter:description" content="人在江湖飘,哪能不挨刀！">
+<meta name="twitter:title" content="记一次expdp错误">
+<meta name="twitter:description" content="话说导数据expdp比exp效率多了，原因很简单，exp是通过BUFFER CACHE的SQL导出到exp文件的，但是expdp则不是，他不通过BUFFER CACHE，而是直接导出到文件的，而且只能在服务端，所以不受网络的影响。 建好相关目录后，就开始动工导数据了，但是出现错误了 expdp mrpmusic/mrpmusic dumpfile=mrpmusic.dmp directory=mr">
 
 
 
@@ -118,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2018/09/"/>
+  <link rel="canonical" href="http://yoursite.com/2011/08/24/记一次expdp错误/"/>
 
 
 
 
 
-  <title>归档 | 魂醉的一亩二分地</title>
+  <title>记一次expdp错误 | 魂醉的一亩二分地</title>
   
 
 
@@ -143,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -281,74 +283,236 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
-
-      <span class="archive-page-counter">
-        
-        
-        
-          
-        
-        嗯..! 目前共计 15 篇日志。 继续努力。
-      </span>
-
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
-
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2011/08/24/记一次expdp错误/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="魂醉">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="魂醉的一亩二分地">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/09/25/记一次expdp错误/" itemprop="url">
-              
-                <span itemprop="name">记一次expdp错误</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">记一次expdp错误</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-25T09:42:06+08:00"
-              content="2018-09-25" >
-          09-25
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2011-08-24T09:42:06+08:00">
+                2011-08-24
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/oracle/" itemprop="url" rel="index">
+                    <span itemprop="name">oracle</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2011/08/24/记一次expdp错误/" class="leancloud_visitors" data-flag-title="记一次expdp错误">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
+      
 
+      
+        <p>话说导数据expdp比exp效率多了，原因很简单，exp是通过BUFFER CACHE的SQL导出到exp文件的，但是expdp则不是，他不通过BUFFER CACHE，而是直接导出到文件的，而且只能在服务端，所以不受网络的影响。</p>
+<p>建好相关目录后，就开始动工导数据了，但是出现错误了</p>
+<p>expdp mrpmusic/mrpmusic dumpfile=mrpmusic.dmp directory=mrpmusic_exp<br>ORA-39006: internal error<br>ORA-39065: unexpected master process exception in DISPATCH<br>ORA-01403: no data found</p>
+<p>ORA-39097: Data Pump job encountered unexpected error 100</p>
+<p>完了查了下metalink</p>
+<p>Data Pump Export Started Failing After Applying CPU Patch [ID 453796.1]这篇文章</p>
+<p>上面说是运行两个脚本</p>
+<p>sqlplus / as sysdba<br>$ORACLE_HOME/rdbms/admin/catmet2.sql<br>$ORACLE_HOME/rdbms/admin/utlrp.sql</p>
+<p>执行后，又有新错误</p>
+<p>ORA-39125: Worker unexpected fatal error in KUPW$WORKER.UNLOAD_METADATA while calling DBMS_METADATA.FETCH_XML_CLOB [PROCACT_SCHEMA:”MRPMUSIC”]<br>ORA-04063: view “SYS.KU$_CLUSTER_VIEW” has errors</p>
+<p>ORA-06512: at “SYS.DBMS_SYS_ERROR”, line 105<br>ORA-06512: at “SYS.KUPW$WORKER”, line 6313</p>
+<p>继续查看了一下 ID 742018.1</p>
+<p>解决方案：<br>‘’’<br>cd $ORACLE_HOME/rdbms/admin<br>SQL&gt; startup restrict<br>SQL&gt; select count(<em>) from dba_objects where status=’INVALID’;<br>SQL&gt; @catalog<br>SQL&gt; @catproc<br>SQL&gt; @utlrp &lt;== To compile the invalid objects<br>SQL&gt; select count(</em>) from dba_objects where status=’INVALID’;<br>col comp_id for a12<br>col comp_name for a30<br>col version for a12<br>select comp_id, comp_name, version, status from dba_registry;<br>SQL&gt; shutdown immediate<br>SQL&gt; startup<br>‘’’<br>需要重启数据库，我就不往下继续了。由于版本不同，无法向下兼容，还是老实用低版本的EXP出来</p>
+
+      
     </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>你活着,证明了什么？</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="魂醉 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="魂醉 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/oracle/" rel="tag"># oracle</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2011/08/22/INDEX-FAST-FULL-SCAN-AND-SKIP-SCAN/" rel="next" title="INDEX FAST FULL SCAN AND SKIP SCAN">
+                <i class="fa fa-chevron-left"></i> INDEX FAST FULL SCAN AND SKIP SCAN
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2011/09/18/linux-cluster配置安装（简化/" rel="prev" title="linux cluster配置安装（简化)">
+                linux cluster配置安装（简化) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -356,6 +520,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTg0MC8xNjM2Nw=="></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -674,6 +847,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -702,6 +879,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
