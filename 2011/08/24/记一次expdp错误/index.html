@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="魂醉的一亩二分地">
 <meta property="og:description" content="话说导数据expdp比exp效率多了，原因很简单，exp是通过BUFFER CACHE的SQL导出到exp文件的，但是expdp则不是，他不通过BUFFER CACHE，而是直接导出到文件的，而且只能在服务端，所以不受网络的影响。 建好相关目录后，就开始动工导数据了，但是出现错误了 expdp mrpmusic/mrpmusic dumpfile=mrpmusic.dmp directory=mr">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-25T01:46:23.488Z">
+<meta property="og:updated_time" content="2018-09-25T01:58:56.419Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记一次expdp错误">
 <meta name="twitter:description" content="话说导数据expdp比exp效率多了，原因很简单，exp是通过BUFFER CACHE的SQL导出到exp文件的，但是expdp则不是，他不通过BUFFER CACHE，而是直接导出到文件的，而且只能在服务端，所以不受网络的影响。 建好相关目录后，就开始动工导数据了，但是出现错误了 expdp mrpmusic/mrpmusic dumpfile=mrpmusic.dmp directory=mr">
@@ -414,7 +414,8 @@
 <p>ORA-39125: Worker unexpected fatal error in KUPW$WORKER.UNLOAD_METADATA while calling DBMS_METADATA.FETCH_XML_CLOB [PROCACT_SCHEMA:”MRPMUSIC”]<br>ORA-04063: view “SYS.KU$_CLUSTER_VIEW” has errors</p>
 <p>ORA-06512: at “SYS.DBMS_SYS_ERROR”, line 105<br>ORA-06512: at “SYS.KUPW$WORKER”, line 6313</p>
 <p>继续查看了一下 ID 742018.1</p>
-<p>解决方案：<br>‘’’<br>cd $ORACLE_HOME/rdbms/admin<br>SQL&gt; startup restrict<br>SQL&gt; select count(<em>) from dba_objects where status=’INVALID’;<br>SQL&gt; @catalog<br>SQL&gt; @catproc<br>SQL&gt; @utlrp &lt;== To compile the invalid objects<br>SQL&gt; select count(</em>) from dba_objects where status=’INVALID’;<br>col comp_id for a12<br>col comp_name for a30<br>col version for a12<br>select comp_id, comp_name, version, status from dba_registry;<br>SQL&gt; shutdown immediate<br>SQL&gt; startup<br>‘’’<br>需要重启数据库，我就不往下继续了。由于版本不同，无法向下兼容，还是老实用低版本的EXP出来</p>
+<p>解决方案：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">cd $ORACLE_HOME/rdbms/admin</span><br><span class="line">SQL&gt; startup restrict</span><br><span class="line">SQL&gt; select count(*) from dba_objects where status=&apos;INVALID&apos;;</span><br><span class="line">SQL&gt; @catalog</span><br><span class="line">SQL&gt; @catproc</span><br><span class="line">SQL&gt; @utlrp &lt;== To compile the invalid objects</span><br><span class="line">SQL&gt; select count(*) from dba_objects where status=&apos;INVALID&apos;;</span><br><span class="line">col comp_id for a12</span><br><span class="line">col comp_name for a30</span><br><span class="line">col version for a12</span><br><span class="line">select comp_id, comp_name, version, status from dba_registry;</span><br><span class="line">SQL&gt; shutdown immediate</span><br><span class="line">SQL&gt; startup</span><br></pre></td></tr></table></figure></p>
+<p>需要重启数据库，我就不往下继续了。由于版本不同，无法向下兼容，还是老实用低版本的EXP出来</p>
 
       
     </div>
