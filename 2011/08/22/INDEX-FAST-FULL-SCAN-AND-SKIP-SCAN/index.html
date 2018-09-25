@@ -79,22 +79,21 @@
 
 
 
-<meta name="description" content="这一块知识，我相信搞oracle的兄弟都是比较精通的，我也是前段时间公司让做个培训的时候，又把这块又温习了一遍，还是有不少新的收获，今天就搬到这里记录一下大家可以看到这里的WEB应用充当中间件，既懂HTTP，又懂oracle net，厉害吧，其实就是个翻译官。如果WEB应用服务器采用 JDBC OCI DRIVER，那么WEB服务必须的安装oracle net组件，才能和oracle数据库进行通讯">
+<meta name="description" content="在快速扫描索引时，oracle读取b-tree索引的所有叶子节点块，而且是顺序读，而且可以同时读取db_file_multiblock_read_count, 而且索引快速扫描比full table scan的物理IO小很多，可以更快的响应请求。以下还是看下原文： The fast full scan can be used if all of the columns in the query f">
 <meta name="keywords" content="oracle">
 <meta property="og:type" content="article">
-<meta property="og:title" content="oracle listener">
-<meta property="og:url" content="http://yoursite.com/2011/07/21/oracle-listener/index.html">
+<meta property="og:title" content="INDEX FAST FULL SCAN AND SKIP SCAN">
+<meta property="og:url" content="http://yoursite.com/2011/08/22/INDEX-FAST-FULL-SCAN-AND-SKIP-SCAN/index.html">
 <meta property="og:site_name" content="魂醉的一亩二分地">
-<meta property="og:description" content="这一块知识，我相信搞oracle的兄弟都是比较精通的，我也是前段时间公司让做个培训的时候，又把这块又温习了一遍，还是有不少新的收获，今天就搬到这里记录一下大家可以看到这里的WEB应用充当中间件，既懂HTTP，又懂oracle net，厉害吧，其实就是个翻译官。如果WEB应用服务器采用 JDBC OCI DRIVER，那么WEB服务必须的安装oracle net组件，才能和oracle数据库进行通讯">
+<meta property="og:description" content="在快速扫描索引时，oracle读取b-tree索引的所有叶子节点块，而且是顺序读，而且可以同时读取db_file_multiblock_read_count, 而且索引快速扫描比full table scan的物理IO小很多，可以更快的响应请求。以下还是看下原文： The fast full scan can be used if all of the columns in the query f">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://pfebs4xvj.bkt.clouddn.com/1.jpg">
-<meta property="og:image" content="http://pfebs4xvj.bkt.clouddn.com/2.jpg">
-<meta property="og:image" content="http://pfebs4xvj.bkt.clouddn.com/3.jpg">
-<meta property="og:updated_time" content="2018-09-21T08:13:31.903Z">
+<meta property="og:image" content="http://pfebs4xvj.bkt.clouddn.com/index_1.jpg">
+<meta property="og:image" content="http://pfebs4xvj.bkt.clouddn.com/index_2.jpg">
+<meta property="og:updated_time" content="2018-09-25T01:22:04.606Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="oracle listener">
-<meta name="twitter:description" content="这一块知识，我相信搞oracle的兄弟都是比较精通的，我也是前段时间公司让做个培训的时候，又把这块又温习了一遍，还是有不少新的收获，今天就搬到这里记录一下大家可以看到这里的WEB应用充当中间件，既懂HTTP，又懂oracle net，厉害吧，其实就是个翻译官。如果WEB应用服务器采用 JDBC OCI DRIVER，那么WEB服务必须的安装oracle net组件，才能和oracle数据库进行通讯">
-<meta name="twitter:image" content="http://pfebs4xvj.bkt.clouddn.com/1.jpg">
+<meta name="twitter:title" content="INDEX FAST FULL SCAN AND SKIP SCAN">
+<meta name="twitter:description" content="在快速扫描索引时，oracle读取b-tree索引的所有叶子节点块，而且是顺序读，而且可以同时读取db_file_multiblock_read_count, 而且索引快速扫描比full table scan的物理IO小很多，可以更快的响应请求。以下还是看下原文： The fast full scan can be used if all of the columns in the query f">
+<meta name="twitter:image" content="http://pfebs4xvj.bkt.clouddn.com/index_1.jpg">
 
 
 
@@ -124,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2011/07/21/oracle-listener/"/>
+  <link rel="canonical" href="http://yoursite.com/2011/08/22/INDEX-FAST-FULL-SCAN-AND-SKIP-SCAN/"/>
 
 
 
 
 
-  <title>oracle listener | 魂醉的一亩二分地</title>
+  <title>INDEX FAST FULL SCAN AND SKIP SCAN | 魂醉的一亩二分地</title>
   
 
 
@@ -301,7 +300,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2011/07/21/oracle-listener/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2011/08/22/INDEX-FAST-FULL-SCAN-AND-SKIP-SCAN/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="魂醉">
@@ -318,7 +317,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">oracle listener</h1>
+          <h1 class="post-title" itemprop="name headline">INDEX FAST FULL SCAN AND SKIP SCAN</h1>
         
 
         <div class="post-meta">
@@ -330,8 +329,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2011-07-21T15:30:04+08:00">
-                2011-07-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2011-08-22T09:16:20+08:00">
+                2011-08-22
               </time>
             
 
@@ -370,7 +369,7 @@
 
           
           
-             <span id="/2011/07/21/oracle-listener/" class="leancloud_visitors" data-flag-title="oracle listener">
+             <span id="/2011/08/22/INDEX-FAST-FULL-SCAN-AND-SKIP-SCAN/" class="leancloud_visitors" data-flag-title="INDEX FAST FULL SCAN AND SKIP SCAN">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -406,30 +405,19 @@
       
 
       
-        <p>这一块知识，我相信搞oracle的兄弟都是比较精通的，我也是前段时间公司让做个培训的时候，又把这块又温习了一遍，还是有不少新的收获，今天就搬到这里记录一下<br><img src="http://pfebs4xvj.bkt.clouddn.com/1.jpg" alt="Alt text"><br>大家可以看到这里的WEB应用充当中间件，既懂HTTP，又懂oracle net，厉害吧，其实就是个翻译官。<br>如果WEB应用服务器采用 JDBC OCI DRIVER，那么WEB服务必须的安装oracle net组件，才能和oracle数据库进行通讯，走的TCP/IP协议。<br>如果WEB应用服务是JDBC THIN DRIVER，也就是瘦客户端，那么不需要oracle net组件，只需要配置JAVA NET就可以和oracle进行通讯。<br>监听怎么响应连接呢？看下图：<br><img src="http://pfebs4xvj.bkt.clouddn.com/2.jpg" alt="Alt text"><br>衍生继承模式：当有连接请求时，listener接待，触发一个服务器进程，红框内3直接继承了listener，只能用在专有模式，listener关闭了不影响<br>直接传送：使用Oracle Shared Server 时，监听程序将把连接传送给调度程序。专有模式不可用</p>
-<p>重定向：listener和服务端不在同一台机器，比如RAC和共享服务</p>
-<p>静态注册和动态注册： </p>
-<p>1.动态注册：就是PMON主动把信息告诉监听，无需使用listener.ora将文件，lsnrclt status里面read的都是动态。</p>
-<p>2.静态注册：监听主动去找服务和实例，需要配置listener.ora文件，指定SID列表，lsnrctl status里面是unknown</p>
-<p>先看静态注册，很简单的，保证一看就懂</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">直接配置listener.ora文件即可</span><br><span class="line"></span><br><span class="line">SID_LIST_LISTENER =</span><br><span class="line"></span><br><span class="line">  (SID_LIST =</span><br><span class="line"></span><br><span class="line">    (SID_DESC =</span><br><span class="line"></span><br><span class="line">      (SID_NAME = oradb)</span><br><span class="line"></span><br><span class="line">      (ORACLE_HOME = /app/oracle/product/10.2.0/db_1)</span><br><span class="line"></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">LISTENER =</span><br><span class="line"></span><br><span class="line">  (DESCRIPTION_LIST =</span><br><span class="line"></span><br><span class="line">    (DESCRIPTION =</span><br><span class="line"></span><br><span class="line">      (ADDRESS = (PROTOCOL = TCP)(HOST =)(PORT = 1521))</span><br><span class="line"></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">  )</span><br></pre></td></tr></table></figure>
-<p>  需要配置SID_NAME LISTENER需要指定相关参数块，这里如果host参数不指定，那么/etc/hosts需要指定，监听启动的时候回去读hosts文件匹配，如果设置为0.0.0.0，那么默认监听所有地址</p>
-<p>动态注册以及配置：</p>
-<p>1.动态注册不需要配置listener.ora文件，需要配置初始化参数文件，参数service_names,可是设置多个服务名，区分不同业务。</p>
-<p>2.如果想配置非默认端口，非默认监听名称，非TCPIP协议，那么需要配置listener.ora 而且需要配置local_listener参数，tnsnames.ora也需要配置。</p>
-<p>这里可以看到动态注册分为默认的和非默认的，默认的就是TCP/IP协议，端口是1521，监听名称LISTENER。非默认的大家自己能理解的哦。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">默认动态注册实验：</span><br><span class="line"></span><br><span class="line">1.Show parameter service_names;</span><br><span class="line"></span><br><span class="line">2.Alter system set service_names=zhang,hai,hong;</span><br><span class="line"></span><br><span class="line">3. Mv listener.ora listener.ora.bak   Lsnrctl stop</span><br><span class="line"></span><br><span class="line">4.Lsnrctl  start</span><br><span class="line"></span><br><span class="line">5.Alter system  register;</span><br><span class="line"></span><br><span class="line">6.Lsnrctl service;</span><br><span class="line"></span><br><span class="line">看结果：</span><br><span class="line"></span><br><span class="line">Connecting to (DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=172.16.3.174)(PORT=1521)))</span><br><span class="line">Services Summary...</span><br><span class="line">Service &quot;HAI&quot; has 1 instance(s).</span><br><span class="line">  Instance &quot;oradb&quot;, status READY, has 1 handler(s) for this service...</span><br><span class="line">    Handler(s):</span><br><span class="line">      &quot;DEDICATED&quot; established:0 refused:0 state:ready</span><br><span class="line">         LOCAL SERVER</span><br><span class="line">Service &quot;HONG&quot; has 1 instance(s).</span><br><span class="line">  Instance &quot;oradb&quot;, status READY, has 1 handler(s) for this service...</span><br><span class="line">    Handler(s):</span><br><span class="line">      &quot;DEDICATED&quot; established:0 refused:0 state:ready</span><br><span class="line">         LOCAL SERVER</span><br><span class="line">Service &quot;ZHANG&quot; has 1 instance(s).</span><br><span class="line">  Instance &quot;oradb&quot;, status READY, has 1 handler(s) for this service...</span><br><span class="line">    Handler(s):</span><br><span class="line">      &quot;DEDICATED&quot; established:0 refused:0 state:ready</span><br><span class="line">         LOCAL SERVER</span><br><span class="line">Service &quot;oradb&quot; has 2 instance(s).</span><br><span class="line">  Instance &quot;oradb&quot;, status UNKNOWN, has 1 handler(s) for this service...</span><br><span class="line">    Handler(s):</span><br><span class="line">      &quot;DEDICATED&quot; established:0 refused:0</span><br><span class="line">         LOCAL SERVER</span><br><span class="line">  Instance &quot;oradb&quot;, status READY, has 1 handler(s) for this service...</span><br><span class="line">    Handler(s):</span><br><span class="line">      &quot;DEDICATED&quot; established:0 refused:0 state:ready</span><br><span class="line">         LOCAL SERVER</span><br><span class="line">Service &quot;oradb_XPT&quot; has 1 instance(s).</span><br><span class="line">  Instance &quot;oradb&quot;, status READY, has 1 handler(s) for this service...</span><br><span class="line">    Handler(s):</span><br><span class="line">      &quot;DEDICATED&quot; established:0 refused:0 state:ready</span><br><span class="line">         LOCAL SERVER</span><br><span class="line">The command completed successfully</span><br></pre></td></tr></table></figure></p>
-<p>相应的client端你如果是用oracle net组件的，那么肯定要配置tnsnames.ora文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">testdb =</span><br><span class="line"></span><br><span class="line">(DESCRIPTION =</span><br><span class="line"></span><br><span class="line">  (ADDRESS = (PROTOCOL = TCP)(HOST = 172.168.3.174)(PORT = 1521))</span><br><span class="line"></span><br><span class="line">  (CONNECT_DATA =</span><br><span class="line"></span><br><span class="line">    (SERVER = DEDICATED)</span><br><span class="line"></span><br><span class="line">    (SERVICE_NAME = zhang)</span><br><span class="line"></span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
-<p>注意：标红的可以写zhang,hai,hong 或者oradb，就算木有listener.ora 文件，照样可以监听。</p>
-<p>下面介绍下非默认动态注册：</p>
-<p>这里我们端口用1234,非默认必须需要listener.ora 文件，还有就是local_listener参数.</p>
-<p>修改监听文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># listener.ora Network Configuration File: /app/oracle/product/10.2.0/db_1/network/admin/listener.ora</span><br><span class="line"># Generated by Oracle configuration tools.</span><br><span class="line"></span><br><span class="line">SID_LIST_LISTENER =</span><br><span class="line">  (SID_LIST =</span><br><span class="line">    (SID_DESC =</span><br><span class="line">      (SID_NAME = oradb)</span><br><span class="line">      (ORACLE_HOME = /app/oracle/product/10.2.0/db_1)</span><br><span class="line">    )</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">LISTENER =</span><br><span class="line">  (DESCRIPTION_LIST =</span><br><span class="line">    (DESCRIPTION =</span><br><span class="line">      (ADDRESS = (PROTOCOL = TCP)(HOST =172.16.3.174)(PORT = 1234))</span><br><span class="line">    )</span><br><span class="line">  )</span><br></pre></td></tr></table></figure></p>
-<p>修改local_listener参数：Alter system set local_listener=‘(ADDRESS = (PROTOCOL = TCP)(HOST =)(PORT = 1234))’;</p>
-<p>注意这里，以上修改参数等同于以下配置：</p>
-<p>配置服务端的tnsnames.ora文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">hankzhang =</span><br><span class="line"></span><br><span class="line">(DESCRIPTION =</span><br><span class="line"></span><br><span class="line">  (ADDRESS_LIST =</span><br><span class="line"></span><br><span class="line">    (ADDRESS = (PROTOCOL = TCP)(HOST =)(PORT = 1234))</span><br><span class="line"></span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
-<p>然后再设置参数：  Alter system set local_listener=hankzhang;</p>
-<p>以上两种方法效果是一样滴。</p>
-<p>lisnrctl status看一下：<br><img src="http://pfebs4xvj.bkt.clouddn.com/3.jpg" alt="Alt text"><br>至于RAC的listener配置，呵呵，大同小异，不过还是有区别的，这里先提以下，有时间再继续。</p>
-<p>RAC在监听端也可以负载均衡的哦，呵呵，当然这是在RAC双主模式的情况下，而且需要配置REMOTE_LISTENER，配置tnsnames.ora文件，监听暂时先到这里。</p>
+        <p>在快速扫描索引时，oracle读取b-tree索引的所有叶子节点块，而且是顺序读，而且可以同时读取db_file_multiblock_read_count,</p>
+<p>而且索引快速扫描比full table scan的物理IO小很多，可以更快的响应请求。以下还是看下原文：</p>
+<p>The fast full scan can be used if all of the columns in the query for the table are in the index<br>with the leading edge of the index not part of the WHERE condition.</p>
+<p>In the following example, the emp table is used. As shown<br>earlier in this chapter, it has a concatenated index on the columns empno, ename, and deptno.</p>
+<p>select empno, ename, deptno<br>from emp<br>where deptno = 30;</p>
+<p>Since all of the columns in the SQL statement are in the index, a fast full scan is available.<br>Index fast full scans are commonly performed during joins in which only the indexed join key<br>columns are queried. As an alternative, Oracle may perform a skip-scan access of the index; the<br>optimizer should consider the histogram for the Deptno column (if one is available) and decide<br>which of the available access paths yields the lowest possible performance cost.</p>
+<p>既然这里提到了SKIP SCANS,顺别看一下，SKIP SCAN比FAST FULL SCAN INDEX 更快</p>
+<p>为了好理解，就拿书中的例子看一下：</p>
+<p>这里emp5表有N 万行，建议一个组合索引，如果在查询中不使用引导列作为查询条件，也就是where后面不能有JOB列的限制</p>
+<p>优化器为CBO，引导列JOB最好没有重复值，可以强制使用index<br>‘’’<br>create index skip1 on emp5(job,empno);<br>select count(*)<br>from emp5<br>where empno = 7900;</p>
+<p>Execution Plan<br>0     SELECT STATEMENT Optimizer=CHOOSE (Cost=4 Card=1 Bytes=5)<br>1 0     SORT (AGGREGATE)<br>2 1         INDEX (FAST FULL SCAN) OF ‘SKIP1’ (NON-UNIQUE)<br>Statistics<br>6826 consistent gets<br>6819 physical reads</p>
+<p>select /<em>+ index(emp5 skip1) </em>/ count(*)<br>from emp5<br>where empno = 7900;<br>Elapsed: 00:00:00.56<br>Execution Plan<br>0     SELECT STATEMENT Optimizer=CHOOSE (Cost=6 Card=1 Bytes=5)<br>1 0      SORT (AGGREGATE)<br>2 1         INDEX (SKIP SCAN) OF ‘SKIP1’ (NON-UNIQUE)<br>Statistics<br>21 consistent gets      ——–逻辑IO相比较而言小了很多<br>17 physical reads<br>‘’’<br>这里可以看到IO上的区别是很明显的，逻辑IO和物理IO小了很多,有利就有弊，使用SKIP SCAN虽然IO上是有效果，但是CPU的消耗会增加，以上就可以看出，cost变大了，不能盲目使用，以下两个例子CPU COST很明显</p>
+<p><img src="http://pfebs4xvj.bkt.clouddn.com/index_1.jpg" alt=""><br>使用SKIP SCAN，可以看到逻辑读是比全表扫描少了，CPU cost大了不少<br><img src="http://pfebs4xvj.bkt.clouddn.com/index_2.jpg" alt=""><br> 网上有资料说SKIP SCAN是转化为多个SQL union操作，如果前导列重复值很少，将转化为大量的UNION操作，这样效率肯定会低很多。所以前导列重复值多的时候，不会选择skip scan，而且从B-TREE索引的结构看出，确实是选择性越高，那么索引的效果越好。所以一般组合索引，都是选择性高的做为前导列。至于什么时候用skip scan，这个看情况而定了，万事都有个权衡。</p>
 
       
     </div>
@@ -489,8 +477,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2010/09/18/Installation-from-Source-Code-for-postgreSQL/" rel="next" title="Installation from Source Code for postgreSQL">
-                <i class="fa fa-chevron-left"></i> Installation from Source Code for postgreSQL
+              <a href="/2011/08/18/TKPROF-使用/" rel="next" title="TKPROF 使用">
+                <i class="fa fa-chevron-left"></i> TKPROF 使用
               </a>
             
           </div>
@@ -499,8 +487,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2011/07/29/oracle-ORA-1555错误/" rel="prev" title="oracle ORA-1555错误">
-                oracle ORA-1555错误 <i class="fa fa-chevron-right"></i>
+              <a href="/2011/09/18/linux-cluster配置安装（简化/" rel="prev" title="linux cluster配置安装（简化)">
+                linux cluster配置安装（简化) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
