@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="PostgreSQL," />
 
 
 
@@ -79,16 +79,18 @@
 
 
 
-<meta name="description" content="人在江湖飘,哪能不挨刀！">
-<meta property="og:type" content="website">
-<meta property="og:title" content="魂醉的一亩二分地">
-<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta name="description" content="一、概述此文档主要对Postgresql 锁机制进行分析，在讲解的过程中结合实验，理解Postgresql的锁机制。 二、表级锁类型表级锁类型分为八种，以下对各种表级锁类型进行简单介绍下, 锁的冲突模式可以参考3.1的图一:表级锁冲突模式。 2.1 ACCESS SHARE“ACCESS SHARE”锁模式只与“ACCESS EXCLUSIVE” 锁模式冲突; 查询命令（Select comman">
+<meta name="keywords" content="PostgreSQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="来自francs的PG锁浅析，可以和oracle锁对照区别一下">
+<meta property="og:url" content="http://yoursite.com/2018/09/26/来自francs的PG锁浅析，可以和oracle锁对照区别一下/index.html">
 <meta property="og:site_name" content="魂醉的一亩二分地">
-<meta property="og:description" content="人在江湖飘,哪能不挨刀！">
+<meta property="og:description" content="一、概述此文档主要对Postgresql 锁机制进行分析，在讲解的过程中结合实验，理解Postgresql的锁机制。 二、表级锁类型表级锁类型分为八种，以下对各种表级锁类型进行简单介绍下, 锁的冲突模式可以参考3.1的图一:表级锁冲突模式。 2.1 ACCESS SHARE“ACCESS SHARE”锁模式只与“ACCESS EXCLUSIVE” 锁模式冲突; 查询命令（Select comman">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-26T06:19:18.699Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="魂醉的一亩二分地">
-<meta name="twitter:description" content="人在江湖飘,哪能不挨刀！">
+<meta name="twitter:title" content="来自francs的PG锁浅析，可以和oracle锁对照区别一下">
+<meta name="twitter:description" content="一、概述此文档主要对Postgresql 锁机制进行分析，在讲解的过程中结合实验，理解Postgresql的锁机制。 二、表级锁类型表级锁类型分为八种，以下对各种表级锁类型进行简单介绍下, 锁的冲突模式可以参考3.1的图一:表级锁冲突模式。 2.1 ACCESS SHARE“ACCESS SHARE”锁模式只与“ACCESS EXCLUSIVE” 锁模式冲突; 查询命令（Select comman">
 
 
 
@@ -118,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/page/2/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/09/26/来自francs的PG锁浅析，可以和oracle锁对照区别一下/"/>
 
 
 
 
 
-  <title>魂醉的一亩二分地</title>
+  <title>来自francs的PG锁浅析，可以和oracle锁对照区别一下 | 魂醉的一亩二分地</title>
   
 
 
@@ -143,8 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -281,9 +282,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -296,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2011/08/24/记一次expdp错误/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/26/来自francs的PG锁浅析，可以和oracle锁对照区别一下/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="魂醉">
@@ -313,9 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2011/08/24/记一次expdp错误/" itemprop="url">记一次expdp错误</a></h1>
+          <h1 class="post-title" itemprop="name headline">来自francs的PG锁浅析，可以和oracle锁对照区别一下</h1>
         
 
         <div class="post-meta">
@@ -327,962 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2011-08-24T09:42:06+08:00">
-                2011-08-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/oracle/" itemprop="url" rel="index">
-                    <span itemprop="name">oracle</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2011/08/24/记一次expdp错误/" class="leancloud_visitors" data-flag-title="记一次expdp错误">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          话说导数据expdp比exp效率多了，原因很简单，exp是通过BUFFER CACHE的SQL导出到
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2011/08/24/记一次expdp错误/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2011/08/22/INDEX-FAST-FULL-SCAN-AND-SKIP-SCAN/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="魂醉">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="魂醉的一亩二分地">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2011/08/22/INDEX-FAST-FULL-SCAN-AND-SKIP-SCAN/" itemprop="url">INDEX FAST FULL SCAN AND SKIP SCAN</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2011-08-22T09:16:20+08:00">
-                2011-08-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/oracle/" itemprop="url" rel="index">
-                    <span itemprop="name">oracle</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2011/08/22/INDEX-FAST-FULL-SCAN-AND-SKIP-SCAN/" class="leancloud_visitors" data-flag-title="INDEX FAST FULL SCAN AND SKIP SCAN">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          在快速扫描索引时，oracle读取b-tree索引的所有叶子节点块，而且是顺序读，而且可以同时读取d
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2011/08/22/INDEX-FAST-FULL-SCAN-AND-SKIP-SCAN/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2011/08/18/TKPROF-使用/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="魂醉">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="魂醉的一亩二分地">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2011/08/18/TKPROF-使用/" itemprop="url">TKPROF 使用</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2011-08-18T17:28:39+08:00">
-                2011-08-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/oracle/" itemprop="url" rel="index">
-                    <span itemprop="name">oracle</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2011/08/18/TKPROF-使用/" class="leancloud_visitors" data-flag-title="TKPROF 使用">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          话说oracle的剖析工具有很多，这里就介绍下常用的tkprof剖析工具。敲tkprof回车，可以看
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2011/08/18/TKPROF-使用/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2011/08/01/ONE-PASS-AND-MULTI-PASS/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="魂醉">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="魂醉的一亩二分地">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2011/08/01/ONE-PASS-AND-MULTI-PASS/" itemprop="url">ONE PASS AND MULTI PASS</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2011-08-01T14:47:37+08:00">
-                2011-08-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/oracle/" itemprop="url" rel="index">
-                    <span itemprop="name">oracle</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2011/08/01/ONE-PASS-AND-MULTI-PASS/" class="leancloud_visitors" data-flag-title="ONE PASS AND MULTI PASS">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          谈到ONE PASS  AND MULTI PASS，那么不得不谈谈oracle sort，不知道大
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2011/08/01/ONE-PASS-AND-MULTI-PASS/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2011/07/29/oracle-ORA-1555错误/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="魂醉">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="魂醉的一亩二分地">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2011/07/29/oracle-ORA-1555错误/" itemprop="url">oracle ORA-1555错误</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2011-07-29T13:44:43+08:00">
-                2011-07-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/oracle/" itemprop="url" rel="index">
-                    <span itemprop="name">oracle</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2011/07/29/oracle-ORA-1555错误/" class="leancloud_visitors" data-flag-title="oracle ORA-1555错误">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          1555错误大家应该都碰到过，这里做下简单的阐述和一些解决方法。 大家可以这么理解，oracle提交
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2011/07/29/oracle-ORA-1555错误/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2011/07/21/oracle-listener/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="魂醉">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="魂醉的一亩二分地">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2011/07/21/oracle-listener/" itemprop="url">oracle listener</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2011-07-21T15:30:04+08:00">
-                2011-07-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/oracle/" itemprop="url" rel="index">
-                    <span itemprop="name">oracle</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2011/07/21/oracle-listener/" class="leancloud_visitors" data-flag-title="oracle listener">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          这一块知识，我相信搞oracle的兄弟都是比较精通的，我也是前段时间公司让做个培训的时候，又把这块又
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2011/07/21/oracle-listener/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2010/09/18/Installation-from-Source-Code-for-postgreSQL/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="魂醉">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="魂醉的一亩二分地">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2010/09/18/Installation-from-Source-Code-for-postgreSQL/" itemprop="url">Installation from Source Code for postgreSQL</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2010-09-18T14:14:19+08:00">
-                2010-09-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-26T14:01:26+08:00">
+                2018-09-26
               </time>
             
 
@@ -1321,7 +366,7 @@
 
           
           
-             <span id="/2010/09/18/Installation-from-Source-Code-for-postgreSQL/" class="leancloud_visitors" data-flag-title="Installation from Source Code for postgreSQL">
+             <span id="/2018/09/26/来自francs的PG锁浅析，可以和oracle锁对照区别一下/" class="leancloud_visitors" data-flag-title="来自francs的PG锁浅析，可以和oracle锁对照区别一下">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1333,6 +378,11 @@
              </span>
           
 
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
           
 
           
@@ -1352,18 +402,218 @@
       
 
       
-        
-          
-          其实学习pg有一段时间了，不过一直没有写相关的blog，以后这一块也会一起加进来，记录自己的学习过程
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2010/09/18/Installation-from-Source-Code-for-postgreSQL/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+        <h1 id="一、概述"><a href="#一、概述" class="headerlink" title="一、概述"></a>一、概述</h1><p>此文档主要对Postgresql 锁机制进行分析，在讲解的过程中结合实验，理解Postgresql的锁机制。</p>
+<h1 id="二、表级锁类型"><a href="#二、表级锁类型" class="headerlink" title="二、表级锁类型"></a>二、表级锁类型</h1><p>表级锁类型分为八种，以下对各种表级锁类型进行简单介绍下, 锁的冲突模式可以参考3.1的图一:表级锁冲突模式。</p>
+<h2 id="2-1-ACCESS-SHARE"><a href="#2-1-ACCESS-SHARE" class="headerlink" title="2.1 ACCESS SHARE"></a>2.1 ACCESS SHARE</h2><p>“ACCESS SHARE”锁模式只与“ACCESS EXCLUSIVE” 锁模式冲突;</p>
+<p>查询命令（Select command）将会在它查询的表上获取”Access Shared” 锁,一般地，任何一个对表上的只读查询操作都将获取这种类型的锁。</p>
+<p>##2.2 ROW SHARE<br> “Row Share” 锁模式与”Exclusive’和”Access Exclusive”锁模式冲突;</p>
+<p>”Select for update”和”Select for share”命令将获得这种类型锁，并且所有被引用但没有 FOR UPDATE 的表上会加上”Access shared locks”锁。</p>
+<h2 id="2-3-ROW-EXCLUSIVE"><a href="#2-3-ROW-EXCLUSIVE" class="headerlink" title="2.3 ROW EXCLUSIVE"></a>2.3 ROW EXCLUSIVE</h2><p> “Row exclusive” 与 “Share,Shared roexclusive,Exclusive,Access exclusive”模式冲突;</p>
+<p>“Update,Delete,Insert”命令会在目标表上获得这种类型的锁，并且在其它被引用的表上加上”Access shared”锁,一般地，更改表数据的命令都将在这张表上获得”Row exclusive”锁。</p>
+<h2 id="2-4-SHARE-UPDATE-EXCLUSIVE"><a href="#2-4-SHARE-UPDATE-EXCLUSIVE" class="headerlink" title="2.4 SHARE UPDATE EXCLUSIVE"></a>2.4 SHARE UPDATE EXCLUSIVE</h2><p>”Share update exclusive,Share,Share row ,exclusive,exclusive,Access exclusive”模式冲突，这种模式保护一张表不被并发的模式更改和VACUUM;</p>
+<p> “Vacuum(without full), Analyze ”和 “Create index concurrently”命令会获得这种类型锁。 </p>
+<h2 id="2-5-SHARE"><a href="#2-5-SHARE" class="headerlink" title="2.5 SHARE"></a>2.5 SHARE</h2><p>与“Row exclusive,Shared update exclusive,Share row exclusive ,Exclusive,Access exclusive”锁模式冲突,这种模式保护一张表数据不被并发的更改;</p>
+<p>“Create index”命令会获得这种锁模式。</p>
+<h2 id="2-6-SHARE-ROW-EXCLUSIVE"><a href="#2-6-SHARE-ROW-EXCLUSIVE" class="headerlink" title="2.6 SHARE ROW EXCLUSIVE"></a>2.6 SHARE ROW EXCLUSIVE</h2><p>与“Row exclusive,Share update exclusive,Shared,Shared row exclusive,Exclusive,Access Exclusive”锁模式冲突;</p>
+<p>任何Postgresql 命令不会自动获得这种锁。</p>
+<h2 id="2-7-EXCLUSIVE"><a href="#2-7-EXCLUSIVE" class="headerlink" title="2.7 EXCLUSIVE"></a>2.7 EXCLUSIVE</h2><p>与” ROW SHARE, ROW EXCLUSIVE, SHARE UPDATE EXCLUSIVE, SHARE, SHARE ROW EXCLUSIVE, EXCLUSIVE, ACCESS EXCLUSIVE”模式冲突,这种索模式仅能与Access Share 模式并发,换句话说，只有读操作可以和持有”EXCLUSIVE”锁的事务并行；</p>
+<p>任何Postgresql 命令不会自动获得这种类型的锁；</p>
+<h2 id="2-8-ACCESS-EXCLUSIVE"><a href="#2-8-ACCESS-EXCLUSIVE" class="headerlink" title="2.8 ACCESS EXCLUSIVE"></a>2.8 ACCESS EXCLUSIVE</h2><p>与所有模式锁冲突(ACCESS SHARE, ROW SHARE, ROW EXCLUSIVE, SHARE UPDATE EXCLUSIVE, SHARE, SHARE ROW EXCLUSIVE, EXCLUSIVE, and ACCESS EXCLUSIVE),这种模式保证了当前只有一个事务访问这张表;</p>
+<p>“ALTER TABLE, DROP TABLE, TRUNCATE, REINDEX, CLUSTER, VACUUM FULL” 命令会获得这种类型锁，在Lock table 命令中，如果没有申明其它模式，它也是缺省模式。</p>
+<h1 id="三、表级锁冲突模式"><a href="#三、表级锁冲突模式" class="headerlink" title="三、表级锁冲突模式"></a>三、表级锁冲突模式</h1><p>3.1  Conflicting lock modes</p>
+<p> Requested Lock Mode|ACCESS SHARE|ROW SHARE|ROW EXCLUSIVE|SHARE UPDATE EXCLUSIVE|SHARE|SHARE ROW EXCLUSIVE|EXCLUSIVE|ACCESS EXCLUSIVE<br>|-|-|-|-|-|—|-|-|-|<br>ACCESS SHARE|-|-|-|-|-|-|X|X<br>ROW SHARE|-|-|-|-|-|-|X|X<br>ROW EXCLUSIVE|-|-|-|-|-|X|X|X|X<br>SHARE UPDATE EXCLUSIVE|-|-|-|X|X|X|X|X<br>SHARE    |-|-|X|X|-|X|X|X<br>SHARE ROW EXCLUSIVE|-|-|X|X|X|X|X|X<br>EXCLUSIVE|-|X|X|X|X|X|X|X<br>ACCESS EXCLUSIVE|X|X|X|X|X|X|X|X<br>图一   表级锁冲突模式<br>备注： 上图是Postgresql 表级锁的各种冲突模式对照表，红色的‘X’表示冲突项, 在章节四中会对其中典型的锁模式进行模似演示。</p>
+<h1 id="四、实验"><a href="#四、实验" class="headerlink" title="四、实验"></a>四、实验</h1><p>在这一章节中将会对图一中比较典型的锁冲突进行模似演练，了解这些在Postgresql DBA的日常维护工作中很有帮助，同时也能减少人为故障的发生。</p>
+<p>4.1  Access exclusive 锁与Access share锁冲突<br>       在日常维护中，大家应该执行过’ALTER TABLE’更改表结构的DDL，例如加字段，更改字段数据类型等，根据章节二的理论，在执行’ALTER TABLE’命令时将申请一个Access exclusive锁, 根据图一，大家知道Access exclusive 锁和所有的锁模式都冲突，那么，它将会’Select’命令冲突，因为Select 加的是Access share锁，那么真的会与‘SELECT‘命令冲突吗，接下来给大家演示下:</p>
+<p>–创建一张测试表 test_2 并插入测试数据</p>
+<p>mydb=&gt; create table test_2 (id integer,name varchar(32));</p>
+<p>CREATE TABLE</p>
+<p>mydb=&gt; insert into test_2 values (1,’franc’);</p>
+<p>INSERT 0 1</p>
+<p>mydb=&gt; insert into test_2 values (2,’tan’);</p>
+<p>INSERT 0 1</p>
+<p>mydb=&gt; select * from test_2;</p>
+<p> id | name </p>
+<p>—-+——-</p>
+<p>  1 | franc</p>
+<p>  2 | tan</p>
+<p>(2 rows)</p>
+<p>–会话一 查询表数据 ( 这里获得Access Shared 锁)</p>
+<p>mydb=&gt; begin;</p>
+<p>BEGIN</p>
+<p>mydb=&gt; select * from test_2 where id=1;</p>
+<p> id | name </p>
+<p>—-+——-</p>
+<p>  1 | franc</p>
+<p>(1 row)</p>
+<p>注意：这里begin开始事务，没有提交；</p>
+<p>–会话二 更改表结构 (这里申请 Access Exclusive锁 )</p>
+<p>mydb=&gt; alter table test_2 add column sex char(1);</p>
+<p>发现，命令一直等侍，执行不下去;</p>
+<p>–会话三 查询状态</p>
+<p>mydb=# select oid,relname from pg_class where relname=’test_2’;</p>
+<p>  oid  | relname</p>
+<p>——-+———</p>
+<p> 33802 | test_2</p>
+<p> mydb=# select locktype,database,relation,pid,mode from pg_locks where relation=’33802’;</p>
+<p> locktype | database | relation |  pid  |        mode        </p>
+<p>———-+———-+———-+——-+———————</p>
+<p> relation |    16466 |    33802 | 18577 | AccessShareLock</p>
+<p> relation |    16466 |    33802 | 18654 | AccessExclusiveLock</p>
+<p> mydb=# select datname,procpid,usename,current_query from pg_stat_activity where procpid in (18577,18654);</p>
+<p> datname | procpid | usename |               current_query               </p>
+<p>———+———+———+——————————————–</p>
+<p> mydb    |   18577 | skytf   | <idle> in transaction</idle></p>
+<p> mydb    |   18654 | skytf   | alter table test_2 add column sex char(1);</p>
+<p>(2 rows)</p>
+<pre><code>这里可以看出会话一(pid=18577) 获取的是 “AccessShareLock”锁,
+</code></pre><p>会话二(pid=18654 ) 获取的是 “AccessExclusiveLock”锁。</p>
+<p>–再次回到会话一，执行’end’结束事务后会发生什么结果</p>
+<p>注意，此时会话二还处于等侍状态</p>
+<p>mydb=&gt; end;</p>
+<p>COMMIT</p>
+<p>–回到会话二发现 原来处于等侍状态的’ALTER TABLE’命令执行成功</p>
+<p>mydb=&gt; alter table test_2 add column sex char(1);</p>
+<p>ALTER TABLE</p>
+<p>mydb=&gt; \d test_2</p>
+<pre><code>Table &quot;skytf.test_2&quot;
+</code></pre><p> Column |         Type          | Modifiers</p>
+<p>——–+———————–+———–</p>
+<p> id     | integer               |</p>
+<p> name   | character varying(32) |</p>
+<p> sex    | character(1)          |</p>
+<p>–回到会话三，锁已经释放</p>
+<p>mydb=# select locktype,database,relation,pid,mode from pg_locks where relation=’33802’;</p>
+<p> locktype | database | relation | pid | mode</p>
+<p>———-+———-+———-+—–+——</p>
+<p>(0 rows)</p>
+<p>mydb=# select datname,procpid,usename,client_addr,current_query from pg_stat_activity where procpid in (18577,18654);</p>
+<p> datname | procpid | usename | client_addr | current_query</p>
+<p>———+———+———+————-+—————</p>
+<p> mydb    |   18577 | skytf   |             | <idle></idle></p>
+<p> mydb    |   18654 | skytf   |             | <idle></idle></p>
+<p>(2 rows)</p>
+<p>实验说明： 这个实验说明了 ‘ALTER TABLE’命令与’SELECT’命令会产生冲突，证实了开始的结论，即”Access exclusive”锁模式与申请”Access shared”锁模式的’SELECT’命令相冲突。</p>
+<p>4.2  Share 锁与 Row Exclusive 锁冲突<br>在数据库的维护过程中，创建索引也是经常做的工作，别小看创建索引，如果是一个很繁忙的系统，索引不一定能创建得上，可能会发生等侍, 严重时造成系统故障；根据章节二的理论，’Create Index’ 命令需要获取Share 锁模式。</p>
+<p>根据图一，”Share” 锁和”Row Exclusive”锁冲突，下面来验证一下：</p>
+<p>根据图三可以看出，share锁模式和多种锁模式冲突，有可能会问我，为什么单独讲share锁和Row Exclusive冲突呢？因为” Update,Delete,Insert”命令获取的是Row Exclusive 操作，而这种操作在生产过程中非常频繁；这个实验正是模似生产维护过程。</p>
+<p>–会话一， 向 test_2 上插入一条数据</p>
+<p>mydb=&gt; select * from test_2;</p>
+<p> id | name  | sex</p>
+<p>—-+——-+—–</p>
+<p>  1 | franc |</p>
+<p>  2 | tan   |</p>
+<p>(2 rows)</p>
+<p>mydb=&gt; begin;</p>
+<p>BEGIN</p>
+<p>mydb=&gt; insert into test_2 values (3,’fpzhou’);</p>
+<p>INSERT 0 1</p>
+<p>mydb=&gt;</p>
+<p>说明： 这个Insert 操作放在一个事务里，注意此时事务尚未提交。</p>
+<p>–会话二，在表test_2上创建索引</p>
+<p>mydb=&gt; \d test_2;</p>
+<pre><code>Table &quot;skytf.test_2&quot;
+</code></pre><p> Column |         Type          | Modifiers</p>
+<p>——–+———————–+———–</p>
+<p> id     | integer               |</p>
+<p> name   | character varying(32) |</p>
+<p> sex    | character(1)          |</p>
+<p>mydb=&gt; create unique index idx_test_2_id  on test_2 (id);</p>
+<p>说明： 创建索引命令发生等侍</p>
+<p>–会话三，查询状态</p>
+<p>mydb=# select locktype,database,relation,pid,mode from pg_locks where relation=’33802’;</p>
+<p> locktype | database | relation |  pid  |       mode      </p>
+<p>———-+———-+———-+——-+——————</p>
+<p> relation |    16466 |    33802 | 18577 | RowExclusiveLock</p>
+<p> relation |    16466 |    33802 | 18654 | ShareLock</p>
+<p>(2 rows)</p>
+<p>mydb=# select datname,procpid,usename,client_addr,current_query from pg_stat_activity where procpid in (18577,18654);</p>
+<p> datname | procpid | usename | client_addr |                   current_query                   </p>
+<p>———+———+———+————-+—————————————————-</p>
+<p> mydb    |   18577 | skytf   |             | <idle> in transaction</idle></p>
+<p> mydb    |   18654 | skytf   |             | create unique index idx_test_2_id  on test_2 (id);</p>
+<p> 说明：  这里可以看出”Insert into”(procpid=18577) 命令获取”RowExclusiveLock”,而”Create Index”(procpid=18654)操作获取的是”Sharelock”, 并且创建索引操作发了等侍，因为这两种锁模式是冲突的。</p>
+<p>–回到会话一，提交事务,看看会发生什么</p>
+<p>注意，此时创建索引的会话二仍处于等侍状态</p>
+<p>mydb=&gt; end;</p>
+<p>COMMIT</p>
+<p>–回到会话二，发现创建索引命令成功,等侍消失</p>
+<p>mydb=&gt; create unique index idx_test_2_id  on test_2 (id);</p>
+<p>CREATE INDEX</p>
+<p>实验结论：1 上述实验说明 “Create index “操作和”Insert”操作冲突;也</p>
+<p>就是 “Share”锁和”RowExclusive”锁冲突。</p>
+<pre><code>2 在生产库上应该避免在业务高峰期执行新建索引操作，因
+</code></pre><p>为如果在张大表上新建索引，消耗时间较长，在这个过程中会阻塞业务的DML操作。</p>
+<p>4.3  SHARE UPDATE EXCLUSIVE 与自身冲突<br>       根据章节二，大家知道 VACUUM(Without full), Analyze 和 Create index (Concurently)操作会申请获得”Shared update Exclusive 锁”。根据图一，”Shared update Exclusive 锁”与本身也是会冲突的，下面实验验证一下:</p>
+<p>–会话一，分析表test_2</p>
+<p>mydb=&gt; select * from test_2;</p>
+<p> id |  name  | sex</p>
+<p>—-+——–+—–</p>
+<p>  1 | franc  |</p>
+<p>  2 | tan    |</p>
+<p>  3 | fpzhou |</p>
+<p>(3 rows)</p>
+<p>mydb=&gt;</p>
+<p>mydb=&gt;</p>
+<p>mydb=&gt; begin;</p>
+<p>BEGIN</p>
+<p>mydb=&gt; analyze test_2;</p>
+<p>ANALYZE      </p>
+<p>注意： 表分析放在一个事务里，此时并没有提交；</p>
+<p>–会话二 对表 test_2 做 vacuum</p>
+<p>mydb=&gt; \d test_2;</p>
+<pre><code>Table &quot;skytf.test_2&quot;
+</code></pre><p> Column |         Type          | Modifiers</p>
+<p>——–+———————–+———–</p>
+<p> id     | integer               |</p>
+<p> name   | character varying(32) |</p>
+<p> sex    | character(1)          |</p>
+<p>Indexes:</p>
+<pre><code>&quot;idx_test_2_id&quot; UNIQUE, btree (id)
+</code></pre><p>mydb=&gt; vacuum test_2;</p>
+<p>注意： 当对表 test_2 执行 vacuum操作时，操作等侍，</p>
+<p>–会话三，观察系统哪里锁住了</p>
+<p>[postgres@pg1 ~]$ psql -d mydb</p>
+<p>psql (9.0beta3)</p>
+<p>Type “help” for help.</p>
+<p>mydb=# select datname,procpid,waiting,current_query from pg_stat_activity where waiting=’t’;</p>
+<p> datname | procpid | waiting | current_query </p>
+<p>———+———+———+—————-</p>
+<p> mydb    |   20625 | t       | vacuum test_2;</p>
+<p>(1 row)</p>
+<p>这里说明会话 vacuum test_2 在等侍</p>
+<p>mydb=# select oid,relname from pg_class where relname=’test_2’;</p>
+<p>  oid  | relname</p>
+<p>——-+———</p>
+<p> 33802 | test_2</p>
+<p>(1 row)</p>
+<p>mydb=# select locktype,database,relation,pid,mode from pg_locks where relation=’33802’;</p>
+<p> locktype | database | relation |  pid  |           mode          </p>
+<p>———-+———-+———-+——-+————————–</p>
+<p> relation |    16466 |    33802 | 20625 | ShareUpdateExclusiveLock</p>
+<p> relation |    16466 |    33802 | 20553 | ShareUpdateExclusiveLock</p>
+<p> (2 rows)</p>
+<p> 说明: 这里可以看出 ‘Analyze’操作 (pid=20553) 和’Vacuum’操作 (pid=20625)</p>
+<pre><code>都是加的&quot;ShareUpdateExclusiveLock&quot;。
+</code></pre><p>mydb=# select datname,procpid,waiting,current_query from pg_stat_activity where procpid in (20625,20553);</p>
+<p> datname | procpid | waiting |     current_query    </p>
+<p>———+———+———+———————–</p>
+<p> mydb    |   20553 | f       | <idle> in transaction</idle></p>
+<p> mydb    |   20625 | t       | vacuum test_2;</p>
+<p>(2 rows)</p>
+<p>说明： 结束上面查询可以看出会话20625在等侍会话20553,也就是说”vacuum test_2” 被事务堵住了，</p>
+<p>–再次回到会话一，提交会话,注意此时会话二处于等侍姿态；</p>
+<p>mydb=&gt; end;</p>
+<p>COMMIT</p>
+<p>–再次回到会话二，发现 vacuum命令执行下去了，等侍消失。</p>
+<p>mydb=&gt; vacuum test_2;</p>
+<p>VACUUM</p>
+<p>mydb=&gt;  select datname,procpid,waiting,current_query from pg_stat_activity where waiting=’t’;</p>
+<p> datname | procpid | waiting | current_query</p>
+<p>———+———+———+—————</p>
+<p>(0 rows)</p>
+<p>实验结论 1 Analyze 和 Vacuum 操作都会申请获得 “ShareUpdateExclusiveLock”。</p>
+<pre><code>2 ShareUpdateExclusiveLoc与ShareUpdateExclusiveLock是冲突的。
+</code></pre>
       
     </div>
     
@@ -1373,19 +623,70 @@
     
 
     
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>你活着,证明了什么？</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="魂醉 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="魂醉 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
 
     
 
     <footer class="post-footer">
       
-
+        <div class="post-tags">
+          
+            <a href="/tags/PostgreSQL/" rel="tag"># PostgreSQL</a>
+          
+        </div>
       
 
       
+      
+      
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/09/18/Greenplum-install/" rel="next" title="Greenplum install">
+                <i class="fa fa-chevron-left"></i> Greenplum install
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
       
-        <div class="post-eof"></div>
+
+      
       
     </footer>
   </div>
@@ -1395,14 +696,17 @@
   </article>
 
 
-    
-  </section>
 
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-  </nav>
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
 
+      
+    </div>
+  </div>
 
 
           </div>
@@ -1410,6 +714,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTg0MC8xNjM2Nw=="></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -1430,8 +743,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -1561,6 +883,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、概述"><span class="nav-number">1.</span> <span class="nav-text">一、概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、表级锁类型"><span class="nav-number">2.</span> <span class="nav-text">二、表级锁类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-ACCESS-SHARE"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 ACCESS SHARE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-ROW-EXCLUSIVE"><span class="nav-number">2.2.</span> <span class="nav-text">2.3 ROW EXCLUSIVE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-SHARE-UPDATE-EXCLUSIVE"><span class="nav-number">2.3.</span> <span class="nav-text">2.4 SHARE UPDATE EXCLUSIVE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-SHARE"><span class="nav-number">2.4.</span> <span class="nav-text">2.5 SHARE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-6-SHARE-ROW-EXCLUSIVE"><span class="nav-number">2.5.</span> <span class="nav-text">2.6 SHARE ROW EXCLUSIVE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-7-EXCLUSIVE"><span class="nav-number">2.6.</span> <span class="nav-text">2.7 EXCLUSIVE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-8-ACCESS-EXCLUSIVE"><span class="nav-number">2.7.</span> <span class="nav-text">2.8 ACCESS EXCLUSIVE</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、表级锁冲突模式"><span class="nav-number">3.</span> <span class="nav-text">三、表级锁冲突模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、实验"><span class="nav-number">4.</span> <span class="nav-text">四、实验</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1728,6 +1066,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -1756,6 +1098,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
