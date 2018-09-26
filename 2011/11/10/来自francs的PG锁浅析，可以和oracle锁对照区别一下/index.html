@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="魂醉的一亩二分地">
 <meta property="og:description" content="一、概述此文档主要对Postgresql 锁机制进行分析，在讲解的过程中结合实验，理解Postgresql的锁机制。 二、表级锁类型表级锁类型分为八种，以下对各种表级锁类型进行简单介绍下, 锁的冲突模式可以参考3.1的图一:表级锁冲突模式。 2.1 ACCESS SHARE“ACCESS SHARE”锁模式只与“ACCESS EXCLUSIVE” 锁模式冲突; 查询命令（Select comman">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-26T06:30:51.623Z">
+<meta property="og:updated_time" content="2018-09-26T06:35:36.385Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="来自francs的PG锁浅析，可以和oracle锁对照区别一下">
 <meta name="twitter:description" content="一、概述此文档主要对Postgresql 锁机制进行分析，在讲解的过程中结合实验，理解Postgresql的锁机制。 二、表级锁类型表级锁类型分为八种，以下对各种表级锁类型进行简单介绍下, 锁的冲突模式可以参考3.1的图一:表级锁冲突模式。 2.1 ACCESS SHARE“ACCESS SHARE”锁模式只与“ACCESS EXCLUSIVE” 锁模式冲突; 查询命令（Select comman">
@@ -421,7 +421,7 @@
 <h2 id="2-8-ACCESS-EXCLUSIVE"><a href="#2-8-ACCESS-EXCLUSIVE" class="headerlink" title="2.8 ACCESS EXCLUSIVE"></a>2.8 ACCESS EXCLUSIVE</h2><p>与所有模式锁冲突(ACCESS SHARE, ROW SHARE, ROW EXCLUSIVE, SHARE UPDATE EXCLUSIVE, SHARE, SHARE ROW EXCLUSIVE, EXCLUSIVE, and ACCESS EXCLUSIVE),这种模式保证了当前只有一个事务访问这张表;</p>
 <p>“ALTER TABLE, DROP TABLE, TRUNCATE, REINDEX, CLUSTER, VACUUM FULL” 命令会获得这种类型锁，在Lock table 命令中，如果没有申明其它模式，它也是缺省模式。</p>
 <h1 id="三、表级锁冲突模式"><a href="#三、表级锁冲突模式" class="headerlink" title="三、表级锁冲突模式"></a>三、表级锁冲突模式</h1><p>3.1  Conflicting lock modes</p>
-<p> Requested Lock Mode|ACCESS SHARE|ROW SHARE|ROW EXCLUSIVE|SHARE UPDATE EXCLUSIVE|SHARE|SHARE ROW EXCLUSIVE|EXCLUSIVE|ACCESS EXCLUSIVE<br>——————–|————|———|————-|———————-|——-|——————-|———|—————<br>ACCESS SHARE|-|-|-|-|-|-|X|X<br>ROW SHARE|-|-|-|-|-|-|X|X<br>ROW EXCLUSIVE|-|-|-|-|-|X|X|X|X<br>SHARE UPDATE EXCLUSIVE|-|-|-|X|X|X|X|X<br>SHARE    |-|-|X|X|-|X|X|X<br>SHARE ROW EXCLUSIVE|-|-|X|X|X|X|X|X<br>EXCLUSIVE|-|X|X|X|X|X|X|X<br>ACCESS EXCLUSIVE|X|X|X|X|X|X|X|X<br>图一   表级锁冲突模式<br>备注： 上图是Postgresql 表级锁的各种冲突模式对照表，红色的‘X’表示冲突项, 在章节四中会对其中典型的锁模式进行模似演示。</p>
+<p> Requested Lock Mode | ACCESS SHARE | ROW SHARE | ROW EXCLUSIVE | SHARE UPDATE EXCLUSIVE | SHARE | SHARE ROW EXCLUSIVE | EXCLUSIVE | ACCESS EXCLUSIVE<br>—- | ———— | ——— | ————- | ———————- | ——-| ——————- | ——— |—–<br>ACCESS SHARE | - | - | - | - | - | - | X | X<br>ROW SHARE | - | - | - | - | - | - | X | X<br>ROW EXCLUSIVE|-|-|-|-|-|X|X|X|X<br>SHARE UPDATE EXCLUSIVE|-|-|-|X|X|X|X|X<br>SHARE    |-|-|X|X|-|X|X|X<br>SHARE ROW EXCLUSIVE|-|-|X|X|X|X|X|X<br>EXCLUSIVE|-|X|X|X|X|X|X|X<br>ACCESS EXCLUSIVE|X|X|X|X|X|X|X|X<br>图一   表级锁冲突模式<br>备注： 上图是Postgresql 表级锁的各种冲突模式对照表，红色的‘X’表示冲突项, 在章节四中会对其中典型的锁模式进行模似演示。</p>
 <h1 id="四、实验"><a href="#四、实验" class="headerlink" title="四、实验"></a>四、实验</h1><p>在这一章节中将会对图一中比较典型的锁冲突进行模似演练，了解这些在Postgresql DBA的日常维护工作中很有帮助，同时也能减少人为故障的发生。</p>
 <p>4.1  Access exclusive 锁与Access share锁冲突<br>       在日常维护中，大家应该执行过’ALTER TABLE’更改表结构的DDL，例如加字段，更改字段数据类型等，根据章节二的理论，在执行’ALTER TABLE’命令时将申请一个Access exclusive锁, 根据图一，大家知道Access exclusive 锁和所有的锁模式都冲突，那么，它将会’Select’命令冲突，因为Select 加的是Access share锁，那么真的会与‘SELECT‘命令冲突吗，接下来给大家演示下:</p>
 <p>–创建一张测试表 test_2 并插入测试数据</p>
