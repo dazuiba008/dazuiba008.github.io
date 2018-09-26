@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="魂醉的一亩二分地">
 <meta property="og:description" content="pg_buffercache模块是用于查看shared buffer cache信息，决定shared buffer cache大还是小。 Installing pg_buffercache into a database： $ createdb pgbench$ psql -d pgbench -f /usr/share/postgresql/contrib/pg_buffercache.sql">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-26T07:22:55.055Z">
+<meta property="og:updated_time" content="2018-09-26T07:25:03.059Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="postgresql pg_buffercache">
 <meta name="twitter:description" content="pg_buffercache模块是用于查看shared buffer cache信息，决定shared buffer cache大还是小。 Installing pg_buffercache into a database： $ createdb pgbench$ psql -d pgbench -f /usr/share/postgresql/contrib/pg_buffercache.sql">
@@ -452,11 +452,7 @@
 </tbody>
 </table>
 <p>pg_buffercache使用：</p>
-<p>查看shared buffers大小：</p>
-<p>postgres=# SELECT name,setting,unit,current_setting(name) FROM pg_settings WHERE name=’shared_buffers’;<br>      name      | setting | unit | current_setting<br>—————-+———+——+—————–<br> shared_buffers | 4096    | 8kB  | 32MB<br>(1 row)</p>
-<p>postgres=# select count(*) from pg_buffercache;</p>
-<h2 id="count"><a href="#count" class="headerlink" title=" count "></a> count </h2><p>  4096<br>(1 row)</p>
-<p>可见block数量一致，大小一致。</p>
+<p>查看shared buffers大小：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">postgres=# SELECT name,setting,unit,current_setting(name) FROM pg_settings WHERE name=&apos;shared_buffers&apos;;</span><br><span class="line">      name      | setting | unit | current_setting </span><br><span class="line">----------------+---------+------+-----------------</span><br><span class="line"> shared_buffers | 4096    | 8kB  | 32MB</span><br><span class="line">(1 row)</span><br><span class="line"></span><br><span class="line">postgres=# select count(*) from pg_buffercache;</span><br><span class="line"></span><br><span class="line"> count </span><br><span class="line">-------</span><br><span class="line">  4096</span><br><span class="line">(1 row)</span><br><span class="line"></span><br><span class="line">可见block数量一致，大小一致。</span><br></pre></td></tr></table></figure></p>
 <p>查看当前数据库buffer的使用情况排名：</p>
 <p>SELECT<br>c.relname,<br>count(*) AS buffers<br>FROM pg_class c<br>INNER JOIN pg_buffercache b<br>ON b.relfilenode=c.relfilenode<br>INNER JOIN pg_database d<br>ON (b.reldatabase=d.oid AND d.datname=current_database())<br>GROUP BY c.relname<br>ORDER BY 2 DESC<br>LIMIT 10;</p>
 <pre><code>relname          | buffers 
@@ -532,8 +528,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2011/11/10/来自francs的PG锁浅析，可以和oracle锁对照区别一下/" rel="next" title="来自francs的PG锁浅析，可以和oracle锁对照区别一下">
-                <i class="fa fa-chevron-left"></i> 来自francs的PG锁浅析，可以和oracle锁对照区别一下
+              <a href="/2012/08/24/postgresql-streaming-replication/" rel="next" title="postgresql streaming replication">
+                <i class="fa fa-chevron-left"></i> postgresql streaming replication
               </a>
             
           </div>
@@ -607,17 +603,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -747,22 +734,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#count"><span class="nav-number">1.</span> <span class="nav-text"> count </span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

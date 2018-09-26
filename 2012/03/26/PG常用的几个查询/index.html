@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="PostgreSQL," />
 
 
 
@@ -79,16 +79,18 @@
 
 
 
-<meta name="description" content="人在江湖飘,哪能不挨刀！">
-<meta property="og:type" content="website">
-<meta property="og:title" content="魂醉的一亩二分地">
-<meta property="og:url" content="http://yoursite.com/archives/2018/09/index.html">
+<meta name="description" content="select version();  —查看pg版本SELECT current_database(); –查看当前数据库select current_user;   –查看当前用户psql -c “select version()”   —-执行单条sql命令psql -f xxxx.sql   —–可以把多条命令写入文件，用-f执行SELECT pg_database_size(current">
+<meta name="keywords" content="PostgreSQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PG常用的几个查询">
+<meta property="og:url" content="http://yoursite.com/2012/03/26/PG常用的几个查询/index.html">
 <meta property="og:site_name" content="魂醉的一亩二分地">
-<meta property="og:description" content="人在江湖飘,哪能不挨刀！">
+<meta property="og:description" content="select version();  —查看pg版本SELECT current_database(); –查看当前数据库select current_user;   –查看当前用户psql -c “select version()”   —-执行单条sql命令psql -f xxxx.sql   —–可以把多条命令写入文件，用-f执行SELECT pg_database_size(current">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-26T07:26:02.529Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="魂醉的一亩二分地">
-<meta name="twitter:description" content="人在江湖飘,哪能不挨刀！">
+<meta name="twitter:title" content="PG常用的几个查询">
+<meta name="twitter:description" content="select version();  —查看pg版本SELECT current_database(); –查看当前数据库select current_user;   –查看当前用户psql -c “select version()”   —-执行单条sql命令psql -f xxxx.sql   —–可以把多条命令写入文件，用-f执行SELECT pg_database_size(current">
 
 
 
@@ -118,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2018/09/"/>
+  <link rel="canonical" href="http://yoursite.com/2012/03/26/PG常用的几个查询/"/>
 
 
 
 
 
-  <title>归档 | 魂醉的一亩二分地</title>
+  <title>PG常用的几个查询 | 魂醉的一亩二分地</title>
   
 
 
@@ -143,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -281,111 +283,229 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
-
-      <span class="archive-page-counter">
-        
-        
-        
-          
-        
-        嗯..! 目前共计 22 篇日志。 继续努力。
-      </span>
-
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
-
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2012/03/26/PG常用的几个查询/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="魂醉">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="魂醉的一亩二分地">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/09/26/postgresql-streaming-replication/" itemprop="url">
-              
-                <span itemprop="name">postgresql streaming replication</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">PG常用的几个查询</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-26T15:17:37+08:00"
-              content="2018-09-26" >
-          09-26
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-03-26T15:15:50+08:00">
+                2012-03-26
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PostgreSQL/" itemprop="url" rel="index">
+                    <span itemprop="name">PostgreSQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2012/03/26/PG常用的几个查询/" class="leancloud_visitors" data-flag-title="PG常用的几个查询">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/26/PG常用的几个查询/" itemprop="url">
-              
-                <span itemprop="name">PG常用的几个查询</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-26T15:15:50+08:00"
-              content="2018-09-26" >
-          09-26
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
+      
+        <p>select version();  —查看pg版本<br>SELECT current_database(); –查看当前数据库<br>select current_user;   –查看当前用户<br>psql -c “select version()”   —-执行单条sql命令<br>psql -f xxxx.sql   —–可以把多条命令写入文件，用-f执行<br>SELECT pg_database_size(current_database());  查看当前库大小<br>SELECT sum(pg_database_size(datname)) from pg_database;  查询所有库大小之和<br>select pg_relation_size(‘accounts’);   —查询表大小<br>select pg_total_relation_size(‘accounts’);   —查询包含表和表索引其他总大小<br>select pg_tablespace_size(‘tbs_index’)/1024/1024 as “SIZE M”;    查看表空间大小</p>
+<p>查看TOP10大表：<br>SELECT table_name<br>,pg_relation_size(table_name) as size<br>FROM information_schema.tables<br>WHERE table_schema NOT IN (‘information_schema’,<br>‘pg_catalog’)<br>ORDER BY size DESC<br>LIMIT 10;</p>
+<p>快速评估表的行数：(一般都是大表，如果用count比较耗时间)<br>SELECT (CASE WHEN reltuples &gt; 0 THEN<br>pg_relation_size(‘mytable’)/(8192*relpages/reltuples)<br>ELSE 0<br>END)::bigint AS estimated_row_count<br>FROM pg_class<br>WHERE oid = ‘mytable’::regclass;</p>
+<p>查询等待会话<br>SELECT<br>w.current_query as waiting_query,<br>w.procpid as w_pid,<br>w.usename as w_user,<br>l.current_query as locking_query,<br>l.procpid as l_pid,<br>l.usename as l_user,<br>t.schemaname || ‘.’ || t.relname as tablename<br>from pg_stat_activity w<br>join pg_locks l1 on w.procpid = l1.pid and not l1.granted<br>join pg_locks l2 on l1.relation = l2.relation and l2.granted<br>join pg_stat_activity l on l2.pid = l.procpid<br>join pg_stat_user_tables t on l1.relation = t.relid<br>where w.waiting;</p>
+<p>SELECT date_trunc(‘second’,<br>current_timestamp - pg_postmaster_start_time()) as uptime; —-数据库开启多久</p>
+<p>SELECT pg_postmaster_start_time();     ——–什么时候开启的</p>
+
+      
     </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>你活着,证明了什么？</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="魂醉 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="魂醉 支付宝"/>
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PostgreSQL/" rel="tag"># PostgreSQL</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2011/11/10/来自francs的PG锁浅析，可以和oracle锁对照区别一下/" rel="next" title="来自francs的PG锁浅析，可以和oracle锁对照区别一下">
+                <i class="fa fa-chevron-left"></i> 来自francs的PG锁浅析，可以和oracle锁对照区别一下
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/08/24/postgresql-streaming-replication/" rel="prev" title="postgresql streaming replication">
+                postgresql streaming replication <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -393,6 +513,15 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zOTg0MC8xNjM2Nw=="></div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -711,6 +840,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -739,6 +872,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
