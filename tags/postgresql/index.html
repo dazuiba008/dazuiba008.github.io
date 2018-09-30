@@ -82,7 +82,7 @@
 <meta name="description" content="人在江湖飘,哪能不挨刀！">
 <meta property="og:type" content="website">
 <meta property="og:title" content="魂醉的一亩二分地">
-<meta property="og:url" content="http://yoursite.com/tags/PostgreSQL/index.html">
+<meta property="og:url" content="http://yoursite.com/tags/postgresql/index.html">
 <meta property="og:site_name" content="魂醉的一亩二分地">
 <meta property="og:description" content="人在江湖飘,哪能不挨刀！">
 <meta property="og:locale" content="zh-Hans">
@@ -118,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/PostgreSQL/"/>
+  <link rel="canonical" href="http://yoursite.com/tags/postgresql/"/>
 
 
 
 
 
-  <title>标签: PostgreSQL | 魂醉的一亩二分地</title>
+  <title>标签: postgresql | 魂醉的一亩二分地</title>
   
 
 
@@ -288,7 +288,7 @@
 
     <div id="posts" class="posts-collapse">
       <div class="collection-title">
-        <h1>PostgreSQL<small>标签</small>
+        <h1>postgresql<small>标签</small>
         </h1>
       </div>
 
@@ -300,37 +300,9 @@
 
       <h2 class="post-title">
         
-            <a class="post-title-link" href="/2012/08/24/postgresql-streaming-replication/" itemprop="url">
+            <a class="post-title-link" href="/2010/09/18/Installation-from-Source-Code-for-postgreSQL/" itemprop="url">
               
-                <span itemprop="name">postgresql streaming replication</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2012-08-24T15:17:37+08:00"
-              content="2012-08-24" >
-          08-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2012/03/26/PG常用的几个查询/" itemprop="url">
-              
-                <span itemprop="name">PG常用的几个查询</span>
+                <span itemprop="name">Installation from Source Code for postgreSQL</span>
               
             </a>
         
@@ -338,37 +310,9 @@
 
       <div class="post-meta">
         <time class="post-time" itemprop="dateCreated"
-              datetime="2012-03-26T15:15:50+08:00"
-              content="2012-03-26" >
-          03-26
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2011/11/10/来自francs的PG锁浅析，可以和oracle锁对照区别一下/" itemprop="url">
-              
-                <span itemprop="name">来自francs的PG锁浅析，可以和oracle锁对照区别一下</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2011-11-10T14:01:26+08:00"
-              content="2011-11-10" >
-          11-10
+              datetime="2010-09-18T14:14:19+08:00"
+              content="2010-09-18" >
+          09-18
         </time>
       </div>
 
@@ -443,7 +387,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1140,6 +1084,65 @@
                 $element.find('.leancloud-visitors-count').text(counter.get('time'));
               },
               error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+ction(counter, error) {
                 console.log('Failed to save Visitor num, with error message: ' + error.message);
               }
             });
